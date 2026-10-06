@@ -278,7 +278,7 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
 <label class="form-label">PROPERTY ADDRESS
 <input class="single-input" id="address" name="property-address" type="text" autocomplete="street-address" autocapitalize="words" spellcheck="false" placeholder="Start typing the property address" required>
 </label>
-<div class="address-suggestions" id="addressSuggestions" role="listbox" aria-label="Address suggestions"></div>
+
 <p class="input-hint">Street address, city, state and ZIP</p>
 </div>
 </div>
@@ -574,124 +574,70 @@ if(mobileMenu&&mobileNav){
 </script>
 
 <script>
-/* Google Places Autocomplete Data API (New) with a StoneBridge-styled suggestion menu. */
-window.initStoneBridgePlaces = async function(){
-  const input=document.getElementById("address");
-  const menu=document.getElementById("addressSuggestions");
-  if(!input || !menu || !window.google || !google.maps) return;
-
-  try{
-    const {AutocompleteSuggestion,AutocompleteSessionToken}=await google.maps.importLibrary("places");
-    let sessionToken=new AutocompleteSessionToken();
-    let predictions=[];
-    let activeIndex=-1;
-    let requestId=0;
-    let debounceTimer;
-
-    function closeMenu(){
-      menu.classList.remove("open");
-      menu.replaceChildren();
-      predictions=[];
-      activeIndex=-1;
-    }
-
-    function refreshSession(){ sessionToken=new AutocompleteSessionToken(); }
-
-    window.resetStoneBridgeAddressSession=function(){
-      closeMenu();
-      refreshSession();
-    };
-
-    function renderSuggestions(items){
-      menu.replaceChildren();
-      predictions=items.map(x=>x.placePrediction).filter(Boolean);
-      activeIndex=-1;
-      predictions.forEach((prediction,index)=>{
-        const button=document.createElement("button");
-        button.type="button";
-        button.className="address-suggestion";
-        button.setAttribute("role","option");
-        const main=prediction.mainText ? prediction.mainText.toString() : prediction.text.toString();
-        const secondary=prediction.secondaryText ? prediction.secondaryText.toString() : "";
-        button.innerHTML='<span class="address-suggestion-pin" aria-hidden="true">⌖</span><span class="address-suggestion-copy"><span class="address-suggestion-main"></span><span class="address-suggestion-secondary"></span></span>';
-        button.querySelector(".address-suggestion-main").textContent=main;
-        const secondaryEl=button.querySelector(".address-suggestion-secondary");
-        secondaryEl.textContent=secondary;
-        if(!secondary) secondaryEl.style.display="none";
-        button.addEventListener("mousedown",e=>e.preventDefault());
-        button.addEventListener("click",()=>selectPrediction(prediction));
-        menu.appendChild(button);
-      });
-      menu.classList.toggle("open",predictions.length>0);
-    }
-
-    async function selectPrediction(prediction){
-      closeMenu();
-      try{
-        const place=prediction.toPlace();
-        await place.fetchFields({fields:["formattedAddress"]});
-        input.value=place.formattedAddress || prediction.text.toString();
-        input.dispatchEvent(new Event("input",{bubbles:true}));
-        refreshSession();
-        // A Google-selected address is sufficient to complete Step 1.
-        setTimeout(()=>showStep(2),140);
-      }catch(error){
-        console.warn("StoneBridge could not load the selected address:",error);
-      }
-    }
-
-    async function fetchSuggestions(){
-      const query=input.value.trim();
-      const thisRequest=++requestId;
-      if(query.length<3){ closeMenu(); return; }
-      try{
-        const {suggestions}=await AutocompleteSuggestion.fetchAutocompleteSuggestions({
-          input:query,
-          sessionToken,
-          includedRegionCodes:["us"],
-          language:"en-US",
-          region:"us"
-        });
-        if(thisRequest!==requestId) return;
-        renderSuggestions(suggestions || []);
-      }catch(error){
-        if(thisRequest!==requestId) return;
-        closeMenu();
-        console.warn("StoneBridge address suggestions unavailable:",error);
-      }
-    }
-
-    input.addEventListener("input",()=>{
-      clearTimeout(debounceTimer);
-      debounceTimer=setTimeout(fetchSuggestions,180);
-    });
-
-    input.addEventListener("keydown",event=>{
-      const buttons=[...menu.querySelectorAll(".address-suggestion")];
-      if(!menu.classList.contains("open") || !buttons.length) return;
-      if(event.key==="ArrowDown" || event.key==="ArrowUp"){
-        event.preventDefault();
-        activeIndex=event.key==="ArrowDown" ? (activeIndex+1)%buttons.length : (activeIndex-1+buttons.length)%buttons.length;
-        buttons.forEach((b,i)=>b.classList.toggle("active",i===activeIndex));
-      }else if(event.key==="Enter"){
-        event.preventDefault();
-        selectPrediction(predictions[activeIndex>=0?activeIndex:0]);
-      }else if(event.key==="Escape"){
-        closeMenu();
-      }
-    });
-
-    input.addEventListener("focus",()=>{ if(predictions.length) menu.classList.add("open"); });
-    document.addEventListener("click",event=>{ if(!event.target.closest(".address-wrap")) closeMenu(); });
-  }catch(error){
-    console.warn("StoneBridge address autocomplete unavailable:",error);
+/* StoneBridge Google Places address autocomplete */
+window.initStoneBridgePlaces = function () {
+  const input = document.getElementById("address");
+  if (!input || !window.google || !google.maps || !google.maps.places) {
+    console.warn("StoneBridge: Google Places did not initialize.");
+    return;
   }
+
+  /* Prevent duplicate initialization if the callback fires more than once. */
+  if (input.dataset.placesReady === "true") return;
+  input.dataset.placesReady = "true";
+
+  const autocomplete = new google.maps.places.Autocomplete(input, {
+    componentRestrictions: { country: "us" },
+    fields: ["formatted_address", "address_components", "geometry", "place_id"],
+    types: ["address"]
+  });
+
+  /* Prefer results near Michigan without hard-restricting users to Michigan. */
+  try {
+    const michiganBounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(41.6961, -90.4181),
+      new google.maps.LatLng(48.3061, -82.1228)
+    );
+    autocomplete.setBounds(michiganBounds);
+    autocomplete.setOptions({ strictBounds: false });
+  } catch (e) {}
+
+  autocomplete.addListener("place_changed", function () {
+    const place = autocomplete.getPlace();
+
+    if (!place || (!place.formatted_address && !place.name)) {
+      console.warn("StoneBridge: No usable address was returned.");
+      return;
+    }
+
+    input.value = place.formatted_address || place.name;
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+
+    /* Google selection completes Step 1 and advances to Step 2. */
+    setTimeout(function () {
+      if (typeof showStep === "function") showStep(2);
+    }, 180);
+  });
+
+  /* Keep Enter from accidentally triggering other page controls. */
+  input.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  });
+
+  window.resetStoneBridgeAddressSession = function () {};
 };
 </script>
+
 <script>
-// If Maps was loaded elsewhere on the page before this script, initialize immediately.
-if(window.google && google.maps){ window.initStoneBridgePlaces(); }
+/* Handle cases where Maps was already loaded before this block executes. */
+if (window.google && google.maps && google.maps.places) {
+  window.initStoneBridgePlaces();
+}
 </script>
+
 <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1r5LhFoWILsfH56HrmlzGYy4mbDAa8nc&loading=async&libraries=places&callback=initStoneBridgePlaces"></script>
 
 <div class="modal-backdrop" id="termsModal" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
