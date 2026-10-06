@@ -323,6 +323,14 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
   color:#777;
 }
 
+
+/* Never let a stale Google Places suggestion panel cover later form steps. */
+body.sb-address-selected .pac-container{
+  display:none !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+
 </style>
 </head>
 <body>
@@ -686,23 +694,51 @@ window.initStoneBridgePlaces = function () {
   } catch (e) {}
 
 
-  function dismissGooglePlacesDropdown() {
-    /* Blur closes Google's active autocomplete interaction. */
-    input.blur();
+  let stoneBridgeAddressSelected = false;
 
-    /* Google owns the .pac-container DOM, so hide any visible container
-       after a selection. It will become available again when the user
-       focuses/types in the address field later. */
+  function hideGooglePlacesDropdown() {
+    document.body.classList.add("sb-address-selected");
     document.querySelectorAll(".pac-container").forEach(function (container) {
-      container.style.display = "none";
+      container.style.setProperty("display", "none", "important");
+      container.style.setProperty("visibility", "hidden", "important");
+      container.style.setProperty("pointer-events", "none", "important");
     });
-
-    setTimeout(function () {
-      document.querySelectorAll(".pac-container").forEach(function (container) {
-        container.style.display = "";
-      });
-    }, 350);
   }
+
+  function allowGooglePlacesDropdown() {
+    stoneBridgeAddressSelected = false;
+    document.body.classList.remove("sb-address-selected");
+    document.querySelectorAll(".pac-container").forEach(function (container) {
+      container.style.removeProperty("display");
+      container.style.removeProperty("visibility");
+      container.style.removeProperty("pointer-events");
+    });
+  }
+
+  function dismissGooglePlacesDropdown() {
+    stoneBridgeAddressSelected = true;
+    input.blur();
+    hideGooglePlacesDropdown();
+
+    /* Google may repaint/reposition the PAC container asynchronously.
+       Keep it suppressed during and after the step transition. */
+    requestAnimationFrame(hideGooglePlacesDropdown);
+    setTimeout(hideGooglePlacesDropdown, 50);
+    setTimeout(hideGooglePlacesDropdown, 150);
+    setTimeout(hideGooglePlacesDropdown, 350);
+    setTimeout(hideGooglePlacesDropdown, 700);
+  }
+
+  /* Only reopen Google's menu when the user intentionally returns
+     to the address field and edits/focuses it. */
+  input.addEventListener("focus", allowGooglePlacesDropdown);
+  input.addEventListener("input", function () {
+    if (stoneBridgeAddressSelected) allowGooglePlacesDropdown();
+  });
+
+  window.resetStoneBridgeAddressSession = function () {
+    allowGooglePlacesDropdown();
+  };
 
   autocomplete.addListener("place_changed", function () {
     const place = autocomplete.getPlace();
@@ -731,7 +767,6 @@ window.initStoneBridgePlaces = function () {
     }
   });
 
-  window.resetStoneBridgeAddressSession = function () {};
 };
 </script>
 
