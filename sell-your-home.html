@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sell Your Michigan Home | StoneBridge Development Group</title>
+<meta name="description" content="Considering selling your Michigan property? Submit your property to StoneBridge Development Group for a private acquisition review.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#151514;--paper:#f7f5f0;--warm:#ebe6dc;--line:#d8d1c5;--muted:#68655f;--accent:#a9997d;--white:#fff;--dark:#1d1c1a}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5}
+a{text-decoration:none;color:inherit}
+button,input,textarea{font:inherit}
+button{cursor:pointer;border:0}
+.container{width:min(1240px,calc(100% - 80px));margin:auto}
+.site-header{height:78px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 42px;background:rgba(247,245,240,.96);position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid rgba(21,21,20,.08);backdrop-filter:blur(16px)}
+.brand{display:flex;flex-direction:column;justify-self:start;line-height:1}
+.brand span{font-size:17px;letter-spacing:.15em;font-weight:600}
+.brand small{font-size:7px;letter-spacing:.3em;margin-top:6px;color:#777}
+.main-nav{display:flex;align-items:center;justify-content:center;gap:32px;font-size:9px;font-weight:600;letter-spacing:.17em;height:100%}
+.main-nav a{position:relative;display:flex;align-items:center;gap:6px;height:100%;white-space:nowrap}
+.main-nav a:after{content:"";position:absolute;left:0;right:0;bottom:22px;height:1px;background:currentColor;transform:scaleX(0);transition:transform .25s ease}
+.main-nav a:hover:after{transform:scaleX(1)}
+.header-phone{justify-self:end;display:flex;align-items:center;gap:8px;font-size:9px;letter-spacing:.14em;white-space:nowrap}
+.mobile-menu{display:none;background:none}
+.sell-page{padding-top:78px}
+.sell-hero{min-height:calc(100svh - 78px);display:grid;grid-template-columns:1fr 1fr;background:var(--dark);color:#fff}
+.sell-hero-copy{display:flex;flex-direction:column;justify-content:center;padding:90px clamp(40px,7vw,110px)}
+.eyebrow{font-size:9px;letter-spacing:.22em;font-weight:600}
+.sell-hero-copy h1{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(58px,6.5vw,100px);font-weight:400;line-height:.88;letter-spacing:-.035em;margin:28px 0}
+em{font-style:italic}
+.sell-hero-copy p{max-width:510px;color:rgba(255,255,255,.68);font-size:15px;line-height:1.8}
+.button-light,.button-dark{display:inline-flex;align-items:center;justify-content:center;gap:15px;width:max-content;padding:16px 21px;font-size:9px;font-weight:700;letter-spacing:.15em;margin-top:34px}
+.button-light{background:#fff;color:var(--ink)}
+.button-dark{background:var(--ink);color:#fff}
+.button-light svg,.button-dark svg{transition:transform .2s}
+.button-light:hover svg,.button-dark:hover svg{transform:translateX(4px)}
+.confidential{display:flex;align-items:center;gap:8px;font-size:8px;letter-spacing:.16em;color:rgba(255,255,255,.5);margin-top:18px}
+.sell-hero-image{min-height:620px;background:
+linear-gradient(180deg,rgba(10,10,9,.04),rgba(10,10,9,.25)),
+url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=88") center/cover}
+.image-note{display:none}
+.submission-shell{padding:110px 20px;background:var(--paper)}
+.submission-card{width:min(900px,100%);margin:auto;background:#fff;border:1px solid var(--line);padding:42px 48px 36px;box-shadow:0 20px 60px rgba(21,21,20,.06)}
+.submission-top{display:flex;justify-content:space-between;font-size:8px;font-weight:700;letter-spacing:.17em;color:#777}
+.submission-top i{font-style:normal;color:#bbb;margin:0 6px}
+.progress-track{height:2px;background:#e7e2d9;margin:22px 0 55px;overflow:hidden}
+.progress-track i{display:block;width:100%;height:100%;background:var(--ink);transform-origin:left;transition:transform .35s ease}
+.step-content{min-height:390px}
+.step-content .eyebrow{color:#777}
+.step-content h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(45px,5vw,68px);font-weight:400;line-height:.95;letter-spacing:-.03em;margin:22px 0 42px}
+.step-content h2 em{color:#777}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.form-label{font-size:8px;font-weight:700;letter-spacing:.16em;color:#68655f}
+.form-label input{display:block;width:100%;border:0;border-bottom:1px solid #cfc8bc;background:transparent;padding:12px 0;font-size:15px;outline:none;color:var(--ink)}
+.form-label input:focus{border-color:var(--ink)}
+.step{display:none}
+.step.active{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.choice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.choice{min-height:145px;text-align:left;background:#faf9f6;border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;justify-content:space-between;transition:.2s}
+.choice:hover{border-color:#aaa092;transform:translateY(-2px)}
+.choice.selected{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);background:#fff}
+.choice-icon{width:35px;height:35px;display:grid;place-items:center;border:1px solid #cfc8bc;border-radius:50%;font-size:17px}
+.choice strong{font-size:11px;letter-spacing:.1em}
+.choice span{font-size:11px;color:#777;margin-top:4px}
+.step-controls{display:flex;justify-content:flex-end;border-top:1px solid #e4ded4;padding-top:25px}
+.back{background:none;font-size:9px;letter-spacing:.14em;color:#777;margin-right:20px}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.privacy-note{display:flex;align-items:center;gap:7px;font-size:8px;letter-spacing:.13em;color:#999;margin-top:24px}
+.education{padding:120px 40px;background:#fff}
+.section-label{display:flex;align-items:center;gap:15px;font-size:8px;font-weight:700;letter-spacing:.18em;color:#777}
+.section-label i{display:block;width:44px;height:1px;background:#bbb}
+.education-heading{width:min(1240px,100%);margin:55px auto 75px;display:grid;grid-template-columns:1.15fr .85fr;gap:90px}
+.education-heading h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(48px,5vw,76px);font-weight:400;line-height:.9;letter-spacing:-.035em}
+.education-heading p{align-self:end;max-width:430px;color:#68655f;line-height:1.8}
+.education-columns{width:min(1240px,100%);margin:auto;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+.education-columns article{padding:30px 28px 0 0;border-right:1px solid var(--line);margin-right:28px}
+.education-columns article:last-child{border-right:0;margin-right:0}
+.education-columns span{font-size:9px;color:#999}
+.education-columns h3{font-size:12px;letter-spacing:.14em;margin:22px 0 12px}
+.education-columns p{font-size:13px;color:#777;line-height:1.75;max-width:300px}
+.faq-section{width:min(1240px,calc(100% - 80px));margin:auto;padding:125px 0;display:grid;grid-template-columns:.8fr 1.2fr;gap:100px}
+.faq-intro h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(48px,5vw,70px);font-weight:400;line-height:.92;margin:35px 0 25px}
+.faq-intro p{color:#777;max-width:350px;font-size:13px;line-height:1.8}
+.text-link{display:inline-flex;align-items:center;gap:10px;font-size:9px;font-weight:700;letter-spacing:.15em;border-bottom:1px solid #aaa;padding-bottom:7px;margin-top:28px}
+.faq-item{border-top:1px solid var(--line)}
+.faq-item:last-child{border-bottom:1px solid var(--line)}
+.faq-item button{width:100%;display:flex;justify-content:space-between;align-items:center;background:none;text-align:left;padding:24px 0;font-size:13px;font-weight:600}
+.faq-item p{display:none;color:#777;font-size:13px;line-height:1.8;max-width:680px;padding:0 40px 25px 0}
+.faq-item.active p{display:block}
+.faq-item.active button svg{transform:rotate(180deg)}
+.sell-bottom-cta{background:var(--dark);color:#fff;text-align:center;padding:120px 30px}
+.sell-bottom-cta .section-label{justify-content:center;color:#aaa}
+.sell-bottom-cta .section-label i{background:#555}
+.sell-bottom-cta h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(60px,7vw,100px);font-weight:400;line-height:.82;margin:35px 0 20px}
+.sell-bottom-cta p{color:#888;font-size:13px}
+.sell-bottom-cta .button-light{margin-top:30px}
+.site-footer{background:#151514;color:#fff;padding:70px 42px 25px;border-top:1px solid #292826}
+.footer-upper{display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;padding-bottom:65px}
+.brand-inverse small{color:#777}
+.footer-links{display:flex;flex-direction:column;gap:11px;font-size:9px;letter-spacing:.12em}
+.footer-links .eyebrow{color:#777;margin-bottom:10px}
+.footer-links a:hover{opacity:.6}
+.social-links{display:flex;gap:14px;margin-top:15px}
+.footer-bottom{border-top:1px solid #333;padding-top:20px;display:flex;justify-content:space-between;color:#777;font-size:8px;letter-spacing:.1em}
+.footer-bottom div{display:flex;gap:20px}
+.mobile-sticky-submit{display:none}
+@media(max-width:900px){
+.site-header{padding:0 20px;grid-template-columns:1fr auto;height:70px}
+.main-nav,.header-phone{display:none}
+.mobile-menu{display:block;justify-self:end;color:var(--ink)}
+.sell-page{padding-top:70px}
+.sell-hero{grid-template-columns:1fr}
+.sell-hero-copy{min-height:600px;padding:75px 28px}
+.sell-hero-image{min-height:420px}
+.submission-shell{padding:65px 15px}
+.submission-card{padding:28px 24px}
+.step-content{min-height:450px}
+.education{padding:85px 25px}
+.education-heading,.faq-section{grid-template-columns:1fr;gap:45px}
+.education-columns{grid-template-columns:1fr;gap:30px}
+.education-columns article{border-right:0;border-bottom:1px solid var(--line);padding-bottom:30px;margin:0}
+.faq-section{width:calc(100% - 50px);padding:85px 0}
+.footer-upper{grid-template-columns:1fr 1fr}
+.footer-upper .brand{grid-column:1/-1}
+.footer-bottom{flex-direction:column;gap:15px}
+}
+@media(max-width:560px){
+.form-grid,.contact-grid,.choice-grid{grid-template-columns:1fr}
+.choice{min-height:120px}
+.step-content h2{font-size:46px}
+.footer-upper{grid-template-columns:1fr}
+.mobile-sticky-submit{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--ink);color:#fff;z-index:90;height:58px;align-items:center;justify-content:center;gap:12px;font-size:9px;font-weight:700;letter-spacing:.15em}
+}
+
+/* streamlined four-step seller flow */
+.submission-card{max-width:940px}
+.address-wrap{max-width:720px}
+.single-input{display:block;width:100%;border:0;border-bottom:1px solid #cfc8bc;background:transparent;padding:16px 0;font-size:18px;outline:none;color:var(--ink)}
+.single-input:focus{border-color:var(--ink)}
+.input-hint{font-size:10px;color:#999;margin-top:12px;letter-spacing:.04em}
+.choice-grid.choice-grid-four{grid-template-columns:repeat(2,1fr)}
+.choice{min-height:155px}
+.choice-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6}
+.contact-grid{grid-template-columns:1fr 1fr}
+.contact-grid .full{grid-column:1/-1}
+.privacy-link{background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:3px;color:#777;font-size:8px;letter-spacing:.12em;cursor:pointer}
+.privacy-note{flex-wrap:wrap}
+.privacy-note .lock{font-size:12px;color:#777}
+.modal-backdrop{position:fixed;inset:0;background:rgba(10,10,9,.68);backdrop-filter:blur(8px);z-index:300;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-backdrop.open{display:flex;animation:modalFade .2s ease}
+.privacy-modal{width:min(720px,100%);max-height:min(82vh,760px);overflow:auto;background:var(--paper);border:1px solid rgba(255,255,255,.18);box-shadow:0 30px 90px rgba(0,0,0,.3);padding:42px}
+.privacy-modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:25px;border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:26px}
+.privacy-modal h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:48px;font-weight:400;line-height:.95}
+.privacy-modal .modal-close{width:38px;height:38px;border:1px solid var(--line);background:transparent;display:grid;place-items:center;font-size:18px;color:var(--ink)}
+.privacy-modal h3{font-size:10px;letter-spacing:.14em;margin:25px 0 9px}
+.privacy-modal p,.privacy-modal li{font-size:12px;line-height:1.8;color:#68655f}
+.privacy-modal ul{padding-left:20px}
+.modal-updated{font-size:8px!important;letter-spacing:.1em;color:#999!important}
+@keyframes modalFade{from{opacity:0}to{opacity:1}}
+@media(max-width:560px){
+.choice-grid.choice-grid-four{grid-template-columns:1fr}
+.choice{min-height:125px}
+.single-input{font-size:16px}
+.privacy-modal{padding:28px 22px}
+.privacy-modal h2{font-size:40px}
+}
+
+
+/* reliable step navigation */
+.step-controls{position:relative;z-index:5}
+.step-controls .back{cursor:pointer;pointer-events:auto;position:relative;z-index:6}
+.step-controls .button-dark{cursor:pointer;position:relative;z-index:6}
+.pac-container{z-index:9999!important;font-family:"DM Sans",sans-serif!important;border:1px solid #ddd!important;box-shadow:0 14px 35px rgba(0,0,0,.12)!important}
+.pac-item{padding:11px 14px!important;font-size:12px!important;line-height:1.4!important}
+.pac-item-query{font-size:13px!important}
+</style>
+</head>
+<body>
+<header class="site-header">
+<a class="brand" href="/" aria-label="StoneBridge Development Group home"><span>STONEBRIDGE</span><small>DEVELOPMENT GROUP</small></a>
+<button class="mobile-menu" id="menu" type="button" aria-label="Open navigation">☰</button>
+<nav class="main-nav">
+<a href="/#projects">PROJECTS</a>
+<a href="/#properties">PROPERTIES</a>
+<a href="/sell-your-home">SELL YOUR PROPERTY</a>
+<a href="/about">ABOUT</a>
+<a href="/contact">CONTACT ↗</a>
+</nav>
+<a class="header-phone" href="tel:2488006242">⌕ &nbsp; 248 800 6242</a>
+</header>
+
+<main class="sell-page">
+<section class="sell-hero">
+<div class="sell-hero-copy">
+<span class="eyebrow">PRIVATE PROPERTY ACQUISITIONS</span>
+<h1>Considering Selling<br><em>Your Home?</em></h1>
+<p>Tell us about your property. StoneBridge will review the opportunity and contact you regarding next steps.</p>
+<a href="#submission" class="button-light">START YOUR PROPERTY SUBMISSION →</a>
+<span class="confidential">⌕ &nbsp; PRIVATE &amp; CONFIDENTIAL</span>
+</div>
+<div class="sell-hero-image"></div>
+</section>
+
+<section class="submission-shell" id="submission">
+<div class="submission-card">
+<div class="submission-top"><span id="stepCounter">01 <i>/</i> 04</span><span>PRIVATE PROPERTY INQUIRY</span></div>
+<div class="progress-track"><i id="progress"></i></div>
+
+<div class="step active" data-step="1">
+<div class="step-content">
+<span class="eyebrow">PROPERTY SUBMISSION — STEP 01</span>
+<h2>Where is the<br><em>property located?</em></h2>
+<div class="address-wrap">
+<label class="form-label">PROPERTY ADDRESS
+<input class="single-input" id="address" name="property-address" type="text" autocomplete="street-address" autocapitalize="words" spellcheck="false" placeholder="Start typing the property address" required>
+</label>
+<p class="input-hint">Street address, city, state and ZIP</p>
+</div>
+</div>
+</div>
+
+<div class="step" data-step="2">
+<div class="step-content">
+<span class="eyebrow">PROPERTY SUBMISSION — STEP 02</span>
+<h2>How quickly are you<br><em>looking to sell?</em></h2>
+<div class="choice-grid choice-grid-four">
+<button class="choice" data-field="timing" data-value="As soon as possible" type="button">
+<span class="choice-icon"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 10-13h-7z"/></svg></span>
+<strong>AS SOON AS POSSIBLE</strong><span>I'm ready to move forward</span>
+</button>
+<button class="choice" data-field="timing" data-value="Within 30 days" type="button">
+<span class="choice-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 9h18"/></svg></span>
+<strong>WITHIN 30 DAYS</strong><span>I'm actively planning</span>
+</button>
+<button class="choice" data-field="timing" data-value="1–3 months" type="button">
+<span class="choice-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+<strong>1–3 MONTHS</strong><span>I'm exploring my options</span>
+</button>
+<button class="choice" data-field="timing" data-value="Just exploring" type="button">
+<span class="choice-icon"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/></svg></span>
+<strong>JUST EXPLORING</strong><span>No timeline yet</span>
+</button>
+</div>
+</div>
+</div>
+
+<div class="step" data-step="3">
+<div class="step-content">
+<span class="eyebrow">PROPERTY SUBMISSION — STEP 03</span>
+<h2>What condition is the<br><em>property in?</em></h2>
+<div class="choice-grid choice-grid-four">
+<button class="choice" data-field="condition" data-value="Move-in ready" type="button">
+<span class="choice-icon"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></span>
+<strong>MOVE-IN READY</strong><span>Little or no work needed</span>
+</button>
+<button class="choice" data-field="condition" data-value="Needs some work" type="button">
+<span class="choice-icon"><svg viewBox="0 0 24 24"><path d="m14 6 4 4M5 19l4-1 9-9-3-3-9 9z"/></svg></span>
+<strong>NEEDS SOME WORK</strong><span>Updates or repairs are needed</span>
+</button>
+<button class="choice" data-field="condition" data-value="Needs major renovation" type="button">
+<span class="choice-icon"><svg viewBox="0 0 24 24"><path d="m14 6 4 4M5 19l4-1 9-9-3-3-9 9zM7 3l14 14"/></svg></span>
+<strong>MAJOR RENOVATION</strong><span>Significant work is needed</span>
+</button>
+<button class="choice" data-field="condition" data-value="Not sure" type="button">
+<span class="choice-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.4 2.4 0 1 1 4.3 1.5c-.9 1.1-2 1.3-2 2.8M12 17h.01"/></svg></span>
+<strong>NOT SURE</strong><span>We'll review it with you</span>
+</button>
+</div>
+</div>
+</div>
+
+<div class="step" data-step="4">
+<div class="step-content">
+<span class="eyebrow">PROPERTY SUBMISSION — STEP 04</span>
+<h2>How can we<br><em>reach you?</em></h2>
+<div class="contact-grid">
+<label class="form-label">FULL NAME<input id="name" autocomplete="name" placeholder="Your name" required></label>
+<label class="form-label">PHONE<input id="phone" type="tel" autocomplete="tel" placeholder="(248) 000-0000" required></label>
+<label class="form-label full">EMAIL<input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+</div>
+</div>
+</div>
+
+<div class="step-controls">
+<button class="back" id="back" type="button" style="display:none">← BACK</button>
+<button class="button-dark" id="next" type="button">CONTINUE →</button>
+</div>
+<div class="privacy-note">
+<span class="lock">⌕</span>
+<span>PRIVATE &amp; CONFIDENTIAL</span>
+<span>·</span>
+<button class="privacy-link" id="privacyOpen" type="button">PRIVACY POLICY</button>
+</div>
+</div>
+</section>
+
+<section class="education">
+<div class="section-label"><span>AN INFORMED DECISION</span><i></i></div>
+<div class="education-heading">
+<h2>SELLING YOUR HOME<br>IS A DECISION —<br><em>NOT A BUTTON.</em></h2>
+<p>There is more than one path forward. The right choice depends on the property, your plans, and what matters most to you.</p>
+</div>
+<div class="education-columns">
+<article><span>01</span><h3>DIRECT SALE</h3><p>A direct sale can provide an alternative to listing a property publicly.</p></article>
+<article><span>02</span><h3>TRADITIONAL SALE</h3><p>Some homeowners may prefer listing with a real-estate professional and exposing the property to the broader market.</p></article>
+<article><span>03</span><h3>YOUR PROPERTY</h3><p>Every property and situation is different. StoneBridge reviews each submission individually.</p></article>
+</div>
+</section>
+
+<section class="faq-section">
+<div class="faq-intro">
+<div class="section-label"><span>COMMON QUESTIONS</span><i></i></div>
+<h2>A few things<br>you may be <em>wondering.</em></h2>
+<p>Each property and situation is different. If you have another question, we're here to talk.</p>
+<a href="/contact" class="text-link">CONTACT STONEBRIDGE →</a>
+</div>
+<div class="faq-list">
+<article class="faq-item active"><button type="button"><span>What happens after I submit my property?</span><span>⌄</span></button><p>Our team will review the information you provide and contact you regarding next steps. The review process and timing depend on the details of each property.</p></article>
+<article class="faq-item"><button type="button"><span>Do I have to accept an offer?</span><span>⌄</span></button><p>No. Submitting a property does not obligate you to sell.</p></article>
+<article class="faq-item"><button type="button"><span>What types of properties do you acquire?</span><span>⌄</span></button><p>StoneBridge focuses on residential properties and reviews each opportunity individually.</p></article>
+<article class="faq-item"><button type="button"><span>Do you consider properties that need renovations?</span><span>⌄</span></button><p>Yes. Property condition is one of the factors considered during the review.</p></article>
+<article class="faq-item"><button type="button"><span>Can I submit a property if I'm not ready to sell?</span><span>⌄</span></button><p>Yes. You can submit your property while you're exploring your options.</p></article>
+<article class="faq-item"><button type="button"><span>Is there a cost to submit my property?</span><span>⌄</span></button><p>No. There is no cost to submit a property for review.</p></article>
+</div>
+</section>
+
+<section class="sell-bottom-cta">
+<div class="section-label"><span>STONEBRIDGE DEVELOPMENT GROUP</span><i></i></div>
+<h2>A considered<br>next <em>step.</em></h2>
+<p>Private, confidential, and without obligation.</p>
+<a href="#submission" class="button-light">SUBMIT YOUR PROPERTY →</a>
+</section>
+</main>
+
+
+<div class="modal-backdrop" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+  <div class="privacy-modal">
+    <div class="privacy-modal-head">
+      <div>
+        <span class="eyebrow">STONEBRIDGE DEVELOPMENT GROUP</span>
+        <h2 id="privacyTitle">Privacy <em>Policy.</em></h2>
+      </div>
+      <button class="modal-close" id="privacyClose" type="button" aria-label="Close privacy policy">×</button>
+    </div>
+
+    <p class="modal-updated">LAST UPDATED: OCTOBER 6, 2026</p>
+
+    <h3>INFORMATION WE COLLECT</h3>
+    <p>When you submit a property inquiry, StoneBridge Development Group may collect information you choose to provide, including your name, phone number, email address, property address, selling timeline, and property condition.</p>
+
+    <h3>HOW WE USE YOUR INFORMATION</h3>
+    <p>We use submitted information to review your property inquiry, communicate with you about your property, respond to requests, and evaluate potential acquisition opportunities.</p>
+
+    <h3>YOUR INFORMATION</h3>
+    <p>We do not require sensitive financial information to submit a property. Please do not include passwords, Social Security numbers, bank account numbers, or other highly sensitive information in this form.</p>
+
+    <h3>SHARING INFORMATION</h3>
+    <p>StoneBridge Development Group does not sell your personal information. Information may be shared with service providers or professional partners only when reasonably necessary to operate our business, evaluate a property, communicate with you, or comply with applicable law.</p>
+
+    <h3>COMMUNICATIONS</h3>
+    <p>By submitting your information, you are asking StoneBridge Development Group to contact you regarding your inquiry. You are not obligated to accept an offer or complete a transaction.</p>
+
+    <h3>CONTACT</h3>
+    <p>Questions about this policy can be directed to <a href="mailto:info@stonebridgedg.com"><u>info@stonebridgedg.com</u></a> or <a href="tel:2488006242"><u>248-800-6242</u></a>.</p>
+  </div>
+</div>
+
+<footer class="site-footer">
+<div class="footer-upper">
+<a class="brand brand-inverse" href="/"><span>STONEBRIDGE</span><small>DEVELOPMENT GROUP</small></a>
+<div class="footer-links"><span class="eyebrow">EXPLORE</span><a href="/#projects">PROJECTS</a><a href="/#properties">PROPERTIES</a><a href="/sell-your-home">SELL YOUR PROPERTY</a><a href="/about">ABOUT</a><a href="/contact">CONTACT</a></div>
+<div class="footer-links"><span class="eyebrow">GET IN TOUCH</span><a href="tel:2488006242">248 800 6242</a><a href="mailto:info@stonebridgedg.com">info@stonebridgedg.com</a><div class="social-links"><a href="#instagram">IG</a><a href="#facebook">FB</a><a href="#linkedin">IN</a></div></div>
+</div>
+<div class="footer-bottom"><span>© 2026 StoneBridge Development Group</span><div><button class="privacy-link" id="footerPrivacy" type="button" style="color:#777">PRIVACY</button><span>TERMS</span><span>MICHIGAN</span></div></div>
+</footer>
+<a class="mobile-sticky-submit" href="#submission">SUBMIT PROPERTY →</a>
+
+<script>
+const state={step:1,timing:"",condition:""};
+const steps=[...document.querySelectorAll(".step")];
+const progress=document.getElementById("progress");
+const counter=document.getElementById("stepCounter");
+const next=document.getElementById("next");
+const back=document.getElementById("back");
+const submissionCard=document.querySelector(".submission-card");
+
+function showStep(n, scroll=true){
+  n=Math.max(1,Math.min(4,n));
+  state.step=n;
+
+  steps.forEach((step)=>{
+    const active=Number(step.dataset.step)===n;
+    step.classList.toggle("active",active);
+  });
+
+  counter.innerHTML=String(n).padStart(2,"0")+" <i>/</i> 04";
+  progress.style.transform=`scaleX(${n/4})`;
+
+  back.style.display=n>1?"inline-flex":"none";
+  next.textContent=n===4?"SUBMIT PROPERTY →":"CONTINUE →";
+
+  // Restore selected cards when returning to a previous step.
+  if(n===2) restoreChoice("timing");
+  if(n===3) restoreChoice("condition");
+
+  if(scroll){
+    requestAnimationFrame(()=>{
+      submissionCard.scrollIntoView({behavior:"smooth",block:"center"});
+    });
+  }
+}
+
+function restoreChoice(field){
+  const value=state[field];
+  document.querySelectorAll(`.choice[data-field="${field}"]`).forEach(btn=>{
+    btn.classList.toggle("selected",btn.dataset.value===value);
+  });
+}
+
+function validStep(){
+  if(state.step===1) return document.getElementById("address").value.trim().length>4;
+  if(state.step===2) return !!state.timing;
+  if(state.step===3) return !!state.condition;
+  if(state.step===4){
+    return ["name","phone","email"].every(id=>document.getElementById(id).value.trim());
+  }
+  return false;
+}
+
+document.querySelectorAll(".choice").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const field=btn.dataset.field;
+    state[field]=btn.dataset.value;
+
+    document.querySelectorAll(`.choice[data-field="${field}"]`)
+      .forEach(x=>x.classList.remove("selected"));
+    btn.classList.add("selected");
+
+    // Advance only after the click is complete.
+    setTimeout(()=>showStep(state.step+1),180);
+  });
+});
+
+next.addEventListener("click",()=>{
+  if(!validStep()){
+    const current=steps[state.step-1];
+    const input=current.querySelector("input[required]");
+    if(input){
+      input.reportValidity();
+      input.focus();
+    }
+    return;
+  }
+
+  if(state.step<4){
+    showStep(state.step+1);
+    return;
+  }
+
+  const body=[
+    "StoneBridge Property Submission","",
+    "NAME: "+document.getElementById("name").value.trim(),
+    "PHONE: "+document.getElementById("phone").value.trim(),
+    "EMAIL: "+document.getElementById("email").value.trim(),
+    "PROPERTY ADDRESS: "+document.getElementById("address").value.trim(),
+    "SELLING TIMELINE: "+state.timing,
+    "PROPERTY CONDITION: "+state.condition
+  ].join("\n");
+
+  window.location.href="mailto:info@stonebridgedg.com?subject="+
+    encodeURIComponent("StoneBridge Property Submission")+
+    "&body="+encodeURIComponent(body);
+});
+
+// Use a dedicated click handler that always moves exactly one step backward.
+back.addEventListener("click",(event)=>{
+  event.preventDefault();
+  event.stopPropagation();
+
+  if(state.step>1){
+    showStep(state.step-1);
+  }
+});
+
+document.querySelectorAll(".faq-item button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const item=btn.closest(".faq-item");
+    document.querySelectorAll(".faq-item").forEach(x=>{if(x!==item)x.classList.remove("active")});
+    item.classList.toggle("active");
+  });
+});
+
+const privacyModal=document.getElementById("privacyModal");
+const privacyOpen=document.getElementById("privacyOpen");
+const privacyClose=document.getElementById("privacyClose");
+privacyOpen.addEventListener("click",()=>privacyModal.classList.add("open"));
+privacyClose.addEventListener("click",()=>privacyModal.classList.remove("open"));
+const footerPrivacy=document.getElementById("footerPrivacy");
+footerPrivacy.addEventListener("click",()=>privacyModal.classList.add("open"));
+privacyModal.addEventListener("click",e=>{if(e.target===privacyModal)privacyModal.classList.remove("open")});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")privacyModal.classList.remove("open")});
+
+document.getElementById("menu").addEventListener("click",()=>document.querySelector(".main-nav").classList.toggle("open"));
+</script>
+
+<script>
+/*
+  Google Places Autocomplete
+  Replace YOUR_GOOGLE_MAPS_API_KEY with your restricted Google Maps API key.
+  Enable Places API (New) in Google Cloud.
+*/
+window.initStoneBridgePlaces = async function(){
+  const input=document.getElementById("address");
+  if(!input || !window.google || !google.maps || !google.maps.places) return;
+
+  try{
+    const {Autocomplete}=await google.maps.importLibrary("places");
+    const autocomplete=new Autocomplete(input,{
+      componentRestrictions:{country:"us"},
+      fields:["formatted_address","address_components"],
+      types:["address"]
+    });
+
+    autocomplete.addListener("place_changed",()=>{
+      const place=autocomplete.getPlace();
+      if(place && place.formatted_address){
+        input.value=place.formatted_address;
+        input.dispatchEvent(new Event("input",{bubbles:true}));
+      }
+    });
+  }catch(error){
+    console.warn("StoneBridge address autocomplete unavailable:",error);
+  }
+};
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&loading=async&libraries=places&callback=initStoneBridgePlaces"></script>
+
+</body>
+</html>
