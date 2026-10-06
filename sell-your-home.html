@@ -240,6 +240,89 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
  .sb-footer .footer-upper{grid-template-columns:1fr!important;gap:42px!important}
  .sb-footer .sb-footer-brand{grid-column:auto!important}
 }
+
+/* ===== StoneBridge seller-flow refinements ===== */
+
+/* Prevent native mobile/browser button styling from turning choice text blue. */
+.choice,
+.choice:link,
+.choice:visited,
+.choice:hover,
+.choice:active,
+.choice:focus,
+.choice strong,
+.choice span {
+  color: var(--ink);
+  -webkit-text-fill-color: var(--ink);
+}
+
+.choice {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  font-family: "DM Sans", Arial, sans-serif;
+}
+
+/* Give the icon its own breathing room above the option copy. */
+.choice-icon {
+  flex: 0 0 auto;
+  margin-bottom: 28px;
+}
+
+.choice strong {
+  display: block;
+  margin-top: auto;
+}
+
+.choice > span:not(.choice-icon) {
+  color: #777;
+  -webkit-text-fill-color: #777;
+}
+
+/* Google Places dropdown should sit above the form while open. */
+.pac-container {
+  z-index: 999999 !important;
+}
+
+@media (max-width: 560px) {
+  .choice {
+    min-height: 145px;
+    padding: 22px 20px;
+    color: var(--ink) !important;
+    -webkit-text-fill-color: var(--ink) !important;
+  }
+
+  .choice-icon {
+    margin-bottom: 24px;
+  }
+
+  .choice strong {
+    color: var(--ink) !important;
+    -webkit-text-fill-color: var(--ink) !important;
+  }
+
+  .choice > span:not(.choice-icon) {
+    margin-top: 7px;
+    color: #777 !important;
+    -webkit-text-fill-color: #777 !important;
+  }
+}
+
+
+/* Consistent StoneBridge lock icon */
+.sb-lock-icon{
+  display:block;
+  flex:0 0 auto;
+  width:12px;
+  height:12px;
+}
+.confidential .sb-lock-icon{
+  color:rgba(255,255,255,.58);
+}
+.privacy-note .sb-lock-icon{
+  color:#777;
+}
+
 </style>
 </head>
 <body>
@@ -260,7 +343,7 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
 <h1>Considering Selling<br><em>Your Home?</em></h1>
 <p>Tell us about your property. StoneBridge will review the opportunity and contact you regarding next steps.</p>
 <a href="#submission" class="button-light">START YOUR PROPERTY SUBMISSION →</a>
-<span class="confidential">⌕ &nbsp; PRIVATE &amp; CONFIDENTIAL</span>
+<span class="confidential"><svg class="sb-lock-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>PRIVATE &amp; CONFIDENTIAL</span></span>
 </div>
 <div class="sell-hero-image"></div>
 </section>
@@ -351,7 +434,7 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
 <button class="button-dark" id="next" type="button">CONTINUE →</button>
 </div>
 <div class="privacy-note">
-<span class="lock">⌕</span>
+<span class="lock"><svg class="sb-lock-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
 <span>PRIVATE &amp; CONFIDENTIAL</span>
 <span>·</span>
 <button class="privacy-link" id="privacyOpen" type="button">PRIVACY POLICY</button>
@@ -602,6 +685,25 @@ window.initStoneBridgePlaces = function () {
     autocomplete.setOptions({ strictBounds: false });
   } catch (e) {}
 
+
+  function dismissGooglePlacesDropdown() {
+    /* Blur closes Google's active autocomplete interaction. */
+    input.blur();
+
+    /* Google owns the .pac-container DOM, so hide any visible container
+       after a selection. It will become available again when the user
+       focuses/types in the address field later. */
+    document.querySelectorAll(".pac-container").forEach(function (container) {
+      container.style.display = "none";
+    });
+
+    setTimeout(function () {
+      document.querySelectorAll(".pac-container").forEach(function (container) {
+        container.style.display = "";
+      });
+    }, 350);
+  }
+
   autocomplete.addListener("place_changed", function () {
     const place = autocomplete.getPlace();
 
@@ -613,6 +715,8 @@ window.initStoneBridgePlaces = function () {
     input.value = place.formatted_address || place.name;
     input.dispatchEvent(new Event("input", { bubbles: true }));
     input.dispatchEvent(new Event("change", { bubbles: true }));
+
+    dismissGooglePlacesDropdown();
 
     /* Google selection completes Step 1 and advances to Step 2. */
     setTimeout(function () {
