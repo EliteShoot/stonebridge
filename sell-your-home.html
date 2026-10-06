@@ -25,7 +25,8 @@ button{cursor:pointer;border:0}
 .main-nav a{position:relative;display:flex;align-items:center;gap:6px;height:100%;white-space:nowrap}
 .main-nav a:after{content:"";position:absolute;left:0;right:0;bottom:22px;height:1px;background:currentColor;transform:scaleX(0);transition:transform .25s ease}
 .main-nav a:hover:after{transform:scaleX(1)}
-.header-phone{justify-self:end;display:flex;align-items:center;gap:8px;font-size:9px;letter-spacing:.14em;white-space:nowrap}
+.header-phone{justify-self:end;display:flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:.12em;white-space:nowrap}
+.header-phone svg{width:17px;height:17px;flex:0 0 17px;stroke-width:1.6}
 .mobile-menu{display:none;background:none}
 .sell-page{padding-top:78px}
 .sell-hero{min-height:calc(100svh - 78px);display:grid;grid-template-columns:1fr 1fr;background:var(--dark);color:#fff}
@@ -68,8 +69,9 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
 .choice-icon{width:35px;height:35px;display:grid;place-items:center;border:1px solid #cfc8bc;border-radius:50%;font-size:17px}
 .choice strong{font-size:11px;letter-spacing:.1em}
 .choice span{font-size:11px;color:#777;margin-top:4px}
-.step-controls{display:flex;justify-content:flex-end;border-top:1px solid #e4ded4;padding-top:25px}
-.back{background:none;font-size:9px;letter-spacing:.14em;color:#777;margin-right:20px}
+.step-controls{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #e4ded4;padding-top:25px;position:relative}
+.back{position:static;background:none;font-size:9px;font-weight:600;letter-spacing:.14em;color:#777;margin:34px 0 0;padding:0 21px;height:46px;display:inline-flex;align-items:center;justify-content:center}
+.back:hover{color:var(--ink)}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .privacy-note{display:flex;align-items:center;gap:7px;font-size:8px;letter-spacing:.13em;color:#999;margin-top:24px}
 .education{padding:120px 40px;background:#fff}
@@ -132,6 +134,8 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
 }
 @media(max-width:560px){
 .form-grid,.contact-grid,.choice-grid{grid-template-columns:1fr}
+.step-controls{padding-top:24px}
+.step-controls .button-dark{min-width:145px;height:46px}
 .choice{min-height:120px}
 .step-content h2{font-size:46px}
 .footer-upper{grid-template-columns:1fr}
@@ -140,7 +144,17 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
 
 /* streamlined four-step seller flow */
 .submission-card{max-width:940px}
-.address-wrap{max-width:720px}
+.address-wrap{max-width:720px;position:relative}
+.address-suggestions{position:absolute;left:0;right:0;top:100%;z-index:40;background:#fff;border:1px solid #ddd6ca;border-top:0;box-shadow:0 18px 45px rgba(22,20,17,.12);display:none;max-height:300px;overflow:auto}
+.address-suggestions.open{display:block}
+.address-suggestion{width:100%;display:flex;gap:13px;align-items:flex-start;text-align:left;background:#fff;border:0;border-bottom:1px solid #eee9e1;padding:15px 16px;cursor:pointer;color:var(--ink);font-family:"DM Sans",Arial,sans-serif}
+.address-suggestion:last-child{border-bottom:0}
+.address-suggestion:hover,.address-suggestion.active{background:#f6f3ed}
+.address-suggestion-pin{font-size:15px;line-height:1.35;opacity:.55}
+.address-suggestion-copy{min-width:0}
+.address-suggestion-main{display:block;font-size:13px;font-weight:600;line-height:1.35}
+.address-suggestion-secondary{display:block;font-size:11px;color:#777;margin-top:3px;line-height:1.35}
+
 .single-input{display:block;width:100%;border:0;border-bottom:1px solid #cfc8bc;background:transparent;padding:16px 0;font-size:18px;outline:none;color:var(--ink)}
 .single-input:focus{border-color:var(--ink)}
 .input-hint{font-size:10px;color:#999;margin-top:12px;letter-spacing:.04em}
@@ -174,7 +188,7 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
 
 /* reliable step navigation */
 .step-controls{position:relative;z-index:5}
-.step-controls .back{cursor:pointer;pointer-events:auto;position:relative;z-index:6}
+.step-controls .back{cursor:pointer;pointer-events:auto;z-index:6}
 .step-controls .button-dark{cursor:pointer;position:relative;z-index:6}
 .pac-container{z-index:9999!important;font-family:"DM Sans",sans-serif!important;border:1px solid #ddd!important;box-shadow:0 14px 35px rgba(0,0,0,.12)!important}
 .pac-item{padding:11px 14px!important;font-size:12px!important;line-height:1.4!important}
@@ -192,7 +206,7 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
 <a href="/about">ABOUT</a>
 <a href="/contact">CONTACT ↗</a>
 </nav>
-<a class="header-phone" href="tel:2488006242">⌕ &nbsp; 248 800 6242</a>
+<a class="header-phone" href="tel:2488006242" aria-label="Call StoneBridge Development Group at 248 800 6242"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"/></svg><span>248 800 6242</span></a>
 </header>
 
 <main class="sell-page">
@@ -220,6 +234,7 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
 <label class="form-label">PROPERTY ADDRESS
 <input class="single-input" id="address" name="property-address" type="text" autocomplete="street-address" autocapitalize="words" spellcheck="false" placeholder="Start typing the property address" required>
 </label>
+<div class="address-suggestions" id="addressSuggestions" role="listbox" aria-label="Address suggestions"></div>
 <p class="input-hint">Street address, city, state and ZIP</p>
 </div>
 </div>
@@ -406,6 +421,7 @@ function showStep(n, scroll=true){
   next.textContent=n===4?"SUBMIT PROPERTY →":"CONTINUE →";
 
   // Restore selected cards when returning to a previous step.
+  if(n===1 && window.resetStoneBridgeAddressSession) window.resetStoneBridgeAddressSession();
   if(n===2) restoreChoice("timing");
   if(n===3) restoreChoice("condition");
 
@@ -510,36 +526,122 @@ document.getElementById("menu").addEventListener("click",()=>document.querySelec
 </script>
 
 <script>
-/*
-  Google Places Autocomplete
-  Replace YOUR_GOOGLE_MAPS_API_KEY with your restricted Google Maps API key.
-  Enable Places API (New) in Google Cloud.
-*/
+/* Google Places Autocomplete Data API (New) with a StoneBridge-styled suggestion menu. */
 window.initStoneBridgePlaces = async function(){
   const input=document.getElementById("address");
-  if(!input || !window.google || !google.maps || !google.maps.places) return;
+  const menu=document.getElementById("addressSuggestions");
+  if(!input || !menu || !window.google || !google.maps) return;
 
   try{
-    const {Autocomplete}=await google.maps.importLibrary("places");
-    const autocomplete=new Autocomplete(input,{
-      componentRestrictions:{country:"us"},
-      fields:["formatted_address","address_components"],
-      types:["address"]
+    const {AutocompleteSuggestion,AutocompleteSessionToken}=await google.maps.importLibrary("places");
+    let sessionToken=new AutocompleteSessionToken();
+    let predictions=[];
+    let activeIndex=-1;
+    let requestId=0;
+    let debounceTimer;
+
+    function closeMenu(){
+      menu.classList.remove("open");
+      menu.replaceChildren();
+      predictions=[];
+      activeIndex=-1;
+    }
+
+    function refreshSession(){ sessionToken=new AutocompleteSessionToken(); }
+
+    window.resetStoneBridgeAddressSession=function(){
+      closeMenu();
+      refreshSession();
+    };
+
+    function renderSuggestions(items){
+      menu.replaceChildren();
+      predictions=items.map(x=>x.placePrediction).filter(Boolean);
+      activeIndex=-1;
+      predictions.forEach((prediction,index)=>{
+        const button=document.createElement("button");
+        button.type="button";
+        button.className="address-suggestion";
+        button.setAttribute("role","option");
+        const main=prediction.mainText ? prediction.mainText.toString() : prediction.text.toString();
+        const secondary=prediction.secondaryText ? prediction.secondaryText.toString() : "";
+        button.innerHTML='<span class="address-suggestion-pin" aria-hidden="true">⌖</span><span class="address-suggestion-copy"><span class="address-suggestion-main"></span><span class="address-suggestion-secondary"></span></span>';
+        button.querySelector(".address-suggestion-main").textContent=main;
+        const secondaryEl=button.querySelector(".address-suggestion-secondary");
+        secondaryEl.textContent=secondary;
+        if(!secondary) secondaryEl.style.display="none";
+        button.addEventListener("mousedown",e=>e.preventDefault());
+        button.addEventListener("click",()=>selectPrediction(prediction));
+        menu.appendChild(button);
+      });
+      menu.classList.toggle("open",predictions.length>0);
+    }
+
+    async function selectPrediction(prediction){
+      closeMenu();
+      try{
+        const place=prediction.toPlace();
+        await place.fetchFields({fields:["formattedAddress"]});
+        input.value=place.formattedAddress || prediction.text.toString();
+        input.dispatchEvent(new Event("input",{bubbles:true}));
+        refreshSession();
+        // A Google-selected address is sufficient to complete Step 1.
+        setTimeout(()=>showStep(2),140);
+      }catch(error){
+        console.warn("StoneBridge could not load the selected address:",error);
+      }
+    }
+
+    async function fetchSuggestions(){
+      const query=input.value.trim();
+      const thisRequest=++requestId;
+      if(query.length<3){ closeMenu(); return; }
+      try{
+        const {suggestions}=await AutocompleteSuggestion.fetchAutocompleteSuggestions({
+          input:query,
+          sessionToken,
+          includedRegionCodes:["us"],
+          includedPrimaryTypes:["street_address"],
+          language:"en-US",
+          region:"us"
+        });
+        if(thisRequest!==requestId) return;
+        renderSuggestions(suggestions || []);
+      }catch(error){
+        if(thisRequest!==requestId) return;
+        closeMenu();
+        console.warn("StoneBridge address suggestions unavailable:",error);
+      }
+    }
+
+    input.addEventListener("input",()=>{
+      clearTimeout(debounceTimer);
+      debounceTimer=setTimeout(fetchSuggestions,180);
     });
 
-    autocomplete.addListener("place_changed",()=>{
-      const place=autocomplete.getPlace();
-      if(place && place.formatted_address){
-        input.value=place.formatted_address;
-        input.dispatchEvent(new Event("input",{bubbles:true}));
+    input.addEventListener("keydown",event=>{
+      const buttons=[...menu.querySelectorAll(".address-suggestion")];
+      if(!menu.classList.contains("open") || !buttons.length) return;
+      if(event.key==="ArrowDown" || event.key==="ArrowUp"){
+        event.preventDefault();
+        activeIndex=event.key==="ArrowDown" ? (activeIndex+1)%buttons.length : (activeIndex-1+buttons.length)%buttons.length;
+        buttons.forEach((b,i)=>b.classList.toggle("active",i===activeIndex));
+      }else if(event.key==="Enter"){
+        event.preventDefault();
+        selectPrediction(predictions[activeIndex>=0?activeIndex:0]);
+      }else if(event.key==="Escape"){
+        closeMenu();
       }
     });
+
+    input.addEventListener("focus",()=>{ if(predictions.length) menu.classList.add("open"); });
+    document.addEventListener("click",event=>{ if(!event.target.closest(".address-wrap")) closeMenu(); });
   }catch(error){
     console.warn("StoneBridge address autocomplete unavailable:",error);
   }
 };
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&loading=async&libraries=places&callback=initStoneBridgePlaces"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1r5LhFoWILsfH56HrmlzGYy4mbDAa8nc&loading=async&libraries=places&callback=initStoneBridgePlaces"></script>
 
 </body>
 </html>
