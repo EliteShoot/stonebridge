@@ -17,18 +17,18 @@ a{text-decoration:none;color:inherit}
 button,input,textarea{font:inherit}
 button{cursor:pointer;border:0}
 .container{width:min(1240px,calc(100% - 80px));margin:auto}
-.site-header{height:78px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 42px;background:rgba(247,245,240,.96);position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid rgba(21,21,20,.08);backdrop-filter:blur(16px)}
-.brand{display:flex;flex-direction:column;justify-self:start;line-height:1}
+.site-header{height:78px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 42px;background:var(--paper);position:relative;z-index:100;border-bottom:1px solid rgba(21,21,20,.09)}
+.brand{display:flex;flex-direction:column;justify-self:start;line-height:1;color:var(--ink)}
 .brand span{font-size:17px;letter-spacing:.15em;font-weight:600}
 .brand small{font-size:7px;letter-spacing:.3em;margin-top:6px;color:#777}
 .main-nav{display:flex;align-items:center;justify-content:center;gap:32px;font-size:9px;font-weight:600;letter-spacing:.17em;height:100%}
-.main-nav a{position:relative;display:flex;align-items:center;gap:6px;height:100%;white-space:nowrap}
+.main-nav a{position:relative;display:flex;align-items:center;gap:6px;height:100%;white-space:nowrap;transition:opacity .25s ease}
 .main-nav a:after{content:"";position:absolute;left:0;right:0;bottom:22px;height:1px;background:currentColor;transform:scaleX(0);transition:transform .25s ease}
-.main-nav a:hover:after{transform:scaleX(1)}
-.header-phone{justify-self:end;display:flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:.12em;white-space:nowrap}
-.header-phone svg{width:17px;height:17px;flex:0 0 17px;stroke-width:1.6}
-.mobile-menu{display:none;background:none}
-.sell-page{padding-top:78px}
+.main-nav a:hover{opacity:.62}.main-nav a:hover:after{transform:scaleX(1)}
+.nav-contact svg{transition:transform .25s ease}.nav-contact:hover svg{transform:translate(2px,-2px)}
+.header-phone{justify-self:end;display:flex;align-items:center;gap:8px;font-size:10px;font-weight:500;letter-spacing:.13em;white-space:nowrap;transition:opacity .25s ease}
+.header-phone:hover{opacity:.6}.mobile-menu{display:none}
+.sell-page{padding-top:0}
 .sell-hero{min-height:calc(100svh - 78px);display:grid;grid-template-columns:1fr 1fr;background:var(--dark);color:#fff}
 .sell-hero-copy{display:flex;flex-direction:column;justify-content:center;padding:90px clamp(40px,7vw,110px)}
 .eyebrow{font-size:9px;letter-spacing:.22em;font-weight:600}
@@ -92,7 +92,7 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
 .text-link{display:inline-flex;align-items:center;gap:10px;font-size:9px;font-weight:700;letter-spacing:.15em;border-bottom:1px solid #aaa;padding-bottom:7px;margin-top:28px}
 .faq-item{border-top:1px solid var(--line)}
 .faq-item:last-child{border-bottom:1px solid var(--line)}
-.faq-item button{width:100%;display:flex;justify-content:space-between;align-items:center;background:none;text-align:left;padding:24px 0;font-size:13px;font-weight:600}
+.faq-item button{width:100%;display:flex;justify-content:space-between;align-items:center;background:none;text-align:left;padding:24px 0;font-size:13px;font-weight:600;color:var(--ink);-webkit-appearance:none;appearance:none;border:0;border-radius:0;-webkit-tap-highlight-color:transparent}
 .faq-item p{display:none;color:#777;font-size:13px;line-height:1.8;max-width:680px;padding:0 40px 25px 0}
 .faq-item.active p{display:block}
 .faq-item.active button svg{transform:rotate(180deg)}
@@ -113,10 +113,14 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
 .footer-bottom div{display:flex;gap:20px}
 .mobile-sticky-submit{display:none}
 @media(max-width:900px){
-.site-header{padding:0 20px;grid-template-columns:1fr auto;height:70px}
-.main-nav,.header-phone{display:none}
-.mobile-menu{display:block;justify-self:end;color:var(--ink)}
-.sell-page{padding-top:70px}
+.site-header{height:72px;padding:0 22px;display:flex;justify-content:space-between}
+.brand span{font-size:15px}.brand small{font-size:6px;letter-spacing:.27em}
+.main-nav{position:absolute;top:72px;left:0;right:0;height:auto;padding:8px 22px 22px;display:none;flex-direction:column;align-items:stretch;gap:0;background:rgba(247,245,240,.99);border-bottom:1px solid rgba(21,21,20,.08);box-shadow:0 14px 30px rgba(0,0,0,.06)}
+.main-nav.open{display:flex}.main-nav a{height:52px;border-bottom:1px solid rgba(21,21,20,.08);font-size:10px}.main-nav a:after{display:none}
+.header-phone{display:none}.mobile-menu{display:flex;background:none;width:40px;height:40px;padding:8px;flex-direction:column;justify-content:center;gap:5px;color:var(--ink)}
+.mobile-menu span{display:block;width:23px;height:1px;background:currentColor;transition:.25s}
+.mobile-menu.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}.mobile-menu.open span:nth-child(2){opacity:0}.mobile-menu.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.sell-page{padding-top:0}
 .sell-hero{grid-template-columns:1fr}
 .sell-hero-copy{min-height:600px;padding:75px 28px}
 .sell-hero-image{min-height:420px}
@@ -193,20 +197,60 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
 .pac-container{z-index:9999!important;font-family:"DM Sans",sans-serif!important;border:1px solid #ddd!important;box-shadow:0 14px 35px rgba(0,0,0,.12)!important}
 .pac-item{padding:11px 14px!important;font-size:12px!important;line-height:1.4!important}
 .pac-item-query{font-size:13px!important}
+
+/* Contact-page matched footer */
+.site-footer{background:var(--ink);color:#fff;border-top:1px solid #383837;padding:70px 40px 28px}
+.footer-upper{width:min(1240px,100%);margin:auto;display:grid;grid-template-columns:2fr 1fr 1.2fr;gap:50px}
+.site-footer .brand{color:#fff;display:flex;flex-direction:column;justify-self:start;line-height:1}
+.site-footer .brand span{font-size:17px;letter-spacing:.15em;font-weight:600}
+.site-footer .brand small{font-size:7px;letter-spacing:.3em;margin-top:6px;color:#999}
+.footer-links{display:flex;flex-direction:column;gap:12px;font-size:10px;letter-spacing:.15em}
+.footer-links .eyebrow{font-size:8px;color:#777;margin-bottom:12px}
+.social-links{display:flex;gap:14px;margin-top:12px}
+.social-links a{border:1px solid #444;border-radius:50%;width:30px;height:30px;display:grid;place-items:center;font-size:8px}
+.footer-bottom{width:min(1240px,100%);margin:60px auto 0;border-top:1px solid #333;padding-top:20px;display:flex;justify-content:space-between;color:#777;font-size:8px;letter-spacing:.1em}
+.footer-bottom div{display:flex;gap:22px}
+.footer-bottom button{background:none;color:#777;border:0;padding:0;font-size:8px;letter-spacing:.1em;font-family:inherit}
+.footer-bottom button:hover,.footer-links a:hover{color:#fff}
+.legal-copy h3{font-family:"Cormorant Garamond",Georgia,serif;font-size:25px;font-weight:500;margin:27px 0 8px}
+.legal-copy p{font-size:12px;line-height:1.75;color:var(--muted);margin:0 0 12px}
+@media(max-width:900px){.footer-upper{grid-template-columns:1fr 1fr}.footer-upper .brand{grid-column:1/-1}.footer-bottom{flex-direction:column;gap:15px}.site-footer{padding-left:22px;padding-right:22px}}
+
+/* Isolated footer repair — mirrors contact page without selector collisions */
+.sb-footer{background:#151514!important;color:#fff!important;border-top:1px solid #383837!important;padding:70px 40px 28px!important}
+.sb-footer .footer-upper{width:min(1240px,100%)!important;margin:auto!important;display:grid!important;grid-template-columns:2fr 1fr 1.2fr!important;gap:50px!important}
+.sb-footer-brand{display:flex!important;flex-direction:column!important;justify-self:start!important;align-self:start!important;line-height:1!important;color:#fff!important;text-decoration:none!important}
+.sb-footer-brand span{font-family:"DM Sans",Arial,sans-serif!important;font-size:17px!important;letter-spacing:.15em!important;font-weight:600!important;color:#fff!important}
+.sb-footer-brand small{font-family:"DM Sans",Arial,sans-serif!important;font-size:7px!important;letter-spacing:.3em!important;margin-top:6px!important;color:#999!important}
+.sb-footer .footer-links{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:12px!important;font-size:10px!important;letter-spacing:.15em!important}
+.sb-footer .footer-links a{color:#fff!important;text-decoration:none!important}
+.sb-footer .footer-links .eyebrow{font-size:8px!important;color:#777!important;margin-bottom:12px!important}
+.sb-footer .social-links{display:flex!important;flex-direction:row!important;gap:14px!important;margin-top:12px!important}
+.sb-footer .social-links a{border:1px solid #444!important;border-radius:50%!important;width:30px!important;height:30px!important;display:grid!important;place-items:center!important;font-size:8px!important;padding:0!important}
+.sb-footer .footer-bottom{width:min(1240px,100%)!important;margin:60px auto 0!important;border-top:1px solid #333!important;padding-top:20px!important;display:flex!important;flex-direction:row!important;justify-content:space-between!important;align-items:center!important;color:#777!important;font-size:8px!important;letter-spacing:.1em!important}
+.sb-footer .footer-bottom>div{display:flex!important;flex-direction:row!important;gap:22px!important;align-items:center!important}
+.sb-footer .footer-bottom button{appearance:none!important;-webkit-appearance:none!important;background:transparent!important;border:0!important;color:#777!important;padding:0!important;margin:0!important;font:inherit!important;letter-spacing:.1em!important}
+@media(max-width:900px){
+ .sb-footer{padding:70px 22px 28px!important}
+ .sb-footer .footer-upper{grid-template-columns:1fr 1fr!important}
+ .sb-footer .sb-footer-brand{grid-column:1/-1!important}
+ .sb-footer .footer-bottom{flex-direction:column!important;align-items:flex-start!important;gap:15px!important}
+}
+@media(max-width:520px){
+ .sb-footer .footer-upper{grid-template-columns:1fr!important;gap:42px!important}
+ .sb-footer .sb-footer-brand{grid-column:auto!important}
+}
 </style>
 </head>
 <body>
 <header class="site-header">
 <a class="brand" href="/" aria-label="StoneBridge Development Group home"><span>STONEBRIDGE</span><small>DEVELOPMENT GROUP</small></a>
-<button class="mobile-menu" id="menu" type="button" aria-label="Open navigation">☰</button>
-<nav class="main-nav">
-<a href="/#projects">PROJECTS</a>
-<a href="/#properties">PROPERTIES</a>
-<a href="/sell-your-home">SELL YOUR PROPERTY</a>
-<a href="/about">ABOUT</a>
-<a href="/contact">CONTACT ↗</a>
+<button class="mobile-menu" id="menu" type="button" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+<nav class="main-nav" id="nav" aria-label="Main navigation">
+<a href="/#projects">PROJECTS</a><a href="/#properties">PROPERTIES</a><a href="/sell-your-home">SELL YOUR PROPERTY</a><a href="/about">ABOUT</a>
+<a href="/contact" class="nav-contact">CONTACT <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
 </nav>
-<a class="header-phone" href="tel:2488006242" aria-label="Call StoneBridge Development Group at 248 800 6242"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"/></svg><span>248 800 6242</span></a>
+<a class="header-phone" href="tel:2488006242"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg>248 800 6242</a>
 </header>
 
 <main class="sell-page">
@@ -386,13 +430,13 @@ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fi
   </div>
 </div>
 
-<footer class="site-footer">
+<footer class="site-footer sb-footer">
 <div class="footer-upper">
-<a class="brand brand-inverse" href="/"><span>STONEBRIDGE</span><small>DEVELOPMENT GROUP</small></a>
+<a class="sb-footer-brand" href="/" aria-label="StoneBridge Development Group home"><span>STONEBRIDGE</span><small>DEVELOPMENT GROUP</small></a>
 <div class="footer-links"><span class="eyebrow">EXPLORE</span><a href="/#projects">PROJECTS</a><a href="/#properties">PROPERTIES</a><a href="/sell-your-home">SELL YOUR PROPERTY</a><a href="/about">ABOUT</a><a href="/contact">CONTACT</a></div>
-<div class="footer-links"><span class="eyebrow">GET IN TOUCH</span><a href="tel:2488006242">248 800 6242</a><a href="mailto:info@stonebridgedg.com">info@stonebridgedg.com</a><div class="social-links"><a href="#instagram">IG</a><a href="#facebook">FB</a><a href="#linkedin">IN</a></div></div>
+<div class="footer-links"><span class="eyebrow">GET IN TOUCH</span><a href="tel:2488006242">248 800 6242</a><a href="mailto:info@stonebridgedg.com">info@stonebridgedg.com</a><div class="social-links"><a href="#instagram" aria-label="Instagram">IG</a><a href="#facebook" aria-label="Facebook">FB</a><a href="#linkedin" aria-label="LinkedIn">IN</a></div></div>
 </div>
-<div class="footer-bottom"><span>© 2026 StoneBridge Development Group</span><div><button class="privacy-link" id="footerPrivacy" type="button" style="color:#777">PRIVACY</button><span>TERMS</span><span>MICHIGAN</span></div></div>
+<div class="footer-bottom"><span>© 2026 StoneBridge Development Group</span><div><button type="button" id="footerPrivacy" data-legal="privacy">PRIVACY</button><button type="button" data-legal="terms">TERMS</button><span>MICHIGAN</span></div></div>
 </footer>
 <a class="mobile-sticky-submit" href="#submission">SUBMIT PROPERTY →</a>
 
@@ -522,7 +566,11 @@ footerPrivacy.addEventListener("click",()=>privacyModal.classList.add("open"));
 privacyModal.addEventListener("click",e=>{if(e.target===privacyModal)privacyModal.classList.remove("open")});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")privacyModal.classList.remove("open")});
 
-document.getElementById("menu").addEventListener("click",()=>document.querySelector(".main-nav").classList.toggle("open"));
+const mobileMenu=document.getElementById("menu"), mobileNav=document.getElementById("nav");
+if(mobileMenu&&mobileNav){
+ mobileMenu.addEventListener("click",()=>{const open=mobileNav.classList.toggle("open");mobileMenu.classList.toggle("open",open);mobileMenu.setAttribute("aria-expanded",String(open));});
+ mobileNav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{mobileNav.classList.remove("open");mobileMenu.classList.remove("open");mobileMenu.setAttribute("aria-expanded","false");}));
+}
 </script>
 
 <script>
@@ -601,7 +649,6 @@ window.initStoneBridgePlaces = async function(){
           input:query,
           sessionToken,
           includedRegionCodes:["us"],
-          includedPrimaryTypes:["street_address"],
           language:"en-US",
           region:"us"
         });
@@ -641,7 +688,38 @@ window.initStoneBridgePlaces = async function(){
   }
 };
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1r5LhFoWILsfH56HrmlzGYy4mbDAa8nc&loading=async&libraries=places&callback=initStoneBridgePlaces"></script>
+<script>
+// If Maps was loaded elsewhere on the page before this script, initialize immediately.
+if(window.google && google.maps){ window.initStoneBridgePlaces(); }
+</script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1r5LhFoWILsfH56HrmlzGYy4mbDAa8nc&loading=async&libraries=places&callback=initStoneBridgePlaces"></script>
 
+<div class="modal-backdrop" id="termsModal" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+  <div class="privacy-modal">
+    <div class="privacy-modal-head">
+      <div><span class="eyebrow">STONEBRIDGE DEVELOPMENT GROUP</span><h2 id="termsTitle">Terms <em>of Use.</em></h2></div>
+      <button class="modal-close" id="termsClose" type="button" aria-label="Close terms">×</button>
+    </div>
+    <p class="modal-updated">LAST UPDATED: OCTOBER 6, 2026</p>
+    <h3>WEBSITE USE</h3><p>This website is provided for general informational and inquiry purposes. By using it, you agree to use the site lawfully and not interfere with its operation, security, or availability.</p>
+    <h3>PROPERTY INFORMATION</h3><p>Property descriptions, availability, photographs, pricing, and other information may change without notice. Website content is not a binding offer, contract, appraisal, or guarantee of availability.</p>
+    <h3>PROPERTY SUBMISSIONS</h3><p>Submitting property information does not obligate you to sell and does not obligate StoneBridge Development Group to make or accept an offer. Any transaction remains subject to review, due diligence, mutually acceptable written terms, and applicable law.</p>
+    <h3>COMMUNICATIONS</h3><p>By submitting a form, you authorize StoneBridge Development Group to contact you regarding your inquiry using the information you provide.</p>
+    <h3>THIRD-PARTY SERVICES</h3><p>This website may link to third-party websites or services. StoneBridge Development Group is not responsible for third-party content, availability, policies, or practices.</p>
+    <h3>CONTACT</h3><p>Questions about these terms may be directed to info@stonebridgedg.com or 248 800 6242.</p>
+  </div>
+</div>
+<script>
+(function(){
+ const privacy=document.getElementById('privacyModal');
+ const terms=document.getElementById('termsModal');
+ const termsClose=document.getElementById('termsClose');
+ document.querySelectorAll('[data-legal="privacy"]').forEach(b=>b.addEventListener('click',()=>privacy&&privacy.classList.add('open')));
+ document.querySelectorAll('[data-legal="terms"]').forEach(b=>b.addEventListener('click',()=>terms&&terms.classList.add('open')));
+ if(termsClose) termsClose.addEventListener('click',()=>terms.classList.remove('open'));
+ if(terms) terms.addEventListener('click',e=>{if(e.target===terms)terms.classList.remove('open')});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&terms)terms.classList.remove('open')});
+})();
+</script>
 </body>
 </html>
