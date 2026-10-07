@@ -436,18 +436,22 @@ body.sb-address-selected .pac-container{
 .sb-footer{
   padding:70px 40px 28px!important;
 }
+.sb-footer .footer-upper{padding-bottom:0!important;}
 @media(max-width:900px){
-  body{padding-bottom:0!important}
-  .sb-footer{padding:60px 22px 25px!important}
-  .mobile-actions.footer-visible{
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-    transform:translateY(100%);
-  }
+  body{padding-bottom:58px!important}
+  .sb-footer{padding:70px 22px 28px!important}
+  .sb-footer .footer-upper{grid-template-columns:1fr 1fr!important;gap:50px!important}
+  .sb-footer .sb-footer-brand{grid-column:1/-1!important}
   .mobile-actions{
-    transition:opacity .22s ease,transform .22s ease,visibility .22s;
+    opacity:1!important;
+    visibility:visible!important;
+    pointer-events:auto!important;
+    transform:none!important;
   }
+}
+@media(max-width:520px){
+  .sb-footer .footer-upper{grid-template-columns:1fr 1fr!important;gap:50px!important}
+  .sb-footer .sb-footer-brand{grid-column:1/-1!important}
 }
 
 </style>
@@ -951,19 +955,6 @@ if (window.google && google.maps && google.maps.places) {
  if(terms) terms.addEventListener('click',e=>{if(e.target===terms)terms.classList.remove('open')});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&terms)terms.classList.remove('open')});
 })();
-</script>
-<script>
-
-(function(){
-  const footer=document.querySelector(".sb-footer");
-  const mobileActions=document.querySelector(".mobile-actions");
-  if(!footer||!mobileActions||!("IntersectionObserver" in window))return;
-  const observer=new IntersectionObserver(entries=>{
-    mobileActions.classList.toggle("footer-visible",entries[0].isIntersecting);
-  },{threshold:0.01});
-  observer.observe(footer);
-})();
-
 </script>
 </body>
 </html>
