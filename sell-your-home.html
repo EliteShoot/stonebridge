@@ -494,6 +494,32 @@ body.sb-address-selected .pac-container{
 }
 @media(prefers-reduced-motion:reduce){.success-check{animation:none}}
 
+
+/* Contact-page matched consent field */
+.consent-field{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin-top:24px;
+  max-width:720px;
+}
+.consent-field input{
+  appearance:auto;
+  -webkit-appearance:checkbox;
+  width:14px;
+  height:14px;
+  margin:2px 0 0;
+  flex:0 0 auto;
+  accent-color:var(--ink);
+}
+.consent-field label{
+  font-size:9px;
+  line-height:1.6;
+  letter-spacing:.03em;
+  color:#777;
+  cursor:pointer;
+}
+
 </style>
 </head>
 <body>
@@ -597,6 +623,12 @@ body.sb-address-selected .pac-container{
 <label class="form-label">PHONE<input id="phone" type="tel" autocomplete="tel" placeholder="(248) 000-0000" required></label>
 <label class="form-label full">EMAIL<input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
 </div>
+
+<div class="consent-field">
+  <input required type="checkbox" name="Consent" value="Yes" id="sellerConsent">
+  <label for="sellerConsent">I consent to receive calls, text messages, and marketing communications from StoneBridge Development Group regarding my inquiry. Consent is not a condition of purchase.</label>
+</div>
+
 </div>
 </div>
 
@@ -760,7 +792,8 @@ function validStep(){
   if(state.step===2) return !!state.timing;
   if(state.step===3) return !!state.condition;
   if(state.step===4){
-    return ["name","phone","email"].every(id=>document.getElementById(id).value.trim());
+    return ["name","phone","email"].every(id=>document.getElementById(id).value.trim())
+      && document.getElementById("sellerConsent").checked;
   }
   return false;
 }
@@ -786,6 +819,12 @@ next.addEventListener("click",async()=>{
     if(input){
       input.reportValidity();
       input.focus();
+    }else if(state.step===4){
+      const consent=document.getElementById("sellerConsent");
+      if(consent && !consent.checked){
+        consent.reportValidity();
+        consent.focus();
+      }
     }
     return;
   }
@@ -805,7 +844,8 @@ next.addEventListener("click",async()=>{
     email:document.getElementById("email").value.trim(),
     address:document.getElementById("address").value.trim(),
     timing:state.timing,
-    condition:state.condition
+    condition:state.condition,
+    consent:document.getElementById("sellerConsent").checked
   };
 
   try{
@@ -829,6 +869,7 @@ next.addEventListener("click",async()=>{
     },450);
 
     ["name","phone","email","address"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("sellerConsent").checked=false;
     state.timing="";
     state.condition="";
   }catch(error){
