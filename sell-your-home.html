@@ -332,6 +332,124 @@ body.sb-address-selected .pac-container{
   pointer-events:none !important;
 }
 
+
+/* Mobile bottom navigation — same treatment as index.html, one full-width action */
+.mobile-actions{display:none}
+@media(max-width:900px){
+  .mobile-actions{
+    position:fixed;
+    display:grid;
+    grid-template-columns:1fr;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:180;
+    background:rgba(247,245,240,.98);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border-top:1px solid rgba(21,21,20,.12);
+    box-shadow:0 -8px 28px rgba(0,0,0,.10);
+    padding:0;
+    gap:0;
+  }
+  .mobile-actions a{
+    min-height:58px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--ink);
+    color:#fff !important;
+    -webkit-text-fill-color:#fff !important;
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:.13em;
+    -webkit-tap-highlight-color:transparent;
+  }
+  body{padding-bottom:58px}
+}
+
+.mobile-sticky-submit{display:none!important}
+
+.privacy-modal .modal-close{
+  width:auto;
+  height:auto;
+  border:0;
+  background:transparent;
+  padding:0;
+  display:block;
+  font-size:27px;
+  line-height:1;
+  color:#777;
+}
+
+
+.mobile-actions a{gap:10px}
+.mobile-actions .sell-property-icon{
+  display:block;
+  flex:0 0 auto;
+}
+
+
+/* Subtle premium animation for the mobile SELL PROPERTY action */
+@keyframes sbSellPulse{
+  0%,100%{box-shadow:inset 0 0 0 0 rgba(255,255,255,0)}
+  50%{box-shadow:inset 0 0 24px rgba(255,255,255,.075)}
+}
+@keyframes sbDollarMove{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-2px) scale(1.08)}
+}
+@media(max-width:900px){
+  .mobile-actions a{
+    position:relative;
+    overflow:hidden;
+    animation:sbSellPulse 2.8s ease-in-out infinite;
+  }
+  .mobile-actions a:after{
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:0;
+    width:42px;
+    left:-70px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent);
+    transform:skewX(-20deg);
+    animation:sbSellShine 3.8s ease-in-out infinite;
+    pointer-events:none;
+  }
+  .mobile-actions .sell-property-icon{
+    animation:sbDollarMove 2.8s ease-in-out infinite;
+  }
+}
+@keyframes sbSellShine{
+  0%,58%{left:-70px}
+  82%,100%{left:calc(100% + 70px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .mobile-actions a,
+  .mobile-actions a:after,
+  .mobile-actions .sell-property-icon{animation:none!important}
+}
+
+
+/* Exact shared StoneBridge footer spacing */
+.sb-footer{
+  padding:70px 40px 28px!important;
+}
+@media(max-width:900px){
+  body{padding-bottom:0!important}
+  .sb-footer{padding:60px 22px 25px!important}
+  .mobile-actions.footer-visible{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transform:translateY(100%);
+  }
+  .mobile-actions{
+    transition:opacity .22s ease,transform .22s ease,visibility .22s;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -526,11 +644,18 @@ body.sb-address-selected .pac-container{
 <div class="footer-upper">
 <a class="sb-footer-brand" href="/" aria-label="StoneBridge Development Group home"><span>STONEBRIDGE</span><small>DEVELOPMENT GROUP</small></a>
 <div class="footer-links"><span class="eyebrow">EXPLORE</span><a href="/#projects">PROJECTS</a><a href="/#properties">PROPERTIES</a><a href="/sell-your-home">SELL YOUR PROPERTY</a><a href="/about">ABOUT</a><a href="/contact">CONTACT</a></div>
-<div class="footer-links"><span class="eyebrow">GET IN TOUCH</span><a href="tel:2488006242">248 800 6242</a><a href="mailto:info@stonebridgedg.com">info@stonebridgedg.com</a><div class="social-links"><a href="#instagram" aria-label="Instagram">IG</a><a href="#facebook" aria-label="Facebook">FB</a><a href="#linkedin" aria-label="LinkedIn">IN</a></div></div>
+<div class="footer-links"><span class="eyebrow">GET IN TOUCH</span><a href="tel:2488006242">248 800 6242</a><a href="mailto:info@stonebridgedg.com">info@stonebridgedg.com</a><div class="social-links"><a href="https://www.instagram.com/stonebridgedg/" target="_blank" rel="noopener noreferrer" aria-label="StoneBridge Development Group on Instagram">IG</a><a href="https://www.facebook.com/people/StoneBridge-Development-Group/61595340982839/" target="_blank" rel="noopener noreferrer" aria-label="StoneBridge Development Group on Facebook">FB</a></div></div>
 </div>
 <div class="footer-bottom"><span>© 2026 StoneBridge Development Group</span><div><button type="button" id="footerPrivacy" data-legal="privacy">PRIVACY</button><button type="button" data-legal="terms">TERMS</button><span>MICHIGAN</span></div></div>
 </footer>
-<a class="mobile-sticky-submit" href="#submission">SUBMIT PROPERTY →</a>
+<div class="mobile-actions" aria-label="Mobile quick action"><a href="#submission" aria-label="Sell property">
+<svg class="sell-property-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="9"></circle>
+<path d="M15 8.5h-4.2a2.3 2.3 0 0 0 0 4.6h2.4a2.3 2.3 0 0 1 0 4.6H9"></path>
+<path d="M12 6.5v2M12 17.7v1.8"></path>
+</svg>
+<span>SELL PROPERTY</span>
+</a></div>
 
 <script>
 const state={step:1,timing:"",condition:""};
@@ -599,7 +724,7 @@ document.querySelectorAll(".choice").forEach(btn=>{
   });
 });
 
-next.addEventListener("click",()=>{
+next.addEventListener("click",async()=>{
   if(!validStep()){
     const current=steps[state.step-1];
     const input=current.querySelector("input[required]");
@@ -615,19 +740,39 @@ next.addEventListener("click",()=>{
     return;
   }
 
-  const body=[
-    "StoneBridge Property Submission","",
-    "NAME: "+document.getElementById("name").value.trim(),
-    "PHONE: "+document.getElementById("phone").value.trim(),
-    "EMAIL: "+document.getElementById("email").value.trim(),
-    "PROPERTY ADDRESS: "+document.getElementById("address").value.trim(),
-    "SELLING TIMELINE: "+state.timing,
-    "PROPERTY CONDITION: "+state.condition
-  ].join("\n");
+  const originalText=next.textContent;
+  next.disabled=true;
+  next.textContent="SENDING…";
 
-  window.location.href="mailto:info@stonebridgedg.com?subject="+
-    encodeURIComponent("StoneBridge Property Submission")+
-    "&body="+encodeURIComponent(body);
+  const payload={
+    name:document.getElementById("name").value.trim(),
+    phone:document.getElementById("phone").value.trim(),
+    email:document.getElementById("email").value.trim(),
+    address:document.getElementById("address").value.trim(),
+    timing:state.timing,
+    condition:state.condition
+  };
+
+  try{
+    const response=await fetch("https://stonebridge.psznbzhnps.workers.dev",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(payload)
+    });
+    const result=await response.json().catch(()=>({}));
+    if(!response.ok) throw new Error(result.error||"Unable to send submission.");
+
+    next.textContent="PROPERTY SUBMITTED ✓";
+    next.classList.add("submitted");
+    ["name","phone","email","address"].forEach(id=>document.getElementById(id).value="");
+    state.timing="";
+    state.condition="";
+  }catch(error){
+    next.disabled=false;
+    next.textContent=originalText;
+    alert("We couldn't send your property submission. Please call 248-800-6242 or email info@stonebridgedg.com.");
+    console.error(error);
+  }
 });
 
 // Use a dedicated click handler that always moves exactly one step backward.
@@ -806,6 +951,19 @@ if (window.google && google.maps && google.maps.places) {
  if(terms) terms.addEventListener('click',e=>{if(e.target===terms)terms.classList.remove('open')});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&terms)terms.classList.remove('open')});
 })();
+</script>
+<script>
+
+(function(){
+  const footer=document.querySelector(".sb-footer");
+  const mobileActions=document.querySelector(".mobile-actions");
+  if(!footer||!mobileActions||!("IntersectionObserver" in window))return;
+  const observer=new IntersectionObserver(entries=>{
+    mobileActions.classList.toggle("footer-visible",entries[0].isIntersecting);
+  },{threshold:0.01});
+  observer.observe(footer);
+})();
+
 </script>
 </body>
 </html>

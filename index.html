@@ -163,6 +163,52 @@ button,
   }
 }
 
+
+/* StoneBridge shared legal modals */
+body.legal-open{overflow:hidden}
+.legal-modal{position:fixed;inset:0;background:rgba(10,10,9,.72);backdrop-filter:blur(10px);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
+.legal-modal.open{display:flex}
+.legal-panel{background:var(--paper);color:var(--ink);width:min(760px,100%);max-height:90vh;overflow:auto;padding:48px}
+.legal-head{display:flex;justify-content:space-between;gap:30px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:25px}
+.legal-head h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:46px;font-weight:500;line-height:.95}
+.legal-head h2 em{font-weight:400}
+.legal-close{background:none;color:#777;font-size:27px;line-height:1}
+.legal-updated{font-size:8px;letter-spacing:.18em;color:#999;margin:25px 0}
+.legal-copy h3{font-size:10px;letter-spacing:.16em;margin:27px 0 8px}
+.legal-copy p{color:var(--muted);font-size:13px;line-height:1.8}
+.legal-copy a{text-decoration:underline}
+@media(max-width:900px){.legal-panel{padding:35px 24px}.legal-head h2{font-size:40px}}
+
+
+/* Homepage mobile bottom navigation — flush/sticky like Sell Your Home */
+@media(max-width:900px){
+  .mobile-actions{
+    left:0 !important;
+    right:0 !important;
+    bottom:0 !important;
+    padding:0 !important;
+    gap:0 !important;
+    border-left:0 !important;
+    border-right:0 !important;
+    border-bottom:0 !important;
+    border-radius:0 !important;
+    background:rgba(247,245,240,.98) !important;
+    box-shadow:0 -8px 28px rgba(0,0,0,.10) !important;
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+  }
+  .mobile-actions a{
+    min-height:58px !important;
+    border-radius:0 !important;
+  }
+  .mobile-actions a:first-child{
+    border-right:1px solid rgba(21,21,20,.12);
+  }
+  body{
+    padding-bottom:58px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -236,9 +282,39 @@ button,
 </main>
 
 <footer class="footer">
-<div class="footer-upper"><a class="brand" href="#top"><b>STONEBRIDGE</b><small>DEVELOPMENT GROUP</small></a><div class="footer-links"><span class="eyebrow">EXPLORE</span><a href="#projects">PROJECTS</a><a href="#properties">PROPERTIES</a><a href="/sell-your-home">SELL YOUR PROPERTY</a><a href="/about">ABOUT</a><a href="/contact">CONTACT</a></div><div class="footer-links"><span class="eyebrow">GET IN TOUCH</span><a href="tel:2488006242">248 800 6242</a><a href="mailto:info@stonebridgedg.com">info@stonebridgedg.com</a><div class="social"><a href="https://instagram.com" target="_blank" rel="noopener">IG</a><a href="https://facebook.com" target="_blank" rel="noopener">FB</a><a href="https://linkedin.com" target="_blank" rel="noopener">IN</a></div></div></div>
-<div class="footer-bottom"><span>© 2026 StoneBridge Development Group</span><div><a href="#" onclick="return false">PRIVACY</a><a href="#" onclick="return false">TERMS</a><span>MICHIGAN</span></div></div>
+<div class="footer-upper"><a class="brand" href="#top"><b>STONEBRIDGE</b><small>DEVELOPMENT GROUP</small></a><div class="footer-links"><span class="eyebrow">EXPLORE</span><a href="#projects">PROJECTS</a><a href="#properties">PROPERTIES</a><a href="/sell-your-home">SELL YOUR PROPERTY</a><a href="/about">ABOUT</a><a href="/contact">CONTACT</a></div><div class="footer-links"><span class="eyebrow">GET IN TOUCH</span><a href="tel:2488006242">248 800 6242</a><a href="mailto:info@stonebridgedg.com">info@stonebridgedg.com</a><div class="social"><a href="https://www.instagram.com/stonebridgedg/" target="_blank" rel="noopener noreferrer" aria-label="StoneBridge Development Group on Instagram">IG</a><a href="https://www.facebook.com/people/StoneBridge-Development-Group/61595340982839/" target="_blank" rel="noopener noreferrer" aria-label="StoneBridge Development Group on Facebook">FB</a></div></div></div>
+<div class="footer-bottom"><span>© 2026 StoneBridge Development Group</span><div><a href="#privacy" data-legal="privacy">PRIVACY</a><a href="#terms" data-legal="terms">TERMS</a><span>MICHIGAN</span></div></div>
 </footer>
+
+<div class="legal-modal" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+  <div class="legal-panel">
+    <div class="legal-head"><div><span class="eyebrow">STONEBRIDGE DEVELOPMENT GROUP</span><h2 id="privacyTitle">Privacy <em>Policy.</em></h2></div><button class="legal-close" type="button" data-close-legal aria-label="Close privacy policy">×</button></div>
+    <p class="legal-updated">LAST UPDATED: OCTOBER 6, 2026</p>
+    <div class="legal-copy">
+      <h3>INFORMATION WE COLLECT</h3><p>When you contact StoneBridge or submit a property, we may receive information you choose to provide, including your name, phone number, email address, property address, property condition, and selling timeline.</p>
+      <h3>HOW INFORMATION IS USED</h3><p>Information submitted through this website may be used to respond to inquiries, review property opportunities, communicate about StoneBridge properties or services, and operate and improve the website.</p>
+      <h3>PROPERTY SUBMISSIONS</h3><p>Submitting property information does not create an obligation to sell, purchase, list, or enter into a transaction. StoneBridge may contact you using the information you provide to discuss the property.</p>
+      <h3>THIRD-PARTY SERVICES</h3><p>This website may use third-party services for functions such as maps, property listings, hosting, analytics, or communications. Those services may process information according to their own privacy practices.</p>
+      <h3>CONTACT</h3><p>Questions regarding this policy may be sent to <a href="mailto:info@stonebridgedg.com">info@stonebridgedg.com</a> or directed to <a href="tel:2488006242">248 800 6242</a>.</p>
+    </div>
+  </div>
+</div>
+
+<div class="legal-modal" id="termsModal" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+  <div class="legal-panel">
+    <div class="legal-head"><div><span class="eyebrow">STONEBRIDGE DEVELOPMENT GROUP</span><h2 id="termsTitle">Terms <em>of Use.</em></h2></div><button class="legal-close" type="button" data-close-legal aria-label="Close terms">×</button></div>
+    <p class="legal-updated">LAST UPDATED: OCTOBER 6, 2026</p>
+    <div class="legal-copy">
+      <h3>WEBSITE USE</h3><p>This website is provided for general informational purposes regarding StoneBridge Development Group, its activities, properties, and private property acquisition process.</p>
+      <h3>PROPERTY INFORMATION</h3><p>Property descriptions, availability, images, pricing, and other information may change without notice. Information on this website should not be treated as a binding offer, representation, or guarantee.</p>
+      <h3>PROPERTY SUBMISSIONS</h3><p>A property submission is an invitation for StoneBridge to review an opportunity. It does not guarantee an offer and does not create a purchase agreement, agency relationship, listing agreement, or other contractual obligation.</p>
+      <h3>COMMUNICATIONS</h3><p>By voluntarily providing contact information, you authorize StoneBridge to respond regarding your inquiry or property submission using the information provided.</p>
+      <h3>THIRD-PARTY SERVICES</h3><p>Links to third-party websites or services are provided for convenience. StoneBridge is not responsible for the content, availability, or practices of third-party services.</p>
+      <h3>CONTACT</h3><p>Questions may be directed to <a href="mailto:info@stonebridgedg.com">info@stonebridgedg.com</a> or <a href="tel:2488006242">248 800 6242</a>.</p>
+    </div>
+  </div>
+</div>
+
 
 
 
@@ -323,6 +399,41 @@ button,
       io.observe(el);
     });
   }
+})();
+</script>
+
+
+<script>
+(function(){
+  const privacy=document.getElementById("privacyModal");
+  const terms=document.getElementById("termsModal");
+
+  function openLegal(modal){
+    if(!modal)return;
+    modal.classList.add("open");
+    document.body.classList.add("legal-open");
+  }
+  function closeLegal(modal){
+    if(!modal)return;
+    modal.classList.remove("open");
+    if(!document.querySelector(".legal-modal.open"))document.body.classList.remove("legal-open");
+  }
+
+  document.querySelectorAll('[data-legal="privacy"]').forEach(function(el){
+    el.addEventListener("click",function(e){e.preventDefault();openLegal(privacy)});
+  });
+  document.querySelectorAll('[data-legal="terms"]').forEach(function(el){
+    el.addEventListener("click",function(e){e.preventDefault();openLegal(terms)});
+  });
+  document.querySelectorAll("[data-close-legal]").forEach(function(el){
+    el.addEventListener("click",function(){closeLegal(el.closest(".legal-modal"))});
+  });
+  document.querySelectorAll(".legal-modal").forEach(function(modal){
+    modal.addEventListener("click",function(e){if(e.target===modal)closeLegal(modal)});
+  });
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape")document.querySelectorAll(".legal-modal.open").forEach(closeLegal);
+  });
 })();
 </script>
 
