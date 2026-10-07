@@ -209,6 +209,99 @@ body.legal-open{overflow:hidden}
   }
 }
 
+
+/* ===== StoneBridge premium button animation ===== */
+@keyframes sbButtonPulse{
+  0%,100%{box-shadow:inset 0 0 0 rgba(255,255,255,0)}
+  50%{box-shadow:inset 0 0 24px rgba(255,255,255,.075)}
+}
+@keyframes sbButtonShine{
+  0%,58%{left:-75px}
+  82%,100%{left:calc(100% + 75px)}
+}
+@keyframes sbButtonIconMove{
+  0%,100%{transform:translateX(0)}
+  50%{transform:translateX(3px)}
+}
+.btn,
+.mobile-actions a{
+  position:relative;
+  overflow:hidden;
+}
+.btn::after,
+.mobile-actions a::after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:44px;
+  left:-75px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);
+  transform:skewX(-20deg);
+  animation:sbButtonShine 3.8s ease-in-out infinite;
+  pointer-events:none;
+}
+.btn{
+  animation:sbButtonPulse 2.8s ease-in-out infinite;
+}
+.btn .sb-right-icon{
+  animation:sbButtonIconMove 2.8s ease-in-out infinite;
+}
+.mobile-actions a:last-child{
+  animation:sbButtonPulse 2.8s ease-in-out infinite;
+}
+.mobile-actions a:first-child::after{
+  background:linear-gradient(90deg,transparent,rgba(21,21,20,.08),transparent);
+}
+@media(prefers-reduced-motion:reduce){
+  .btn,
+  .btn::after,
+  .btn .sb-right-icon,
+  .mobile-actions a,
+  .mobile-actions a::after{
+    animation:none !important;
+  }
+}
+
+
+/* Mobile action icons */
+.mobile-actions a{
+  gap:9px !important;
+}
+.mobile-action-icon{
+  display:block;
+  flex:0 0 auto;
+}
+.mobile-actions a:last-child .mobile-action-icon{
+  animation:sbDollarMove 2.8s ease-in-out infinite;
+}
+
+/* Property availability badge */
+.availability-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+}
+.availability-badge i{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#2f9e5b;
+  box-shadow:0 0 0 3px rgba(47,158,91,.14);
+  flex:0 0 auto;
+}
+@keyframes sbAvailablePulse{
+  0%,100%{box-shadow:0 0 0 3px rgba(47,158,91,.14)}
+  50%{box-shadow:0 0 0 5px rgba(47,158,91,.07)}
+}
+.availability-badge i{
+  animation:sbAvailablePulse 2.4s ease-in-out infinite;
+}
+@media(prefers-reduced-motion:reduce){
+  .mobile-actions a:last-child .mobile-action-icon,
+  .availability-badge i{animation:none !important}
+}
+
 </style>
 </head>
 <body>
@@ -221,8 +314,8 @@ body.legal-open{overflow:hidden}
 <a class="header-phone" href="tel:2488006242"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path></svg> 248 800 6242</a>
 </header>
 <div class="mobile-actions" aria-label="Mobile quick actions">
-<a href="/contact">CONTACT US</a>
-<a href="/sell-your-home">GET AN OFFER</a>
+<a href="/contact"><svg class="mobile-action-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg><span>CONTACT US</span></a>
+<a href="/sell-your-home"><svg class="mobile-action-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 8.5c-.7-.7-1.7-1-2.8-1-1.6 0-2.7.8-2.7 2 0 1.2 1 1.8 2.8 2.2 1.8.4 2.7 1 2.7 2.3 0 1.4-1.2 2.4-3 2.4-1.3 0-2.5-.4-3.3-1.2"/><path d="M12 5.5v2"/><path d="M12 16.5v2"/></svg><span>GET AN OFFER</span></a>
 </div>
 
 <main id="top">
@@ -250,9 +343,9 @@ body.legal-open{overflow:hidden}
 <section class="portfolio container" id="projects">
 <div class="portfolio-head"><div class="label">SELECTED RESIDENCES <i></i></div><div><h2>Homes with a<br><em>point of view.</em></h2><p>A selection of properties represented within the StoneBridge portfolio.</p></div></div>
 <div class="grid" id="properties">
-<article class="project"><div class="project-image"><img src="https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1300&q=85" alt="Modern residential home"><span class="number">01</span></div><div class="meta"><div><h3>BIRCHFIELD RESIDENCE</h3><span>SHELBY TWP, MICHIGAN / SALE</span></div><span class="view">VIEW PROPERTY <svg class="sb-arrow-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></div></article>
-<article class="project"><div class="project-image"><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1300&q=85" alt="Stone residence"><span class="number">02</span></div><div class="meta"><div><h3>LINWOOD RESIDENCE</h3><span>EASTPOINT, MICHIGAN / RENT</span></div><span class="view">VIEW PROPERTY <svg class="sb-arrow-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></div></article>
-<article class="project"><div class="project-image"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1500&q=85" alt="Luxury residence"><span class="number">03</span></div><div class="meta"><div><h3>AMORE RESIDENCE</h3><span>CLINTON TWP, MICHIGAN / RENT</span></div><span class="view">VIEW PROPERTY <svg class="sb-arrow-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></div></article>
+<article class="project"><div class="project-image"><img src="https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1300&q=85" alt="Modern residential home"><span class="number availability-badge"><i aria-hidden="true"></i>AVAILABLE</span></div><div class="meta"><div><h3>BIRCHFIELD RESIDENCE</h3><span>SHELBY TWP, MICHIGAN / SALE</span></div><span class="view">VIEW PROPERTY <svg class="sb-arrow-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></div></article>
+<article class="project"><div class="project-image"><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1300&q=85" alt="Stone residence"><span class="number availability-badge"><i aria-hidden="true"></i>AVAILABLE</span></div><div class="meta"><div><h3>LINWOOD RESIDENCE</h3><span>EASTPOINT, MICHIGAN / RENT</span></div><span class="view">VIEW PROPERTY <svg class="sb-arrow-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></div></article>
+<article class="project"><div class="project-image"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1500&q=85" alt="Luxury residence"><span class="number availability-badge"><i aria-hidden="true"></i>AVAILABLE</span></div><div class="meta"><div><h3>AMORE RESIDENCE</h3><span>CLINTON TWP, MICHIGAN / RENT</span></div><span class="view">VIEW PROPERTY <svg class="sb-arrow-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span></div></article>
 </div>
 </section>
 
