@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Page Not Found | StoneBridge Development Group</title>
+<meta name="description" content="The page you requested could not be found. Return to StoneBridge Development Group.">
+<link rel="icon" type="image/x-icon" href="https://i.imgur.com/xm9nTpK.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#151514;--paper:#f7f5f0;--line:#d8d1c5;--muted:#68655f}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{font-family:"DM Sans",Arial,sans-serif;background:var(--paper);color:var(--ink)}
+a{text-decoration:none;color:inherit}
+button{font:inherit;cursor:pointer}
+.site-header{height:78px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 42px;border-bottom:1px solid rgba(21,21,20,.09);position:relative;z-index:20}
+.brand{display:flex;flex-direction:column;justify-self:start;line-height:1}
+.brand span{font-size:17px;letter-spacing:.15em;font-weight:600}
+.brand small{font-size:7px;letter-spacing:.3em;margin-top:6px;color:#777}
+.main-nav{display:flex;align-items:center;justify-content:center;gap:32px;font-size:9px;font-weight:600;letter-spacing:.17em;height:100%}
+.main-nav a{position:relative;display:flex;align-items:center;gap:6px;height:100%;white-space:nowrap;transition:opacity .25s ease}
+.main-nav a:after{content:"";position:absolute;left:0;right:0;bottom:22px;height:1px;background:currentColor;transform:scaleX(0);transition:.25s}
+.main-nav a:hover{opacity:.62}.main-nav a:hover:after{transform:scaleX(1)}
+.nav-contact svg{transition:transform .25s ease}.nav-contact:hover svg{transform:translate(2px,-2px)}
+.header-phone{justify-self:end;display:flex;align-items:center;gap:8px;font-size:9px;letter-spacing:.14em;white-space:nowrap}
+.mobile-menu{display:none;background:none;border:0;width:40px;height:40px;padding:8px;flex-direction:column;justify-content:center;gap:5px}
+.mobile-menu span{display:block;width:23px;height:1px;background:currentColor;transition:.25s}
+
+.error-page{min-height:calc(100svh - 78px);display:grid;grid-template-columns:1.05fr .95fr;overflow:hidden}
+.error-copy{display:flex;flex-direction:column;justify-content:center;padding:80px max(42px,calc((100vw - 1240px)/2));padding-right:7vw}
+.eyebrow{font-size:9px;font-weight:600;letter-spacing:.22em;color:#777}
+.error-number{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(115px,18vw,260px);font-weight:400;line-height:.65;letter-spacing:-.07em;color:#ded8cd;margin:48px 0 42px;user-select:none}
+.error-copy h1{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(52px,6vw,88px);font-weight:400;line-height:.88;letter-spacing:-.045em}
+.error-copy h1 em{font-weight:400}
+.error-copy p{max-width:500px;color:var(--muted);font-size:14px;line-height:1.85;margin:28px 0 0}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:35px}
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:16px 22px;font-size:9px;font-weight:700;letter-spacing:.15em;transition:transform .25s ease}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-light{border:1px solid var(--line);background:transparent;color:var(--ink)}
+.btn:hover{transform:translateY(-2px)}
+.btn svg{transition:transform .25s ease}.btn:hover svg{transform:translateX(3px)}
+.error-visual{position:relative;background:linear-gradient(0deg,rgba(10,10,9,.42),rgba(10,10,9,.08)),url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=88") center/cover}
+.error-visual:after{content:"STONEBRIDGE / MICHIGAN";position:absolute;right:30px;bottom:28px;color:rgba(255,255,255,.78);font-size:8px;letter-spacing:.2em}
+
+@keyframes shine{0%,58%{left:-75px}82%,100%{left:calc(100% + 75px)}}
+.btn-dark:after{content:"";position:absolute;top:0;bottom:0;width:44px;left:-75px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.17),transparent);transform:skewX(-20deg);animation:shine 3.8s ease-in-out infinite;pointer-events:none}
+
+.mobile-actions{display:none}
+@media(max-width:900px){
+ .site-header{height:72px;padding:0 22px;display:flex;justify-content:space-between}
+ .brand span{font-size:15px}.brand small{font-size:6px;letter-spacing:.27em}
+ .header-phone{display:none}.mobile-menu{display:flex}
+ .main-nav{position:absolute;top:72px;left:0;right:0;height:auto;padding:8px 22px 22px;display:none;flex-direction:column;align-items:stretch;gap:0;background:rgba(247,245,240,.99);border-bottom:1px solid rgba(21,21,20,.08);box-shadow:0 14px 30px rgba(0,0,0,.06)}
+ .main-nav.open{display:flex}.main-nav a{height:52px;border-bottom:1px solid rgba(21,21,20,.08);font-size:10px}.main-nav a:after{display:none}
+ .mobile-menu.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}.mobile-menu.open span:nth-child(2){opacity:0}.mobile-menu.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+ .error-page{min-height:calc(100svh - 72px - 58px);grid-template-columns:1fr}
+ .error-copy{padding:65px 22px 75px}
+ .error-number{font-size:130px;margin:38px 0 35px}
+ .error-copy h1{font-size:55px}
+ .error-visual{display:none}
+ .mobile-actions{position:fixed;display:grid;grid-template-columns:1fr 1fr;left:0;right:0;bottom:0;z-index:180;background:rgba(247,245,240,.98);box-shadow:0 -8px 28px rgba(0,0,0,.10);backdrop-filter:blur(16px)}
+ .mobile-actions a{min-height:58px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:9px;font-weight:700;letter-spacing:.13em}
+ .mobile-actions a:first-child{border-right:1px solid rgba(21,21,20,.12)}
+ .mobile-actions a:last-child{background:var(--ink);color:#fff}
+ body{padding-bottom:58px}
+}
+@media(prefers-reduced-motion:reduce){.btn-dark:after{animation:none}}
+
+/* StoneBridge shared footer */
+.sb-footer{background:#151514;color:#fff;border-top:1px solid #383837;padding:70px 40px 28px}
+.sb-footer .footer-upper{width:min(1240px,100%);margin:auto;display:grid;grid-template-columns:2fr 1fr 1.2fr;gap:50px}
+.sb-footer-brand{display:flex;flex-direction:column;justify-self:start;align-self:start;line-height:1;color:#fff;text-decoration:none}
+.sb-footer-brand span{font-family:"DM Sans",Arial,sans-serif;font-size:17px;letter-spacing:.15em;font-weight:600;color:#fff}
+.sb-footer-brand small{font-family:"DM Sans",Arial,sans-serif;font-size:7px;letter-spacing:.3em;margin-top:6px;color:#999}
+.sb-footer .footer-links{display:flex;flex-direction:column;align-items:flex-start;gap:12px;font-size:10px;letter-spacing:.15em}
+.sb-footer .footer-links a{color:#fff;text-decoration:none}
+.sb-footer .footer-links .eyebrow{font-size:8px;color:#777;margin-bottom:12px}
+.sb-footer .social-links{display:flex;flex-direction:row;gap:14px;margin-top:12px}
+.sb-footer .social-links a{border:1px solid #444;border-radius:50%;width:30px;height:30px;display:grid;place-items:center;font-size:8px;padding:0}
+.sb-footer .footer-bottom{width:min(1240px,100%);margin:60px auto 0;border-top:1px solid #333;padding-top:20px;display:flex;justify-content:space-between;align-items:center;color:#777;font-size:8px;letter-spacing:.1em}
+.sb-footer .footer-bottom>div{display:flex;gap:22px;align-items:center}
+.sb-footer .footer-bottom button{appearance:none;-webkit-appearance:none;background:transparent;border:0;color:#777;padding:0;margin:0;font:inherit;letter-spacing:.1em}
+
+/* Shared legal modals */
+body.legal-open{overflow:hidden}
+.legal-modal{position:fixed;inset:0;background:rgba(10,10,9,.72);backdrop-filter:blur(10px);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
+.legal-modal.open{display:flex}
+.legal-panel{background:var(--paper);color:var(--ink);width:min(760px,100%);max-height:90vh;overflow:auto;padding:48px}
+.legal-head{display:flex;justify-content:space-between;gap:30px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:25px}
+.legal-head h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:46px;font-weight:500;line-height:.95}
+.legal-close{appearance:none;background:none;border:0;color:#777;font-size:27px;line-height:1}
+.legal-updated{font-size:8px;letter-spacing:.18em;color:#999;margin:25px 0}
+.legal-copy h3{font-size:10px;letter-spacing:.16em;margin:27px 0 8px}
+.legal-copy p{color:var(--muted);font-size:13px;line-height:1.8}
+.legal-copy a{text-decoration:underline}
+@media(max-width:900px){
+ .sb-footer{padding:70px 22px 28px}
+ .sb-footer .footer-upper{grid-template-columns:1fr 1fr}
+ .sb-footer .sb-footer-brand{grid-column:1/-1}
+ .sb-footer .footer-bottom{flex-direction:column;align-items:flex-start;gap:15px}
+ .legal-panel{padding:35px 24px}.legal-head h2{font-size:40px}
+}
+
+</style>
+</head>
+<body>
+<header class="site-header">
+<a class="brand" href="/" aria-label="StoneBridge Development Group home"><span>STONEBRIDGE</span><small>DEVELOPMENT GROUP</small></a>
+<button class="mobile-menu" id="menu" type="button" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+<nav class="main-nav" id="nav" aria-label="Main navigation">
+<a href="/#projects">PROJECTS</a>
+<a href="/#properties">PROPERTIES</a>
+<a href="/sell-your-home">SELL YOUR PROPERTY</a>
+<a href="/about">ABOUT</a>
+<a href="/contact" class="nav-contact">CONTACT <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+</nav>
+<a class="header-phone" href="tel:2488006242">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13.8 16.6a1 1 0 0 0 1.2-.3l.4-.5A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.5.4a1 1 0 0 0-.3 1.2 14 14 0 0 0 6.4 6.4Z"/></svg>
+248 800 6242</a>
+</header>
+
+<main class="error-page">
+<section class="error-copy">
+<span class="eyebrow">STONEBRIDGE DEVELOPMENT GROUP</span>
+<div class="error-number">404</div>
+<h1>This page<br><em>doesn't exist.</em></h1>
+<p>The link may be outdated, the page may have moved, or the address may have been entered incorrectly. You can return home or continue exploring StoneBridge.</p>
+<div class="actions">
+<a class="btn btn-dark" href="/">RETURN HOME
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14"/><path d="m14 7 5 5-5 5"/></svg></a>
+<a class="btn btn-light" href="/contact">CONTACT STONEBRIDGE</a>
+</div>
+</section>
+<div class="error-visual" aria-hidden="true"></div>
+</main>
+
+
+<footer class="sb-footer">
+<div class="footer-upper">
+<a class="sb-footer-brand" href="/" aria-label="StoneBridge Development Group home"><span>STONEBRIDGE</span><small>DEVELOPMENT GROUP</small></a>
+<div class="footer-links"><span class="eyebrow">EXPLORE</span><a href="/#projects">PROJECTS</a><a href="/#properties">PROPERTIES</a><a href="/sell-your-home">SELL YOUR PROPERTY</a><a href="/about">ABOUT</a><a href="/contact">CONTACT</a></div>
+<div class="footer-links"><span class="eyebrow">GET IN TOUCH</span><a href="tel:2488006242">248 800 6242</a><a href="mailto:info@stonebridgedg.com">info@stonebridgedg.com</a><div class="social-links"><a href="https://www.instagram.com/stonebridgedg/" target="_blank" rel="noopener noreferrer" aria-label="StoneBridge Development Group on Instagram">IG</a><a href="https://www.facebook.com/people/StoneBridge-Development-Group/61595340982839/" target="_blank" rel="noopener noreferrer" aria-label="StoneBridge Development Group on Facebook">FB</a></div></div>
+</div>
+<div class="footer-bottom"><span>© 2026 StoneBridge Development Group</span><div><button type="button" data-legal="privacy">PRIVACY</button><button type="button" data-legal="terms">TERMS</button><span>MICHIGAN</span></div></div>
+</footer>
+
+<div class="legal-modal" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+<div class="legal-panel">
+<div class="legal-head"><h2 id="privacyTitle">Privacy <em>Policy.</em></h2><button class="legal-close" type="button" data-close-legal aria-label="Close privacy policy">×</button></div>
+<p class="legal-updated">LAST UPDATED: OCTOBER 6, 2026</p>
+<div class="legal-copy">
+<h3>INFORMATION WE COLLECT</h3><p>When you contact StoneBridge or submit a property, we may receive information you choose to provide, including your name, phone number, email address, property address, property condition, and selling timeline.</p>
+<h3>HOW INFORMATION IS USED</h3><p>Information submitted through this website may be used to respond to inquiries, review property opportunities, communicate about StoneBridge properties or services, and operate and improve the website.</p>
+<h3>PROPERTY SUBMISSIONS</h3><p>Submitting property information does not create an obligation to sell, purchase, list, or enter into a transaction. StoneBridge may contact you using the information you provide to discuss the property.</p>
+<h3>THIRD-PARTY SERVICES</h3><p>This website may use third-party services for functions such as maps, property listings, hosting, analytics, or communications. Those services may process information according to their own privacy practices.</p>
+<h3>CONTACT</h3><p>Questions regarding this policy may be sent to <a href="mailto:info@stonebridgedg.com">info@stonebridgedg.com</a> or directed to <a href="tel:2488006242">248 800 6242</a>.</p>
+</div></div></div>
+
+<div class="legal-modal" id="termsModal" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+<div class="legal-panel">
+<div class="legal-head"><h2 id="termsTitle">Terms <em>of Use.</em></h2><button class="legal-close" type="button" data-close-legal aria-label="Close terms">×</button></div>
+<p class="legal-updated">LAST UPDATED: OCTOBER 6, 2026</p>
+<div class="legal-copy">
+<h3>WEBSITE USE</h3><p>This website is provided for general informational purposes regarding StoneBridge Development Group, its activities, properties, and private property acquisition process.</p>
+<h3>PROPERTY INFORMATION</h3><p>Property descriptions, availability, images, pricing, and other information may change without notice. Information on this website should not be treated as a binding offer, representation, or guarantee.</p>
+<h3>PROPERTY SUBMISSIONS</h3><p>A property submission is an invitation for StoneBridge to review an opportunity. It does not guarantee an offer and does not create a purchase agreement, agency relationship, listing agreement, or other contractual obligation.</p>
+<h3>COMMUNICATIONS</h3><p>By voluntarily providing contact information, you authorize StoneBridge to respond regarding your inquiry or property submission using the information provided.</p>
+<h3>THIRD-PARTY SERVICES</h3><p>Links to third-party websites or services are provided for convenience. StoneBridge is not responsible for the content, availability, or practices of third-party services.</p>
+<h3>CONTACT</h3><p>Questions may be directed to <a href="mailto:info@stonebridgedg.com">info@stonebridgedg.com</a> or <a href="tel:2488006242">248 800 6242</a>.</p>
+</div></div></div>
+
+<div class="mobile-actions" aria-label="Mobile quick actions">
+<a href="/">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+<span>RETURN HOME</span></a>
+<a href="/sell-your-home">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M15 8.5h-4.2a2.3 2.3 0 0 0 0 4.6h2.4a2.3 2.3 0 0 1 0 4.6H9"/><path d="M12 6.5v2M12 17.7v1.8"/></svg>
+<span>SELL PROPERTY</span></a>
+</div>
+
+<script>
+(function(){
+ const menu=document.getElementById("menu");
+ const nav=document.getElementById("nav");
+ if(menu&&nav){
+   menu.addEventListener("click",function(){
+     const open=nav.classList.toggle("open");
+     menu.classList.toggle("open",open);
+     menu.setAttribute("aria-expanded",String(open));
+   });
+   nav.querySelectorAll("a").forEach(function(a){
+     a.addEventListener("click",function(){
+       nav.classList.remove("open");
+       menu.classList.remove("open");
+       menu.setAttribute("aria-expanded","false");
+     });
+   });
+ }
+})();
+</script>
+<script>
+
+(function(){
+ const privacy=document.getElementById("privacyModal");
+ const terms=document.getElementById("termsModal");
+ function openLegal(modal){if(!modal)return;modal.classList.add("open");document.body.classList.add("legal-open")}
+ function closeLegal(modal){if(!modal)return;modal.classList.remove("open");if(!document.querySelector(".legal-modal.open"))document.body.classList.remove("legal-open")}
+ document.querySelectorAll('[data-legal="privacy"]').forEach(el=>el.addEventListener("click",()=>openLegal(privacy)));
+ document.querySelectorAll('[data-legal="terms"]').forEach(el=>el.addEventListener("click",()=>openLegal(terms)));
+ document.querySelectorAll("[data-close-legal]").forEach(el=>el.addEventListener("click",()=>closeLegal(el.closest(".legal-modal"))));
+ document.querySelectorAll(".legal-modal").forEach(modal=>modal.addEventListener("click",e=>{if(e.target===modal)closeLegal(modal)}));
+ document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".legal-modal.open").forEach(closeLegal)});
+})();
+
+</script>
+</body>
+</html>
