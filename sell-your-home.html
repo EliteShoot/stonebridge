@@ -454,6 +454,46 @@ body.sb-address-selected .pac-container{
   .sb-footer .sb-footer-brand{grid-column:1/-1!important}
 }
 
+
+/* Seller submission success state */
+.submission-success{
+  display:none;
+  min-height:390px;
+  text-align:center;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:35px 20px 50px;
+}
+.submission-card.submission-complete .submission-top,
+.submission-card.submission-complete .step,
+.submission-card.submission-complete .step-controls,
+.submission-card.submission-complete .privacy-note{
+  display:none !important;
+}
+.submission-card.submission-complete .submission-success{display:flex}
+.submission-card.submission-complete .progress-track{margin-bottom:20px}
+.submission-card.submission-complete .progress-track i{transform:scaleX(1)!important}
+.success-check{
+  width:68px;height:68px;border:1px solid var(--ink);border-radius:50%;
+  display:grid;place-items:center;margin-bottom:28px;
+  animation:sbSuccessIn .45s ease both;
+}
+.success-check svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.submission-success .eyebrow{color:#777}
+.submission-success h2{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:clamp(45px,5vw,68px);font-weight:400;line-height:.95;
+  letter-spacing:-.03em;margin:18px 0 22px;
+}
+.submission-success p{max-width:570px;color:var(--muted);font-size:14px;line-height:1.8}
+.success-status{margin-top:27px;font-size:8px;font-weight:700;letter-spacing:.17em;color:#777}
+@keyframes sbSuccessIn{
+  from{opacity:0;transform:scale(.82)}
+  to{opacity:1;transform:scale(1)}
+}
+@media(prefers-reduced-motion:reduce){.success-check{animation:none}}
+
 </style>
 </head>
 <body>
@@ -558,6 +598,17 @@ body.sb-address-selected .pac-container{
 <label class="form-label full">EMAIL<input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
 </div>
 </div>
+</div>
+
+
+<div class="submission-success" id="submissionSuccess" aria-live="polite">
+  <div class="success-check" aria-hidden="true">
+    <svg viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7"/></svg>
+  </div>
+  <span class="eyebrow">PROPERTY SUBMITTED</span>
+  <h2>Thank you for<br><em>reaching out.</em></h2>
+  <p>Someone from our team will reach out to you soon with any further questions or, when possible, a preliminary offer regarding your property.</p>
+  <span class="success-status">SUBMISSION RECEIVED ✓</span>
 </div>
 
 <div class="step-controls">
@@ -766,8 +817,17 @@ next.addEventListener("click",async()=>{
     const result=await response.json().catch(()=>({}));
     if(!response.ok) throw new Error(result.error||"Unable to send submission.");
 
+    // Complete the progress bar, then transition to a dedicated confirmation state.
+    progress.style.transform="scaleX(1)";
+    counter.innerHTML="04 <i>/</i> 04";
     next.textContent="PROPERTY SUBMITTED ✓";
     next.classList.add("submitted");
+
+    setTimeout(()=>{
+      submissionCard.classList.add("submission-complete");
+      submissionCard.scrollIntoView({behavior:"smooth",block:"center"});
+    },450);
+
     ["name","phone","email","address"].forEach(id=>document.getElementById(id).value="");
     state.timing="";
     state.condition="";
