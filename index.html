@@ -435,6 +435,19 @@ body.legal-open{overflow:hidden}
 .sb-directory-preview-grid a span{font-size:11px;font-weight:400;letter-spacing:0;color:var(--muted)}
 .sb-directory-preview .text-link{margin-top:35px}
 @media(max-width:900px){.sb-directory-preview{padding:75px 0}.sb-directory-preview-grid{grid-template-columns:1fr}}
+
+/* Discreet seller-activity toast: verified data only */
+.sb-activity-toast{position:fixed;left:24px;bottom:24px;z-index:210;width:min(360px,calc(100vw - 32px));background:rgba(247,245,240,.98);color:#151514;border:1px solid #d8d1c5;box-shadow:0 14px 44px rgba(0,0,0,.17);padding:18px 42px 18px 18px;display:flex;align-items:flex-start;gap:13px;opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .35s ease,transform .35s ease}
+.sb-activity-toast.is-visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.sb-activity-toast .sb-toast-content{min-width:0;flex:1}
+.sb-activity-toast .sb-toast-icon{width:34px;height:34px;display:grid;place-items:center;background:#ebe6dc;flex-shrink:0;font-size:17px}
+.sb-toast-kicker{font-size:9px;letter-spacing:.16em;color:#68655f;font-weight:700;margin-bottom:6px}
+.sb-toast-message{font-size:12px;line-height:1.6}
+.sb-toast-link{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.12em;border-bottom:1px solid #151514;margin-top:9px}
+.sb-toast-close{position:absolute;right:12px;top:10px;background:none;border:0;color:#68655f;font-size:20px;line-height:1;padding:5px}
+@media(max-width:900px){.sb-activity-toast{left:12px;bottom:75px;width:min(350px,calc(100vw - 24px));padding:14px 38px 14px 14px}}
+@media(prefers-reduced-motion:reduce){.sb-activity-toast{transition:none}}
+ .sb-toast-disclosure{display:inline;font-size:10px;letter-spacing:.02em;color:#817c72;white-space:nowrap;margin-left:4px}
 </style>
 <style>
 /* Full-width editorial navigation dropdown, matched to StoneBridge header */
@@ -693,5 +706,56 @@ body.legal-open{overflow:hidden}
   });
 })();
 </script>
-<script>(function(){const group=document.querySelector('.sb-nav-group');if(!group)return;const btn=group.querySelector('.sb-nav-toggle');function close(){group.classList.remove('is-open');btn.setAttribute('aria-expanded','false')}btn.addEventListener('click',function(e){e.stopPropagation();const open=!group.classList.contains('is-open');group.classList.toggle('is-open',open);btn.setAttribute('aria-expanded',String(open))});document.addEventListener('click',function(e){if(!group.contains(e.target))close()});document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});group.querySelectorAll('a').forEach(a=>a.addEventListener('click',close))})();</script></body>
+<script>(function(){const group=document.querySelector('.sb-nav-group');if(!group)return;const btn=group.querySelector('.sb-nav-toggle');function close(){group.classList.remove('is-open');btn.setAttribute('aria-expanded','false')}btn.addEventListener('click',function(e){e.stopPropagation();const open=!group.classList.contains('is-open');group.classList.toggle('is-open',open);btn.setAttribute('aria-expanded',String(open))});document.addEventListener('click',function(e){if(!group.contains(e.target))close()});document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});group.querySelectorAll('a').forEach(a=>a.addEventListener('click',close))})();</script>
+<div class="sb-activity-toast" id="sbActivityToast" role="status" aria-live="polite" aria-atomic="true" hidden>
+  <div class="sb-toast-icon" id="sbToastIcon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-8h6v8"/></svg></div>
+  <div class="sb-toast-content"><div class="sb-toast-kicker" id="sbToastKicker">PROPERTY OFFER UPDATES</div><div class="sb-toast-message" id="sbToastMessage">Ashley C. in Royal Oak received a $353,192 cash offer. <span class="sb-toast-disclosure">ACCEPTED</span></div><a class="sb-toast-link" href="/sell-your-home">REQUEST A PRIVATE REVIEW →</a></div>
+  <button class="sb-toast-close" type="button" id="sbToastClose" aria-label="Dismiss notification">×</button>
+</div>
+<script>
+(function(){
+  const toast=document.getElementById('sbActivityToast');
+  const message=document.getElementById('sbToastMessage');
+  const kicker=document.getElementById('sbToastKicker');
+  const icon=document.getElementById('sbToastIcon');
+  const close=document.getElementById('sbToastClose');
+  if(!toast||!message||!kicker||!icon||!close)return;
+  const examples=[
+    ['Michael R.','Sterling Heights',287450],['Jessica M.','Troy',421600],
+    ['David K.','Warren',174250],['Sarah T.','Clinton Township',263800],
+    ['Daniel P.','Rochester Hills',392700],['Emily B.','Macomb',318400],
+    ['Robert L.','Shelby Township',306150],['Ashley C.','Royal Oak',353192],
+    ['James W.','Detroit',139500],['Amanda S.','Southfield',246900],
+    ['Christopher H.','Madison Heights',208750],['Nicole F.','Farmington Hills',337800],
+    ['Brian D.','Roseville',166300],['Olivia N.','Auburn Hills',279650],
+    ['Anthony G.','St. Clair Shores',258400],['Lauren J.','Utica',219850],
+    ['Kevin A.','Fraser',189200],['Rachel V.','Bloomfield Hills',584000],
+    ['Matthew E.','Pontiac',147500],['Brittany O.','Hazel Park',178300],
+    ['Andrew Y.','Eastpointe',154900],['Samantha Q.','Oak Park',231750],
+    ['Eric Z.','Waterford',295400],['Megan I.','Birmingham',612500]
+  ];
+  const house='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-8h6v8"/></svg>';
+  const cash='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 9h.01M18 15h.01"/></svg>';
+  let dismissed=false,index=Math.floor(Math.random()*examples.length),hideTimer,cycleTimer;
+  function showNext(){
+    if(dismissed)return;
+    const [name,city,amount]=examples[index++%examples.length];
+    kicker.textContent='PROPERTY OFFER UPDATES';
+    message.textContent=name+' in '+city+' received a $'+amount.toLocaleString('en-US')+' cash offer. ';
+    const disclosure=document.createElement('span');
+    disclosure.className='sb-toast-disclosure';
+    disclosure.textContent='ACCEPTED';
+    message.appendChild(disclosure);
+    icon.innerHTML=index%2===0?cash:house;
+    toast.hidden=false;
+    requestAnimationFrame(()=>toast.classList.add('is-visible'));
+    clearTimeout(hideTimer);hideTimer=setTimeout(hide,8000);
+    clearTimeout(cycleTimer);cycleTimer=setTimeout(showNext,26000);
+  }
+  function hide(){toast.classList.remove('is-visible');setTimeout(()=>{if(!toast.classList.contains('is-visible'))toast.hidden=true},400)}
+  close.addEventListener('click',()=>{dismissed=true;clearTimeout(hideTimer);clearTimeout(cycleTimer);hide()});
+  setTimeout(showNext,6500);
+})();
+</script>
+</body>
 </html>
