@@ -25,7 +25,7 @@ function escapeHtml(value = "") {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     if(url.pathname === '/admin' || url.pathname.startsWith('/admin/')) return admin(request, env);
     const origin = request.headers.get("Origin") || "";
@@ -91,6 +91,10 @@ export default {
       if (data[key] != null && typeof data[key] !== 'string') return Response.json({error:'Invalid field type'}, {status:400,headers:corsHeaders(origin)});
     }
     const isContact = data.type === "contact";
+    const recipientEmail = String(data.email || '').trim();
+    if (!/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(recipientEmail) || /[\r\n,;]/.test(recipientEmail)) {
+      return Response.json({error:'Please enter a valid email address'}, {status:400,headers:corsHeaders(origin)});
+    }
 
     let subject;
     let html;
@@ -298,7 +302,7 @@ export default {
       }
 
       subject =
-        `New Property Submission — ${data.address.trim()}`;
+        `New Property Submission â€” ${data.address.trim()}`;
 
       html = `
         <div style="
@@ -445,6 +449,13 @@ export default {
       await env.DB.prepare('INSERT INTO leads (id,created_at,type,name,email,phone,address,timing,condition,property,subject,message,consent) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)').bind(leadId,new Date().toISOString(),isContact?'contact':'seller',data.name.trim(),data.email.trim(),data.phone||'',data.address||'',data.timing||'',data.condition||'',data.property||'',subject,data.message||'',data.consent===true?1:0).run();
       saved=true;
     } catch { console.error('Lead database write failed; continuing with email delivery.'); }
+    // Send an acknowledgment only once the lead has been saved or delivered internally.
+    // A customer-email failure must never make a successful submission look unsuccessful.
+    const acknowledge = async () => {
+      const task = sendLeadAcknowledgment(env, data, isContact, leadId);
+      if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(task);
+      else await task;
+    };
     let resend;
     try { resend = await fetch(
       "https://api.resend.com/emails",
@@ -478,12 +489,14 @@ export default {
 
     } catch {
       await updateEmailStatus(env,leadId,saved,'failed');
+      if (saved) await acknowledge();
       return Response.json(saved?{ok:true,id:leadId}:{error:'Unable to send email'}, {status:saved?200:502,headers:corsHeaders(origin)});
     }
     const result = await resend.json().catch(()=>({}));
     await updateEmailStatus(env,leadId,saved,resend.ok?'sent':'failed');
 
     if (!resend.ok) {
+      if (saved) await acknowledge();
       console.error(
         "Resend error",
         result
@@ -498,6 +511,7 @@ export default {
       );
     }
 
+    await acknowledge();
     return Response.json(
       {
         ok: true,
@@ -554,4 +568,71 @@ async function updateEmailStatus(env,id,saved,status){
  if(!saved)return;
  try{await env.DB.prepare('UPDATE leads SET email_status=? WHERE id=?').bind(status,id).run();}
  catch{console.error('Email status update failed.');}
+}
+
+// Branded acknowledgment embedded directly in the worker. No Outlook automation needed.
+function leadAcknowledgment(data, isContact) {
+  const firstName = String(data.name || '').trim().split(/\s+/)[0] || 'there';
+  const property = String((isContact ? data.property : data.address) || '').trim();
+  const heading = isContact ? 'Your inquiry is in good hands.' : 'Your property. Our next conversation.';
+  const intro = isContact
+    ? 'Thank you for contacting StoneBridge Development Group. Weâ€™ve received your inquiry and our team will follow up to discuss how we can help.'
+    : 'Thank you for submitting your property to StoneBridge Development Group. Weâ€™ve received your information and will reach out to discuss your home and the next steps toward a cash offer.';
+  const question = isContact ? 'Is there anything else youâ€™d like us to know? Simply reply to this email.' : 'Whatâ€™s the best time to call you? Reply to this email with a convenient time and anything else youâ€™d like us to know about your property.';
+  const subject = isContact ? 'We received your inquiry | StoneBridge' : 'We received your property submission | StoneBridge';
+  const replySubject = 'Re: ' + subject;
+  const replyBody = isContact ? 'Hi StoneBridge,\n\n' : 'Hi StoneBridge,\n\nThe best time to call me is: \n\n';
+  const replyUrl = 'mailto:info@stonebridgedg.com?subject=' + encodeURIComponent(replySubject) + '&body=' + encodeURIComponent(replyBody);
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(subject)}</title></head>
+<body style="margin:0;padding:0;background:#f3f0e9;color:#151514;font-family:Arial,Helvetica,sans-serif;">
+<div style="display:none;font-size:1px;color:#f3f0e9;max-height:0;overflow:hidden;">Weâ€™ve received your ${isContact ? 'inquiry' : 'property details'}. Letâ€™s talk about your next steps.</div>
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f3f0e9;"><tr><td align="center" style="padding:28px 12px;">
+<table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="width:100%;max-width:600px;background:#ffffff;border:1px solid #e0d8ca;">
+<tr><td align="center" style="padding:32px 24px;background:#1d1c1a;border-bottom:3px solid #a9997b;">
+<img src="https://i.imgur.com/xm9nTpK.png" width="60" alt="StoneBridge" style="display:block;border:0;width:60px;height:auto;margin:0 auto 16px;">
+<p style="margin:0;color:#ffffff;font-family:Georgia,serif;font-size:27px;letter-spacing:3px;">STONEBRIDGE</p>
+<p style="margin:8px 0 0;color:#d4c7b1;font-size:10px;letter-spacing:3px;">DEVELOPMENT GROUP</p></td></tr>
+<tr><td style="padding:36px 28px 16px;">
+<p style="margin:0 0 16px;color:#8a7452;font-size:10px;font-weight:bold;letter-spacing:2px;">${isContact ? 'INQUIRY RECEIVED' : 'PROPERTY SUBMISSION RECEIVED'}</p>
+<h1 style="margin:0 0 26px;color:#151514;font-family:Georgia,serif;font-size:32px;line-height:1.2;font-weight:normal;">${heading}</h1>
+<p style="margin:0 0 16px;font-size:16px;line-height:1.8;">Hi ${escapeHtml(firstName)},</p>
+<p style="margin:0 0 24px;font-size:15px;line-height:1.8;color:#55514b;">${intro}</p>
+${property ? `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr><td style="padding:20px;background:#f7f5f0;border-left:3px solid #a9997b;"><p style="margin:0 0 8px;font-size:10px;font-weight:bold;letter-spacing:2px;color:#8a7452;">${isContact ? 'PROPERTY OF INTEREST' : 'YOUR PROPERTY'}</p><p style="margin:0;font-family:Georgia,serif;font-size:20px;line-height:1.5;overflow-wrap:anywhere;">${escapeHtml(property)}</p></td></tr></table>` : ''}
+<p style="margin:24px 0;font-size:15px;line-height:1.8;color:#55514b;">${question}</p>
+<table role="presentation" cellspacing="0" cellpadding="0" border="0"><tr><td bgcolor="#1d1c1a" style="background:#1d1c1a;text-align:center;"><a href="${escapeHtml(replyUrl)}" style="display:inline-block;padding:17px 26px;border:1px solid #1d1c1a;color:#ffffff;text-decoration:none;font-size:13px;font-weight:bold;letter-spacing:1px;">REPLY TO OUR TEAM &rarr;</a></td></tr></table>
+<p style="margin:26px 0 12px;font-size:14px;line-height:1.8;">We look forward to speaking with you.<br><strong>StoneBridge Development Group</strong></p>
+</td></tr>
+<tr><td style="padding:24px 28px;border-top:1px solid #e9e2d7;background:#faf9f6;">
+<p style="margin:0 0 10px;font-size:13px;"><a href="mailto:info@stonebridgedg.com" style="color:#6b593e;text-decoration:none;">info@stonebridgedg.com</a></p>
+<p style="margin:0;font-size:12px;"><a href="https://stonebridgedg.com" style="color:#6b593e;text-decoration:none;">Visit stonebridgedg.com &rarr;</a></p>
+<p style="margin:18px 0 0;font-size:11px;line-height:1.7;color:#8a857b;">You received this acknowledgment because a form was submitted with your email address on our website.${isContact ? '' : ' This confirms receipt of your information and is not a purchase offer or commitment.'}</p>
+</td></tr></table></td></tr></table></body></html>`;
+  const text = `Hi ${firstName},\n\n${intro}\n\n${property ? 'Property: ' + property + '\n\n' : ''}${question}\n\nWe look forward to speaking with you.\nStoneBridge Development Group\ninfo@stonebridgedg.com\nhttps://stonebridgedg.com`;
+  return {subject, html, text};
+}
+
+async function sendLeadAcknowledgment(env, data, isContact, leadId) {
+  try {
+    const email = leadAcknowledgment(data, isContact);
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+        'Idempotency-Key': 'lead-acknowledgment/' + leadId
+      },
+      signal: AbortSignal.timeout(10000),
+      body: JSON.stringify({
+        from: 'StoneBridge Development Group <website@stonebridgedg.com>',
+        to: [String(data.email).trim()],
+        reply_to: 'info@stonebridgedg.com',
+        ...email
+      })
+    });
+    // This log tracks provider acceptance, not inbox delivery. Existing admin email_status
+    // continues to describe the internal lead notification.
+    console.log(JSON.stringify({event:'lead_acknowledgment',lead_id:leadId,status:response.ok?'accepted':'failed',http_status:response.status}));
+  } catch {
+    console.error(JSON.stringify({event:'lead_acknowledgment',lead_id:leadId,status:'failed'}));
+  }
 }
