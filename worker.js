@@ -577,8 +577,8 @@ function leadAcknowledgment(data, isContact) {
   const heading = isContact ? 'Your inquiry is in good hands.' : 'Your property. Our next conversation.';
   const intro = isContact
     ? 'Thank you for contacting StoneBridge Development Group. Weâ€™ve received your inquiry and our team will follow up to discuss how we can help.'
-    : 'Thank you for submitting your property to StoneBridge Development Group. Weâ€™ve received your information and will reach out to discuss your home and the next steps toward a cash offer.';
-  const question = isContact ? 'Is there anything else youâ€™d like us to know? Simply reply to this email.' : 'Whatâ€™s the best time to call you? Reply to this email with a convenient time and anything else youâ€™d like us to know about your property.';
+    : 'Thank you for submitting your property to StoneBridge Development Group. We have received your information and will reach out to discuss your home and the next steps toward a cash offer.';
+  const question = isContact ? 'Is there anything else you would like us to know? Simply reply to this email.' : 'What is the best time to call you? Reply to this email with a convenient time and anything else you would like us to know about your property.';
   const subject = isContact ? 'We received your inquiry | StoneBridge' : 'We received your property submission | StoneBridge';
   const replySubject = 'Re: ' + subject;
   const replyBody = isContact ? 'Hi StoneBridge,\n\n' : 'Hi StoneBridge,\n\nThe best time to call me is: \n\n';
