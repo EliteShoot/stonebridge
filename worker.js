@@ -576,7 +576,7 @@ function leadAcknowledgment(data, isContact) {
   const property = String((isContact ? data.property : data.address) || '').trim();
   const heading = isContact ? 'Your inquiry is in good hands.' : 'Your property. Our next conversation.';
   const intro = isContact
-    ? 'Thank you for contacting StoneBridge Development Group. Weâ€™ve received your inquiry and our team will follow up to discuss how we can help.'
+    ? 'Thank you for contacting StoneBridge Development Group. We have received your inquiry and our team will follow up to discuss how we can help.'
     : 'Thank you for submitting your property to StoneBridge Development Group. We have received your information and will reach out to discuss your home and the next steps toward a cash offer.';
   const question = isContact ? 'Is there anything else you would like us to know? Simply reply to this email.' : 'What is the best time to call you? Reply to this email with a convenient time and anything else you would like us to know about your property.';
   const subject = isContact ? 'We received your inquiry | StoneBridge' : 'We received your property submission | StoneBridge';
@@ -585,7 +585,7 @@ function leadAcknowledgment(data, isContact) {
   const replyUrl = 'mailto:info@stonebridgedg.com?subject=' + encodeURIComponent(replySubject) + '&body=' + encodeURIComponent(replyBody);
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(subject)}</title></head>
 <body style="margin:0;padding:0;background:#f3f0e9;color:#151514;font-family:Arial,Helvetica,sans-serif;">
-<div style="display:none;font-size:1px;color:#f3f0e9;max-height:0;overflow:hidden;">Weâ€™ve received your ${isContact ? 'inquiry' : 'property details'}. Letâ€™s talk about your next steps.</div>
+<div style="display:none;font-size:1px;color:#f3f0e9;max-height:0;overflow:hidden;">We have received your ${isContact ? 'inquiry' : 'property details'}. Let us talk about your next steps.</div>
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f3f0e9;"><tr><td align="center" style="padding:28px 12px;">
 <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="width:100%;max-width:600px;background:#ffffff;border:1px solid #e0d8ca;">
 <tr><td align="center" style="padding:32px 24px;background:#1d1c1a;border-bottom:3px solid #a9997b;">
