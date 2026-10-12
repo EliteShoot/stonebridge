@@ -302,7 +302,7 @@ export default {
       }
 
       subject =
-        `New Property Submission â€” ${data.address.trim()}`;
+        `New Property Submission -” ${data.address.trim()}`;
 
       html = `
         <div style="
