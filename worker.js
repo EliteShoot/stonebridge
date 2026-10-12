@@ -302,7 +302,7 @@ export default {
       }
 
       subject =
-        `New Property Submission - ${data.address.trim()}`;
+        `StoneBridge Property Submission - ${data.address.trim()}`;
 
       html = `
         <div style="
