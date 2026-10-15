@@ -115,7 +115,7 @@ button{cursor:pointer;border:0}
 <meta name="twitter:title" content="Contact StoneBridge Development Group | Michigan">
 <meta name="twitter:description" content="Contact StoneBridge Development Group at 248-800-6242 or info@stonebridgedg.com about selling a Michigan property, available homes or a business inquiry.">
 <link rel="canonical" href="https://stonebridgedg.com/contact">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "ContactPage", "@id": "https://stonebridgedg.com/contact#webpage", "name": "Contact StoneBridge Development Group | Michigan", "description": "Contact StoneBridge Development Group at 248-800-6242 or info@stonebridgedg.com about selling a Michigan property, available homes or a business inquiry.", "url": "https://stonebridgedg.com/contact", "isPartOf": {"@id": "https://stonebridgedg.com/#website"}, "about": {"@id": "https://stonebridgedg.com/#organization"}}, {"@type": "Organization", "@id": "https://stonebridgedg.com/#organization", "name": "StoneBridge Development Group", "url": "https://stonebridgedg.com/", "logo": "https://i.imgur.com/xm9nTpK.png", "telephone": "+1-248-800-6242", "email": "info@stonebridgedg.com"}, {"@type": "BreadcrumbList", "@id": "https://stonebridgedg.com/contact#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "StoneBridge", "item": "https://stonebridgedg.com/"}, {"@type": "ListItem", "position": 2, "name": "Contact  StoneBridge.", "item": "https://stonebridgedg.com/contact"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "ContactPage", "@id": "https://stonebridgedg.com/contact#webpage", "name": "Contact StoneBridge Development Group | Michigan", "description": "Contact StoneBridge Development Group at 248-800-6242 or info@stonebridgedg.com about selling a Michigan property, available homes or a business inquiry.", "url": "https://stonebridgedg.com/contact", "isPartOf": {"@id": "https://stonebridgedg.com/#website"}, "about": {"@id": "https://stonebridgedg.com/#organization"}}, {"@type": "Organization", "@id": "https://stonebridgedg.com/#organization", "name": "StoneBridge Development Group", "url": "https://stonebridgedg.com/", "logo": "https://i.imgur.com/xm9nTpK.png", "telephone": "+1-248-800-6242", "email": "info@stonebridgedg.com"}, {"@type": "BreadcrumbList", "@id": "https://stonebridgedg.com/contact#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "StoneBridge", "item": "https://stonebridgedg.com/"}, {"@type": "ListItem", "position": 2, "name": "Contact StoneBridge Development Group", "item": "https://stonebridgedg.com/contact"}]}]}</script>
 <style>
 /* Additional seller guidance: scoped to preserve the existing site design. */
 .sb-seo-guide{background:#f7f5f0;color:#151514;border-top:1px solid #d8d1c5;padding:72px 0;}
@@ -210,6 +210,7 @@ document.querySelectorAll('.form-grid').forEach(form=>form.addEventListener('sub
   const response=await fetch('https://stonebridge.psznbzhnps.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'contact',subject:form.dataset.subject,name:String(d.get('Name')||'').trim(),email:String(d.get('Email')||'').trim(),property:String(d.get('Property')||'').trim(),message:String(d.get('Message')||'').trim(),consent:d.get('Consent')==='Yes'})});
   const result=await response.json().catch(()=>({}));
   if(!response.ok)throw new Error(result.error||'Unable to send inquiry');
+  if(typeof gtag==='function')gtag('event','generate_lead',{lead_type:'contact',page_path:location.pathname,transport_type:'beacon'});
   button.textContent='✓';form.reset();note.textContent='Thank you. A member of our team will be in touch.';
   setTimeout(()=>{
    const modal=form.closest('.modal');
@@ -222,5 +223,6 @@ document.querySelectorAll('.form-grid').forEach(form=>form.addEventListener('sub
 }));
 document.querySelectorAll('[data-legal]').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.legal==='privacy'?'privacyModal':'termsModal')));
 </script>
+<script src="/seller-insights.js" defer></script>
 </body>
 </html>
