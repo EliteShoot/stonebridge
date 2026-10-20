@@ -912,7 +912,7 @@ next.addEventListener("click",async()=>{
     });
     const result=await response.json().catch(()=>({}));
     if(!response.ok) throw new Error(result.error||"Unable to send submission.");
-    if(typeof gtag === "function") gtag("event", "generate_lead", {lead_type:"property", page_path:location.pathname, transport_type:"beacon"});
+    if(typeof gtag === "function") gtag("event", "seller_lead_submitted", {send_to:"G-89ZXPS62KN", lead_type:"property", page_path:location.pathname, transport_type:"beacon"});
 
     // Complete the progress bar, then transition to a dedicated confirmation state.
     progress.style.transform="scaleX(1)";
