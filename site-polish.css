@@ -1,0 +1,54 @@
+/* Shared public-site interaction and layout refinements. */
+:root{--sb-motion:220ms;--sb-curve:cubic-bezier(.2,.7,.2,1);--sb-focus:#8a6d42}
+html{scroll-padding-top:100px}
+body{overflow-wrap:break-word}
+button,a,input,textarea,select{-webkit-tap-highlight-color:transparent}
+:is(a,button,input,textarea,select):focus-visible{outline:3px solid var(--sb-focus);outline-offset:4px}
+:is(.btn,.button,.button-dark,.button-light,.button-outline-light,.submit,.sb-action,.so-hero-cta,.organic-cta,.nav-contact,.so-bottom>a){transition:transform var(--sb-motion) var(--sb-curve),box-shadow var(--sb-motion) var(--sb-curve),background-color var(--sb-motion),color var(--sb-motion);min-height:44px;align-items:center;justify-content:center;gap:10px}
+:is(.btn,.button,.button-dark,.button-light,.button-outline-light,.submit,.sb-action,.so-hero-cta,.organic-cta,.so-bottom>a){display:inline-flex}
+:is(button,a):is(:disabled,[aria-disabled="true"]){cursor:not-allowed}
+button:disabled{opacity:.55}
+:is(.btn,.button,.button-dark,.button-light,.submit,.sb-action):active:not(:disabled){transform:translateY(0) scale(.985)}
+:is(.btn,.button,.view,.text-link,.nav-contact) svg{transition:transform var(--sb-motion) var(--sb-curve);flex-shrink:0}
+:is(.choice,.inquiry-type,.so-card,.seo-seller-card,.guide-related a,.sb-directory-preview-grid a){transition:transform var(--sb-motion) var(--sb-curve),background-color var(--sb-motion),border-color var(--sb-motion),box-shadow var(--sb-motion)}
+.so-card:hover{padding-left:0}
+.choice.selected{border-color:#6f5b3e;box-shadow:inset 0 0 0 1px #6f5b3e,0 4px 14px #1515140a}
+:is(input:not([type="checkbox"]),textarea,select){transition:border-color var(--sb-motion),box-shadow var(--sb-motion)}
+:is(input:not([type="checkbox"]),textarea,select):focus{border-color:#8a6d42;box-shadow:0 0 0 3px #8a6d4218}
+.project-image{overflow:hidden}
+.project-image img{transition:transform 650ms var(--sb-curve)}
+.main-nav a,.footer-links a,.text-link{transition:color var(--sb-motion);text-underline-offset:5px}
+.guide-content p+p{margin-top:16px}
+.guide-content section> a{display:block;width:fit-content;margin:14px 0;line-height:1.6}
+.guide-content section> a:last-child{margin-bottom:0}
+.sb-seo-guide .sb-seo-grid{row-gap:36px}
+.sb-seo-guide .sb-seo-grid article{min-width:0}
+.sb-seo-guide .sb-seo-grid article:only-child{grid-column:1/-1}
+.sb-seo-guide .sb-seo-inner>p{max-width:78ch;line-height:1.8;margin:0 0 32px}
+.sb-seo-guide nav{gap:14px 24px}
+.sb-table-wrap{overflow-x:auto;overscroll-behavior-inline:contain}
+.sb-table-wrap caption{text-align:left;padding:16px;font-weight:600}
+.sb-seo-guide .sb-seo-grid article a{text-decoration:underline;text-underline-offset:4px}
+.privacy-modal,.legal-panel,.modal-card{overscroll-behavior:contain}
+@media(hover:hover) and (pointer:fine){
+ :is(.btn,.button,.button-dark,.button-light,.button-outline-light,.submit,.sb-action,.so-hero-cta,.organic-cta,.so-bottom>a):hover:not(:disabled){transform:translateY(-3px);box-shadow:0 8px 22px #15151420}
+ :is(.btn,.button,.view,.text-link,.nav-contact):hover svg{transform:translateX(3px)}
+ :is(.choice,.inquiry-type,.so-card,.seo-seller-card,.guide-related a,.sb-directory-preview-grid a):hover{transform:translateY(-3px);border-color:#a9997d;box-shadow:0 8px 22px #1515140b}
+ .so-card:hover{background:#a9997d0b}
+ .project:hover .project-image img{transform:scale(1.025)}
+ .footer-links a:hover,.text-link:hover{text-decoration:underline}
+}
+@media(min-width:801px){.cash-proof-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:800px){
+ :is(.guide-hero,.sell-hero-copy,.so-hero-content) p{line-height:1.75}
+ .sb-seo-guide .sb-seo-grid{gap:28px}
+ :is(.single-input,.contact-grid input,.form-grid input,.form-grid textarea){font-size:16px}
+ .step-controls{gap:12px}
+ .mobile-actions{padding-bottom:env(safe-area-inset-bottom,0px)}
+ .guide-content section> a{width:100%;padding:8px 0}
+ .footer-links a{padding-block:5px}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto!important}
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
