@@ -467,6 +467,28 @@ body.legal-open{overflow:hidden}
 @keyframes sbRentedPulse{0%,100%{box-shadow:0 0 0 3px rgba(220,69,69,.18),0 0 8px rgba(220,69,69,.35)}50%{box-shadow:0 0 0 5px rgba(220,69,69,.08),0 0 14px rgba(220,69,69,.6)}}
 @media(prefers-reduced-motion:reduce){.availability-badge.is-rented i{animation:none!important}}
 </style>
+
+<style id="property-details-style">
+/* Listing details use the site's existing paper, ink, serif and fine rules. */
+.portfolio .project{min-width:0}
+.portfolio .meta{align-items:flex-start;flex-wrap:wrap;gap:12px 20px}
+.portfolio .meta .view{min-height:24px}
+.portfolio .property-details{padding:18px 0 0}
+.property-address{font-size:12px;color:var(--muted);letter-spacing:.035em}
+.property-price{font-family:"Cormorant Garamond",Georgia,serif;font-size:38px;font-weight:500;line-height:1.2;letter-spacing:-.025em;margin:12px 0 20px}
+.property-price small{font-family:"DM Sans",Arial,sans-serif;font-size:11px;font-weight:400;letter-spacing:.03em;color:var(--muted)}
+.property-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0}
+.property-stats>div{display:flex;flex-direction:column-reverse;gap:4px;padding:0 18px;border-left:1px solid var(--line)}
+.property-stats>div:first-child{padding-left:0;border-left:0}
+.property-stats dt{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.property-stats dd{font-size:20px;font-weight:500;line-height:1.2;font-variant-numeric:tabular-nums}
+.property-features,.property-note{font-size:11px;line-height:1.7;color:var(--muted);margin-top:13px}
+.property-note{font-size:10px;margin-top:5px}
+.portfolio .project-sale .project-image{height:auto;background:var(--warm)}
+.portfolio .project-sale .project-image img{height:auto;width:100%;object-fit:contain;filter:none}
+.portfolio .project-sale:hover .project-image img{transform:none}
+@media(max-width:900px){.portfolio .project:nth-child(4){margin-top:0}.property-price{font-size:34px}.property-stats>div{padding:0 12px}}
+</style>
 </head>
 <body>
 <header class="site-header">
@@ -504,22 +526,46 @@ body.legal-open{overflow:hidden}
 <section class="portfolio container" id="projects">
 <div class="portfolio-head"><div class="label">SELECTED RESIDENCES <i></i></div><div><h2>Homes with a<br/><em>point of view.</em></h2><p>Explore a selection of StoneBridge homes.</p></div></div>
 <div class="grid" id="properties">
-<article class="project"><div class="project-image"><img alt="Amore Residence in Clinton Township, Michigan" decoding="async" loading="lazy" sizes="(max-width:900px) calc(100vw - 44px), (max-width:1280px) calc(50vw - 58px), 603px" src="https://imgproxy.tenantcloud.net/RLkntQdt5Fr2eTTW1dklar7lfJAfd3CepKdHt-G5Y5k/sm:1/rs:fit:900::0/aHR0cHM6Ly9jZG4u/dGVuYW50Y2xvdWQu/bmV0L2ZpbGVzLzAx/YTE0MTZjLTQwNTMt/NzA2My1iYzgzLTRk/YjA1MmYyYzQ0Ny9v/cmlnaW5hbC5wbmc.jpeg?signature=%2F1oRVQHx94wR2qlJNbUUV6i1lfBAByLmuyMS9okQvD4%3D"/><span class="number availability-badge"><i aria-hidden="true"></i>AVAILABLE</span></div><div class="meta"><div><h3>AMORE RESIDENCE</h3><span>CLINTON TWP, MI / RENT</span></div><a class="view" href="https://stonebridge.tenantcloud.com/listings/207849" target="_blank" rel="noopener noreferrer">VIEW PROPERTY <svg aria-hidden="true" class="sb-arrow-icon" fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="13"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></article>
-<article class="project"><div class="project-image"><img alt="Linwood Residence rental home in Eastpointe, Michigan" decoding="async" loading="lazy" sizes="(max-width:900px) calc(100vw - 44px), (max-width:1280px) calc(50vw - 58px), 603px" src="https://imgproxy.tenantcloud.net/7cWMHPUVmBBaeEiXe72unpwrTLqPIWgV5vZJUM1nbUE/sm:1/rs:fit:900::0/aHR0cHM6Ly9jZG4u/dGVuYW50Y2xvdWQu/bmV0L2ZpbGVzLzAx/YTE0MTU1LTRlMGYt/NzEwOS04NDZlLThl/MzdhZTc4NmQ4Ny9v/cmlnaW5hbC5wbmc.jpeg?signature=Y9wvHAxXyVQCwjZbBoWj34CnYEaaE%2B2%2BNpoyw%2BYCeE4%3D"/><span class="number availability-badge is-rented"><i aria-hidden="true"></i>RENTED</span></div><div class="meta"><div><h3>LINWOOD RESIDENCE</h3><span>EASTPOINTE, MICHIGAN / RENTED</span></div><a class="view" href="https://stonebridge.tenantcloud.com/listings/207028" target="_blank" rel="noopener noreferrer">VIEW PROPERTY <svg aria-hidden="true" class="sb-arrow-icon" fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="13"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></article>
-<article class="project"><div class="project-image"><img alt="Renovated Michigan residence represented by StoneBridge Development Group" decoding="async" loading="lazy" sizes="(max-width:900px) calc(100vw - 44px), 769px" src="https://imgproxy.tenantcloud.net/oPvNTGRUnLZtRn5Bbo1_ZeqRwoov-noi8iLCW1ec3X8/sm:1/rs:fit:900::0/aHR0cHM6Ly9jZG4u/dGVuYW50Y2xvdWQu/bmV0L2ZpbGVzLzAx/YTE0MTMzLTUyYTUt/NzA3MS1iYzM5LWFk/MjJhY2YyOTVlYi9v/cmlnaW5hbC5wbmc.jpeg?signature=EW8lre64mex5PfeoaubH1%2F3LcADUw2BezEhVeuUkJj4%3D"/><span class="number availability-badge"><i aria-hidden="true"></i>AVAILABLE</span></div><div class="meta"><div><h3>REPUBLIC RESIDENCE</h3><span>WARREN, MICHIGAN / RENT</span></div><a class="view" href="https://stonebridge.tenantcloud.com/listings/207835" target="_blank" rel="noopener noreferrer">
+<article class="project"><div class="project-image"><img alt="Amore Residence in Clinton Township, Michigan" decoding="async" loading="lazy" sizes="(max-width:900px) calc(100vw - 44px), (max-width:1280px) calc(50vw - 58px), 603px" src="https://imgproxy.tenantcloud.net/RLkntQdt5Fr2eTTW1dklar7lfJAfd3CepKdHt-G5Y5k/sm:1/rs:fit:900::0/aHR0cHM6Ly9jZG4u/dGVuYW50Y2xvdWQu/bmV0L2ZpbGVzLzAx/YTE0MTZjLTQwNTMt/NzA2My1iYzgzLTRk/YjA1MmYyYzQ0Ny9v/cmlnaW5hbC5wbmc.jpeg?signature=%2F1oRVQHx94wR2qlJNbUUV6i1lfBAByLmuyMS9okQvD4%3D"/><span class="number availability-badge"><i aria-hidden="true"></i>AVAILABLE</span></div><div class="meta"><div><h3>AMORE RESIDENCE</h3><span>CLINTON TWP, MI / RENT</span></div><a aria-label="View Amore Residence listing" class="view" href="https://stonebridge.tenantcloud.com/listings/207849" target="_blank" rel="noopener noreferrer">VIEW PROPERTY <svg aria-hidden="true" class="sb-arrow-icon" fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="13"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div>
+<div class="property-details">
+<p class="property-address">15519 Amore St</p>
+<p class="property-price">$2,600<small> / month</small></p>
+<dl class="property-stats"><div><dt>Bedrooms</dt><dd>3</dd></div><div><dt>Bathrooms</dt><dd>2</dd></div><div><dt>Sq ft</dt><dd>1,534</dd></div></dl>
+<p class="property-features">Renovated interiors · Single-family home</p>
+</div></article>
+<article class="project project-sale"><div class="project-image"><img alt="Birchfield Residence for sale in Shelby Township, Michigan" decoding="async" loading="lazy" sizes="(max-width:900px) calc(100vw - 44px), (max-width:1280px) calc(50vw - 58px), 603px" src="https://photos.zillowstatic.com/fp/0f522c7783c62a38602ea283cf91a232-uncropped_scaled_within_1536_1152.webp"/><span class="number availability-badge"><i aria-hidden="true"></i>FOR SALE</span></div><div class="meta"><div><h3>BIRCHFIELD RESIDENCE</h3><span>SHELBY TWP, MICHIGAN / FOR SALE</span></div><a aria-label="View Birchfield Residence listing" class="view" href="https://www.zillow.com/homedetails/54036-Birchfield-Dr-W-Shelby-Township-MI-48316/83641089_zpid/" target="_blank" rel="noopener noreferrer">VIEW PROPERTY <svg aria-hidden="true" class="sb-arrow-icon" fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="13"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div>
+<div class="property-details">
+<p class="property-address">54036 Birchfield Dr W</p>
+<p class="property-price">$999,000</p>
+<dl class="property-stats"><div><dt>Bedrooms</dt><dd>6</dd></div><div><dt>Bathrooms</dt><dd>5.5</dd></div><div><dt>Total sq ft</dt><dd>6,586</dd></div></dl>
+<p class="property-features">3-car garage · Finished walkout · 0.43-acre lot</p><p class="property-note">5 full baths + 1 half bath · Includes 2,259 finished lower-level sq ft</p>
+</div></article>
+<article class="project"><div class="project-image"><img alt="Renovated Michigan residence represented by StoneBridge Development Group" decoding="async" loading="lazy" sizes="(max-width:900px) calc(100vw - 44px), 769px" src="https://imgproxy.tenantcloud.net/oPvNTGRUnLZtRn5Bbo1_ZeqRwoov-noi8iLCW1ec3X8/sm:1/rs:fit:900::0/aHR0cHM6Ly9jZG4u/dGVuYW50Y2xvdWQu/bmV0L2ZpbGVzLzAx/YTE0MTMzLTUyYTUt/NzA3MS1iYzM5LWFk/MjJhY2YyOTVlYi9v/cmlnaW5hbC5wbmc.jpeg?signature=EW8lre64mex5PfeoaubH1%2F3LcADUw2BezEhVeuUkJj4%3D"/><span class="number availability-badge"><i aria-hidden="true"></i>AVAILABLE</span></div><div class="meta"><div><h3>REPUBLIC RESIDENCE</h3><span>WARREN, MICHIGAN / RENT</span></div><a aria-label="View Republic Residence listing" class="view" href="https://stonebridge.tenantcloud.com/listings/207835" target="_blank" rel="noopener noreferrer">
   VIEW PROPERTY
   <svg aria-hidden="true" class="sb-arrow-icon" fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24" width="13">
     <path d="M7 17 17 7"></path>
     <path d="M7 7h10v10"></path>
   </svg>
-</a></div></article>
-<article class="project"><div class="project-image"><img alt="Grandy Residence in Clinton Township, Michigan" decoding="async" loading="lazy" sizes="(max-width:900px) calc(100vw - 44px), 769px" src="https://imgproxy.tenantcloud.net/xVFYFE5r1TetZfcM-m2EtD0vy5NeLWutspNdbRphaOY/sm:1/rs:fit:900::0/aHR0cHM6Ly9jZG4u/dGVuYW50Y2xvdWQu/bmV0L2ZpbGVzLzAx/YTE0MTQ3LThmM2Mt/NzI0My1iNzY4LTE4/OGZiNDg2NDA1MC9v/cmlnaW5hbC5wbmc.jpeg?signature=0deHSYPcg39mnCMS5A5PkdSAPC41xPiEmhgeNB%2Bm7Yo%3D"/><span class="number availability-badge"><i aria-hidden="true"></i>AVAILABLE</span></div><div class="meta"><div><h3>GRANDY RESIDENCE</h3><span>CLINTON TWP, MICHIGAN / RENT</span></div><a class="view" href="https://stonebridge.tenantcloud.com/listings/207839" target="_blank" rel="noopener noreferrer">
+</a></div>
+<div class="property-details">
+<p class="property-address">11809 Republic Ave</p>
+<p class="property-price">$1,650<small> / month</small></p>
+<dl class="property-stats"><div><dt>Bedrooms</dt><dd>3</dd></div><div><dt>Bathrooms</dt><dd>1</dd></div><div><dt>Sq ft</dt><dd>912</dd></div></dl>
+<p class="property-features">2-car garage · Basement · In-unit laundry</p>
+</div></article>
+<article class="project"><div class="project-image"><img alt="Grandy Residence in Clinton Township, Michigan" decoding="async" loading="lazy" sizes="(max-width:900px) calc(100vw - 44px), 769px" src="https://imgproxy.tenantcloud.net/xVFYFE5r1TetZfcM-m2EtD0vy5NeLWutspNdbRphaOY/sm:1/rs:fit:900::0/aHR0cHM6Ly9jZG4u/dGVuYW50Y2xvdWQu/bmV0L2ZpbGVzLzAx/YTE0MTQ3LThmM2Mt/NzI0My1iNzY4LTE4/OGZiNDg2NDA1MC9v/cmlnaW5hbC5wbmc.jpeg?signature=0deHSYPcg39mnCMS5A5PkdSAPC41xPiEmhgeNB%2Bm7Yo%3D"/><span class="number availability-badge"><i aria-hidden="true"></i>AVAILABLE</span></div><div class="meta"><div><h3>GRANDY RESIDENCE</h3><span>CLINTON TWP, MICHIGAN / RENT</span></div><a aria-label="View Grandy Residence listing" class="view" href="https://stonebridge.tenantcloud.com/listings/207839" target="_blank" rel="noopener noreferrer">
   VIEW PROPERTY
   <svg aria-hidden="true" class="sb-arrow-icon" fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24" width="13">
     <path d="M7 17 17 7"></path>
     <path d="M7 7h10v10"></path>
   </svg>
-</a></div></article>
+</a></div>
+<div class="property-details">
+<p class="property-address">21849 Grandy St</p>
+<p class="property-price">$1,600<small> / month</small></p>
+<dl class="property-stats"><div><dt>Bedrooms</dt><dd>2</dd></div><div><dt>Bathrooms</dt><dd>1</dd></div><div><dt>Sq ft</dt><dd>954</dd></div></dl>
+<p class="property-features">Attached garage · In-unit laundry</p>
+</div></article>
 </div>
 </section>
 <section class="full"><h2>BUILT FOR THE WAY<br/><em>PEOPLE LIVE.</em></h2><span class="tag">STONEBRIDGE / MICHIGAN</span></section>
