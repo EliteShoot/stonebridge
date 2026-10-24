@@ -54,3 +54,12 @@ button:disabled{opacity:.55}
 }
 
 .sb-owned-areas{padding:64px 24px;background:#ebe6dc;color:#151514}.sb-owned-areas .sb-seo-inner{max-width:1120px;margin:auto}.sb-owned-areas h2{font-size:clamp(30px,4vw,46px);line-height:1.15;margin-bottom:20px}.sb-owned-areas nav{display:flex;flex-wrap:wrap;gap:16px 24px}.sb-owned-areas nav a{padding:12px 0;text-decoration:underline;text-underline-offset:5px}.sb-owned-areas p{margin-bottom:24px;line-height:1.8}
+
+/* Darken property photography consistently while keeping text and badges clear. */
+.hero:before,.about-hero:before,.so-hero:before{background:linear-gradient(90deg,rgba(10,10,9,.66),rgba(10,10,9,.38) 75%),linear-gradient(0deg,rgba(0,0,0,.28),transparent 65%);pointer-events:none}
+.sell-hero-image:after{background:linear-gradient(180deg,rgba(10,10,9,.30),rgba(10,10,9,.44));pointer-events:none}
+#stagePanel:after{background:linear-gradient(0deg,rgba(10,10,9,.80),rgba(10,10,9,.30) 85%)}
+.project-image:after{content:"";position:absolute;inset:0;background:rgba(10,10,9,.24);pointer-events:none}
+.project-image .number{z-index:1}
+.philosophy-photo,.feature-image,.error-visual,section.full,.sb-drop-feature{background-color:#aaa;background-blend-mode:multiply}
+.map svg{width:min(360px,85%);height:auto;stroke-linecap:round;stroke-linejoin:round}
