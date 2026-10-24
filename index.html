@@ -459,7 +459,7 @@ body.legal-open{overflow:hidden}
 .portfolio .project:first-child .project-image img{display:block;width:100%;height:auto;object-fit:contain}
 .portfolio .project:first-child:hover img{transform:none}
 </style>
-<link rel="stylesheet" href="/site-polish.css?v=20261024-porch">
+<link rel="stylesheet" href="/site-polish.css?v=20261024-motion">
 <style>
 .availability-badge.is-rented i{background:#dc4545;box-shadow:0 0 0 3px rgba(220,69,69,.18),0 0 10px rgba(220,69,69,.45);animation:sbRentedPulse 2.4s ease-in-out infinite}
 @keyframes sbRentedPulse{0%,100%{box-shadow:0 0 0 3px rgba(220,69,69,.18),0 0 8px rgba(220,69,69,.35)}50%{box-shadow:0 0 0 5px rgba(220,69,69,.08),0 0 14px rgba(220,69,69,.6)}}
@@ -718,24 +718,6 @@ body.legal-open{overflow:hidden}
     });
   });
 
-  if("IntersectionObserver" in window){
-    const io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.style.opacity = "1";
-          entry.target.style.transform = "none";
-          io.unobserve(entry.target);
-        }
-      });
-    }, {threshold:.08});
-
-    document.querySelectorAll(".intro>div,.project,.pillar,.philosophy-copy,.mich-copy,.acq>div").forEach(function(el){
-      el.style.opacity = "0";
-      el.style.transform = "translateY(22px)";
-      el.style.transition = "opacity .8s ease,transform .8s ease";
-      io.observe(el);
-    });
-  }
 })();
 </script>
 <script>
@@ -773,6 +755,6 @@ body.legal-open{overflow:hidden}
 </script>
 <script>(function(){const group=document.querySelector('.sb-nav-group');if(!group)return;const btn=group.querySelector('.sb-nav-toggle');function close(){group.classList.remove('is-open');btn.setAttribute('aria-expanded','false')}btn.addEventListener('click',function(e){e.stopPropagation();const open=!group.classList.contains('is-open');group.classList.toggle('is-open',open);btn.setAttribute('aria-expanded',String(open))});document.addEventListener('click',function(e){if(!group.contains(e.target))close()});document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});group.querySelectorAll('a').forEach(a=>a.addEventListener('click',close))})();</script>
 
-<script src="/seller-insights.js" defer></script>
+<script src="/seller-insights.js?v=20261024-motion" defer></script>
 </body>
 </html>

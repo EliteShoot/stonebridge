@@ -63,3 +63,13 @@ button:disabled{opacity:.55}
 .project-image .number{z-index:1}
 .philosophy-photo,.feature-image,.error-visual,section.full,.sb-drop-feature{background-color:#aaa;background-blend-mode:multiply}
 .map svg{width:min(360px,85%);height:auto;stroke-linecap:round;stroke-linejoin:round}
+
+/* Motion is opt-in through JS; content remains visible without script support. */
+.sb-reveal{opacity:0;translate:0 26px;transition:opacity .75s var(--sb-curve),translate .75s var(--sb-curve),transform var(--sb-motion) var(--sb-curve);transition-delay:var(--sb-reveal-delay,0ms)}
+.sb-reveal.is-visible{opacity:1;translate:0 0}
+.sb-back-top{position:fixed;right:max(22px,env(safe-area-inset-right));bottom:calc(var(--sb-bottom-clearance,16px) + env(safe-area-inset-bottom,0px));z-index:170;display:grid;place-items:center;width:46px;height:46px;border:1px solid #a9997d;border-radius:50%;background:#151514;color:#f7f5f0;box-shadow:0 4px 18px #0002;cursor:pointer;transition:background .2s,transform .2s}
+.sb-back-top[hidden]{display:none!important}
+.sb-back-top:hover{background:#37342e;transform:translateY(-3px)}
+.sb-back-top:focus-visible{outline:3px solid #a9997d;outline-offset:4px}
+@media(max-width:900px){.sb-back-top{right:max(16px,env(safe-area-inset-right));width:44px;height:44px}}
+@media(prefers-reduced-motion:reduce){.sb-reveal{opacity:1!important;translate:none!important;transition:none!important}.sb-back-top{transition:none}}
