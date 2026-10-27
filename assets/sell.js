@@ -62,6 +62,7 @@
       state.complete=true;$('sellForm').hidden=true;$('success').hidden=false;
       $('fill').style.width='100%';$('progress').setAttribute('aria-valuenow','100');$('stepLabel').textContent='COMPLETE';$('progressLabel').textContent='REQUEST RECEIVED';
       track('seller_lead_submitted',{send_to:'G-89ZXPS62KN',lead_type:'property',transport_type:'beacon'});
+      try { if(typeof window.fbq==='function') window.fbq('track','Lead'); } catch (_) {}
       $('success').querySelector('h2').focus();
     } catch {
       error('We couldn’t confirm your request. Your answers are still here. Please try again, or email info@stonebridgedg.com.');
