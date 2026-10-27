@@ -7,7 +7,7 @@
   const track = (event, extra={}) => { if(typeof window.gtag==='function') window.gtag('event',event,{page_path:location.pathname,form_id:'sell_landing',...extra}); };
   const error = message => { $('error').textContent=message; $('error').hidden=!message; };
   function show(n, focus=true) {
-    state.step=n; steps.forEach(s=>s.hidden=Number(s.dataset.step)!==n);
+    state.step=n; document.body.classList.toggle('address-editing',n===1 && document.activeElement===$('address')); steps.forEach(s=>s.hidden=Number(s.dataset.step)!==n);
     $('preparing').hidden=true; $('controls').hidden=false; $('back').hidden=n===1;
     $('stepLabel').textContent=`STEP ${n} OF 4`; $('progressLabel').textContent=titles[n-1];
     $('fill').style.width=`${n===4?90:n*25}%`; $('progress').setAttribute('aria-valuenow',n===4?'90':String(n*25));
@@ -69,5 +69,38 @@
     } finally {state.busy=false;$('next').disabled=false;$('back').disabled=false;}
   });
   document.querySelectorAll('[data-dialog]').forEach(b=>b.addEventListener('click',()=>$(b.dataset.dialog).showModal()));
+  // Load the same Google Places integration as the existing seller form.
+  const address = $('address');
+  const help = $('addressHelp');
+  const placesFallback = () => { help.textContent='Enter the full address, city, MI and ZIP. You can continue without suggestions.'; };
+  window.gm_authFailure = placesFallback;
+  window.initStoneBridgePlaces = () => {
+    if(address.dataset.placesReady==='true') return;
+    if(!window.google?.maps?.places?.Autocomplete){placesFallback();return;}
+    try {
+      const autocomplete = new google.maps.places.Autocomplete(address, {
+        componentRestrictions:{country:'us'}, types:['address'],
+        fields:['formatted_address','address_components'],
+        bounds:{south:41.6961,west:-90.4181,north:48.3061,east:-82.1228}, strictBounds:false
+      });
+      address.dataset.placesReady='true';
+      autocomplete.addListener('place_changed',()=>{
+        const place=autocomplete.getPlace();
+        if(!place?.formatted_address || state.step!==1 || state.busy)return;
+        address.value=place.formatted_address;
+        document.body.classList.remove('address-editing');
+        address.blur();track('seller_form_started');show(2);
+      });
+    } catch { placesFallback(); }
+  };
+  address.addEventListener('focus',()=>document.body.classList.add('address-editing'));
+  address.addEventListener('input',()=>document.body.classList.add('address-editing'));
+  address.addEventListener('keydown',event=>{
+    // Let Google select the highlighted suggestion without submitting the form too.
+    if(event.key==='Enter' && document.querySelector('.pac-item-selected')) event.preventDefault();
+  });
+  const mapsUrl=document.querySelector('script[data-places-url]')?.dataset.placesUrl;
+  if(window.google?.maps?.places)window.initStoneBridgePlaces();
+  else if(mapsUrl){const script=document.createElement('script');script.src=mapsUrl;script.async=true;script.onerror=placesFallback;document.head.appendChild(script);}
   show(1,false);
 })();
