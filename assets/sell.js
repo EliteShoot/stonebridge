@@ -54,11 +54,12 @@
     $('phone').setCustomValidity(/^(?:1)?[2-9]\d{2}[2-9]\d{6}$/.test(phone)?'':'Please enter a valid 10-digit US phone number.');
     for(const id of ['name','phone','email','consent']){if(!$(id).checkValidity()){$(id).reportValidity();return;}}
     state.busy=true;$('next').disabled=true;$('back').disabled=true;$('next').textContent='Sending your request…';
-    const payload={address:$('address').value.trim(),timing:state.timing,condition:state.condition,name:$('name').value,phone:$('phone').value,email:$('email').value,consent:$('consent').checked};
+    const payload={draft_id:window.StoneBridgeDrafts?.id($('sellForm')),address:$('address').value.trim(),timing:state.timing,condition:state.condition,name:$('name').value,phone:$('phone').value,email:$('email').value,consent:$('consent').checked};
     try {
       const response=await fetch('https://stonebridge.psznbzhnps.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:AbortSignal.timeout(25000)});
       const result=await response.json();
       if(!response.ok||result.ok!==true)throw new Error('submission');
+      window.StoneBridgeDrafts?.complete($('sellForm'));
       state.complete=true;$('sellForm').hidden=true;$('success').hidden=false;
       $('fill').style.width='100%';$('progress').setAttribute('aria-valuenow','100');$('stepLabel').textContent='COMPLETE';$('progressLabel').textContent='REQUEST RECEIVED';
       track('seller_lead_submitted',{send_to:'G-89ZXPS62KN',lead_type:'property',transport_type:'beacon'});
@@ -89,6 +90,7 @@
         const place=autocomplete.getPlace();
         if(!place?.formatted_address || state.step!==1 || state.busy)return;
         address.value=place.formatted_address;
+        address.dispatchEvent(new Event('change',{bubbles:true}));
         document.body.classList.remove('address-editing');
         address.blur();track('seller_form_started');show(2);
       });
