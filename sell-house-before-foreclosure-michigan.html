@@ -620,6 +620,7 @@ body.sb-address-selected .pac-container{
 <style>.sb-keyword-help{background:#f7f5f0;color:#151514;padding:58px 24px;border-top:1px solid #d8d1c5}.sb-keyword-inner{max-width:1120px;margin:auto}.sb-keyword-help h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:36px;font-weight:400;line-height:1.15;margin:0 0 24px}.sb-keyword-help h3{font-family:"DM Sans",Arial,sans-serif;font-size:18px;line-height:1.5;margin:0 0 12px}.sb-keyword-help p{font-family:"DM Sans",Arial,sans-serif;font-size:15px;line-height:1.8;max-width:820px;margin:0 0 26px}.sb-keyword-help nav{display:flex;flex-wrap:wrap;gap:14px 24px;margin-top:25px}.sb-keyword-help a{font-size:14px;text-decoration:underline;text-underline-offset:3px}.sb-area-note{font-size:13px!important;color:#68655f}.sb-keyword-help article{margin-bottom:24px}</style><link rel="stylesheet" href="/site-polish.css">
 <!-- Meta Pixel Code -->
 <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1909947260369701');fbq('track','PageView');</script>
+<script src="/assets/form-autosave.js" defer></script>
 </head>
 <body>
 <header class="site-header">
@@ -974,6 +975,7 @@ next.addEventListener("click",async()=>{
   next.textContent="SENDING…";
 
   const payload={
+    draft_id:window.StoneBridgeDrafts?.id(document.querySelector(".submission-card")),
     name:document.getElementById("name").value.trim(),
     phone:document.getElementById("phone").value.trim(),
     email:document.getElementById("email").value.trim(),
@@ -991,6 +993,7 @@ next.addEventListener("click",async()=>{
     });
     const result=await response.json().catch(()=>({}));
     if(!response.ok) throw new Error(result.error||"Unable to send submission.");
+    window.StoneBridgeDrafts?.complete(document.querySelector(".submission-card"));
     if(typeof gtag === "function") gtag("event", "seller_lead_submitted", {send_to:"G-89ZXPS62KN", lead_type:"property", page_path:location.pathname, transport_type:"beacon"});
     try { if(typeof window.fbq==='function') window.fbq('track','Lead'); } catch (_) {}
 
