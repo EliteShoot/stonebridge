@@ -53,6 +53,12 @@
       track('seller_lead_submitted',{send_to:'G-89ZXPS62KN',lead_type:'property',transport_type:'beacon'});
       try { if(typeof window.fbq==='function') window.fbq('track','Lead'); } catch (_) {}
       $('success').querySelector('h2').focus();
+      // Only a server-confirmed submission may open the conversion page.
+      // If storage is unavailable, retain the existing inline confirmation.
+      try {
+        sessionStorage.setItem('stonebridge:seller-submitted', String(Date.now()));
+        location.assign('/sell/thank-you/');
+      } catch (_) {}
     } catch {
       error('We couldn’t confirm your request. Your answers are still here. Please try again, or email info@stonebridgedg.com.');
       $('next').textContent='Try again →';
