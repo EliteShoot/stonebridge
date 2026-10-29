@@ -2,30 +2,18 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const steps = [...document.querySelectorAll('.step')];
-  const state = {step:1,timing:'',condition:'',busy:false,complete:false,prepared:false};
+  const state = {step:1,timing:'',condition:'',busy:false,complete:false};
   const titles = ['YOUR PROPERTY','YOUR TIMELINE','PROPERTY CONDITION','CONTACT DETAILS'];
   const track = (event, extra={}) => { if(typeof window.gtag==='function') window.gtag('event',event,{page_path:location.pathname,form_id:'sell_landing',...extra}); };
   const error = message => { $('error').textContent=message; $('error').hidden=!message; };
   function show(n, focus=true) {
     state.step=n; document.body.classList.toggle('address-editing',n===1 && document.activeElement===$('address')); steps.forEach(s=>s.hidden=Number(s.dataset.step)!==n);
-    $('preparing').hidden=true; $('controls').hidden=false; $('back').hidden=n===1;
+    $('controls').hidden=false; $('back').hidden=n===1;
     $('stepLabel').textContent=`STEP ${n} OF 4`; $('progressLabel').textContent=titles[n-1];
     $('fill').style.width=`${n===4?90:n*25}%`; $('progress').setAttribute('aria-valuenow',n===4?'90':String(n*25));
     $('next').textContent=n===4?'Request my offer review →':'Continue →';
     error(''); if(focus) steps[n-1].querySelector('h2').focus();
     track('seller_form_step',{step:n});
-  }
-  async function prepare() {
-    if(state.prepared){show(4);return;}
-    state.busy=true; steps.forEach(s=>s.hidden=true); $('controls').hidden=true; $('preparing').hidden=false;
-    $('preparingTitle').focus();
-    requestAnimationFrame(()=>requestAnimationFrame(()=>$('loadingFill').parentElement.classList.add('running')));
-    const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-    await new Promise(r=>setTimeout(r,reduced?100:1500));
-    $('processingIcon').classList.add('done'); $('preparingTitle').textContent='Your details are ready.';
-    $('preparingHint').textContent='Now, let us know how to reach you.';
-    await new Promise(r=>setTimeout(r,reduced?100:700));
-    state.prepared=true;state.busy=false;show(4);
   }
   document.querySelectorAll('.choice').forEach(button=>{
     button.setAttribute('aria-pressed','false');
@@ -34,8 +22,8 @@
       const field=button.dataset.field;state[field]=button.dataset.value;
       document.querySelectorAll(`[data-field="${field}"]`).forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
       error('');
-      // Advance only once, synchronously locking navigation during preparation.
-      if(field==='condition')prepare();else show(3);
+      // Advance directly to contact details after the condition is selected.
+      if(field==='condition')show(4);else show(3);
     });
   });
   $('back').addEventListener('click',()=>{if(!state.busy&&state.step>1)show(state.step-1);});
@@ -48,7 +36,7 @@
       track('seller_form_started');show(2);return;
     }
     if(state.step===2){if(!state.timing){error('Choose your selling timeline.');return;}show(3);return;}
-    if(state.step===3){if(!state.condition){error('Choose the property condition.');return;}prepare();return;}
+    if(state.step===3){if(!state.condition){error('Choose the property condition.');return;}show(4);return;}
     for(const id of ['name','phone','email'])$(''+id).value=$(id).value.trim();
     const phone=$('phone').value.replace(/\D/g,'');
     $('phone').setCustomValidity(/^(?:1)?[2-9]\d{2}[2-9]\d{6}$/.test(phone)?'':'Please enter a valid 10-digit US phone number.');
