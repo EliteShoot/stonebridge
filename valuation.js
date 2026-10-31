@@ -20,7 +20,7 @@ export async function propertyValuation(request, env, origin) {
     ]);
     const now=Date.now();
     const cached=await env.DB.prepare('SELECT payload FROM sb_valuation_cache WHERE id=? AND expires_at>?').bind(key,now).first();
-    if(cached) return reply(JSON.parse(cached.payload));
+    if(cached) {const result=JSON.parse(cached.payload);if(result.available)result.preliminary_offer=Math.round(result.value*.85);delete result.source;return reply(result);}
     // Atomic reservations: concurrent requests cannot exceed the local free-tier budget.
     const reserve=async(id,limit)=>!!await env.DB.prepare('INSERT INTO sb_valuation_usage(id,count) VALUES (?,1) ON CONFLICT(id) DO UPDATE SET count=count+1 WHERE count<? RETURNING count').bind(id,limit).first();
     const day=new Date(now).toISOString().slice(0,10),month=day.slice(0,7);
@@ -35,8 +35,9 @@ export async function propertyValuation(request, env, origin) {
     const record=raw?.property||raw?.data||raw;
     const value=record?.zestimate;
     const available=typeof value==='number'&&Number.isFinite(value)&&value>0;
-    const result=available?{ok:true,available:true,value:Math.round(value),preliminary_offer:Math.round(value*.8),source:'Zillow Zestimate via HouseData',checked_at:new Date(now).toISOString()}:{ok:true,available:false,reason:'no_estimate'};
+    const result=available?{ok:true,available:true,value:Math.round(value),preliminary_offer:Math.round(value*.85),checked_at:new Date(now).toISOString()}:{ok:true,available:false,reason:'no_estimate'};
     await env.DB.prepare('INSERT INTO sb_valuation_cache(id,payload,expires_at) VALUES (?,?,?) ON CONFLICT(id) DO UPDATE SET payload=excluded.payload,expires_at=excluded.expires_at').bind(key,JSON.stringify(result),now+(available?86400000:3600000)).run();
     return reply(result);
   } catch (error) {console.warn('valuation_lookup_unavailable',error?.name);return unavailable(error?.name==='TimeoutError'?'provider_timeout':'provider_unavailable');}
 }
+
