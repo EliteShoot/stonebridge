@@ -71,5 +71,24 @@
 </footer>
 <dialog id="privacy"><h2>Privacy</h2><p>StoneBridge Development Group collects the contact and property information you provide to review your inquiry, communicate with you and evaluate a potential purchase. We do not sell your personal information. We may share it with service providers or professional partners as necessary to respond to your inquiry, operate our business or comply with law.</p><p>When you request a property value lookup, your property address is sent through our server to HouseData to retrieve an available estimate. This page uses Google Analytics and the Meta Pixel to measure visits and form completion and assess advertising performance. Please do not submit financial account details or other sensitive information. For questions about your information, contact info@stonebridgedg.com.</p><form method="dialog"><button>Close</button></form></dialog>
 <dialog id="terms"><h2>Terms</h2><p>Submitting this form is a request for contact, not a contract, appraisal, guaranteed offer or commitment to sell. Any purchase is subject to property review, title, due diligence and mutually agreed written terms.</p><form method="dialog"><button>Close</button></form></dialog>
+
+<!-- Floating seller introduction video -->
+<style>
+.sb-video-float{position:fixed;right:22px;bottom:22px;z-index:900;width:188px;filter:drop-shadow(0 12px 28px rgba(0,0,0,.25));font-family:'DM Sans',sans-serif}.sb-video-shell{position:relative;overflow:hidden;border-radius:30px;background:#151b1c;aspect-ratio:9/13;border:2px solid rgba(255,255,255,.55);transition:border-radius .25s}.sb-video-shell video{width:100%;height:100%;object-fit:cover;display:block}.sb-video-controls{position:absolute;bottom:10px;left:9px;right:9px;display:flex;gap:7px;justify-content:center;opacity:.95}.sb-video-controls button,.sb-video-close{appearance:none;border:1px solid rgba(255,255,255,.4);background:rgba(10,20,22,.38);color:white;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:100px;min-width:36px;height:36px;cursor:pointer;font-size:17px;display:grid;place-items:center}.sb-video-controls button:focus-visible,.sb-video-close:focus-visible{outline:3px solid #fff;outline-offset:2px}.sb-video-close{position:absolute;top:9px;right:9px;font-size:21px;z-index:2}.sb-video-float.is-expanded{width:min(360px,calc(100vw - 32px))}.sb-video-float.is-expanded .sb-video-shell{border-radius:22px}.sb-video-float.is-hidden{display:none}@media(max-width:600px){.sb-video-float{width:124px;right:12px;bottom:12px}.sb-video-controls{gap:3px;left:4px;right:4px;bottom:5px}.sb-video-controls button{min-width:29px;height:29px;font-size:14px}.sb-video-close{min-width:28px;height:28px;top:5px;right:5px}}
+</style>
+<aside class="sb-video-float" id="sbSellerVideo" aria-label="StoneBridge introduction video">
+ <div class="sb-video-shell">
+  <video id="sbSellerClip" playsinline autoplay muted loop preload="metadata" aria-label="Introduction to StoneBridge Development Group"><source src="/assets/stonebridge-seller-intro.mp4" type="video/mp4"></video>
+  <button class="sb-video-close" type="button" aria-label="Close video" title="Close">×</button>
+  <div class="sb-video-controls">
+   <button type="button" data-video-action="play" aria-label="Pause video" title="Pause">Ⅱ</button>
+   <button type="button" data-video-action="mute" aria-label="Unmute video" title="Unmute">♩</button>
+   <button type="button" data-video-action="expand" aria-label="Expand video" title="Expand">⛶</button>
+  </div>
+ </div>
+</aside>
+<script>
+(()=>{const panel=document.getElementById('sbSellerVideo'),video=document.getElementById('sbSellerClip');if(!panel||!video)return;const play=panel.querySelector('[data-video-action="play"]'),mute=panel.querySelector('[data-video-action="mute"]'),expand=panel.querySelector('[data-video-action="expand"]');function sync(){play.textContent=video.paused?'▶':'Ⅱ';play.setAttribute('aria-label',video.paused?'Play video':'Pause video');mute.textContent=video.muted?'♩':'♫';mute.setAttribute('aria-label',video.muted?'Unmute video':'Mute video');expand.setAttribute('aria-label',panel.classList.contains('is-expanded')?'Minimize video':'Expand video');}play.addEventListener('click',()=>video.paused?video.play().catch(()=>{}):video.pause());mute.addEventListener('click',()=>{video.muted=!video.muted;sync()});expand.addEventListener('click',()=>{panel.classList.toggle('is-expanded');sync()});panel.querySelector('.sb-video-close').addEventListener('click',()=>{video.pause();panel.classList.add('is-hidden')});video.addEventListener('play',sync);video.addEventListener('pause',sync);sync();})();
+</script>
 </body></html>
 
