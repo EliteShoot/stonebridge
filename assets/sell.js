@@ -54,7 +54,7 @@
       const e=state.estimate,available=e?.available===true&&Number.isFinite(e.value)&&e.value>0&&Number.isFinite(e.preliminary_offer);
       $('estimateResult').hidden=false;$('estimateAddress').textContent=address;
       $('estimateFigures').hidden=!available;$('estimateFallback').hidden=available;
-      if(available){const money=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});$('propertyValue').textContent=money.format(e.value);$('offerValue').textContent=money.format(e.preliminary_offer);}
+      if(available){const money=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});$('offerValue').textContent=money.format(e.preliminary_offer);}
       syncMessage();track('seller_valuation_result',{available});show(2,false);$('estimateResult').setAttribute('tabindex','-1');$('estimateResult').focus();
     }
   }
