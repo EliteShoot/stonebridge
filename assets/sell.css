@@ -26,3 +26,13 @@ label:not(.consent){font-size:8px;font-weight:700;letter-spacing:.16em;color:#68
 .social>a{border:1px solid #444;border-radius:50%;width:30px;height:30px;display:grid;place-items:center;font-size:8px}
 .header-phone:focus-visible,.footer a:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
 @media(max-width:600px){.site-header{padding:0 18px}.site-header .header-phone{font-size:9px;letter-spacing:.07em;gap:6px}.site-header .brand span{font-size:13px}.footer-upper{grid-template-columns:1fr;gap:32px}}
+
+
+/* Address-based estimate and earlier contact capture. */
+.estimate-result{margin:26px 0 28px;padding:24px;background:#f5f2eb;border:1px solid #ded8cc;border-top:2px solid #a9997d}
+.estimate-address{font-size:13px;margin:0 0 18px;overflow-wrap:anywhere}.estimate-result .eyebrow{font-size:8px}
+.estimate-label{display:block;font-size:8px;letter-spacing:.13em;color:#68655f;margin-top:16px}
+.estimate-result strong{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size:38px;font-weight:500;line-height:1.2}.estimate-result strong.offer-value{font-size:52px;color:#526247}
+.contact-preference{border:0;padding:0;margin:24px 0;display:flex;gap:24px}.contact-preference legend{font-size:8px;letter-spacing:.13em;margin-bottom:12px}.contact-preference label{display:flex;align-items:center;gap:9px;font-size:12px;letter-spacing:0;margin:0;min-height:44px}.contact-preference input[type=radio]{appearance:auto;width:18px;height:18px;padding:0;accent-color:#526247}
+#valuationLoading{text-align:center;padding:40px 0 24px}#loadingAddress{overflow-wrap:anywhere;font-size:13px}.valuation-spinner{width:46px;height:46px;border:2px solid #e8e2d8;border-top-color:#a9997d;border-radius:50%;margin:0 auto 28px;animation:valuation-spin .9s linear infinite}@keyframes valuation-spin{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.valuation-spinner{animation:none}.track span{transition:none}}
+@media(max-width:600px){.estimate-result{padding:20px 16px}.estimate-result strong.offer-value{font-size:46px}}
