@@ -9,9 +9,9 @@ const request=(address='123 Main St, Troy, MI 48084')=>new Request('https://test
 const env={DB,RAPIDAPI_KEY:'test-only'};
 test('valuation caches actual estimates, preserves null values, and enforces atomic quota',async()=>{
  let calls=0;const original=globalThis.fetch;
- globalThis.fetch=async(url,opts)=>{calls++;assert.equal(new URL(url).hostname,'zillow-full-data-api.p.rapidapi.com');assert.equal(opts.headers['X-RapidAPI-Key'],'test-only');return Response.json({zestimate:250000});};
+ globalThis.fetch=async(url,opts)=>{calls++;assert.equal(new URL(url).hostname,'zillow-full-data-api.p.rapidapi.com');assert.equal(new URL(url).searchParams.get('address'),'123 Main St, Troy, MI 48084');assert.equal(opts.headers['X-RapidAPI-Key'],'test-only');return Response.json({zestimate:250000});};
  try {
-  let result=await (await propertyValuation(request(),env,'https://stonebridgedg.com')).json();assert.equal(result.preliminary_offer,200000);
+  let result=await (await propertyValuation(request('123 Main St, Troy, MI 48084, USA'),env,'https://stonebridgedg.com')).json();assert.equal(result.preliminary_offer,200000);
   await propertyValuation(request(),env,'https://stonebridgedg.com');assert.equal(calls,1);
   globalThis.fetch=async()=>Response.json({zestimate:null,price:999999});
   result=await (await propertyValuation(request('124 Main St, Troy, MI 48084'),env,'https://stonebridgedg.com')).json();assert.equal(result.available,false);assert.equal(result.value,undefined);
