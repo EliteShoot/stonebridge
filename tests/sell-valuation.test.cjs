@@ -11,7 +11,7 @@ for(const mode of ['text','email'])for(const outcome of ['available','missing','
  w.fbq=(event,name)=>{if(name==='Lead')leads++;};
  w.fetch=async(url,options)=>{
   const data=JSON.parse(options.body);
-  if(url.endsWith('/valuation')){lookups++;if(outcome==='network')throw Error('timeout');return {ok:true,json:async()=>outcome==='available'?{ok:true,available:true,value:250000,preliminary_offer:200000,source:'Zillow Zestimate via HouseData'}:{ok:true,available:false}};}
+  if(url.endsWith('/valuation')){lookups++;if(outcome==='network')throw Error('timeout');return {ok:true,json:async()=>outcome==='available'?{ok:true,available:true,value:250000,preliminary_offer:200000,source:'Zillow Zestimate via HouseData'}:{ok:true,available:false,reason:'no_estimate'}};}
   if(url.endsWith('/draft'))drafts.push(data);else submissions.push(data);
   return {ok:true,json:async()=>({ok:true})};
  };
@@ -24,7 +24,7 @@ for(const mode of ['text','email'])for(const outcome of ['available','missing','
  assert.equal($('valuationLoading').hidden,true);assert.equal(w.document.querySelector('[data-step="2"]').hidden,false);
  assert.equal($('estimateFigures').hidden,outcome!=='available');
  if(outcome==='available')assert.equal($('offerValue').textContent,'$200,000');else assert.equal($('estimateFallback').hidden,false);
- $('back').click();submit();await tick();assert.equal(lookups,1);
+ $('back').click();submit();await tick();assert.equal(lookups,outcome==='network'?2:1);
  // Empty contact data cannot advance or fire a conversion.
  submit();assert.equal(w.document.querySelector('[data-step="2"]').hidden,false);assert.equal(leads,0);
  change('name','Test');
