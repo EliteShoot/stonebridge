@@ -3,7 +3,7 @@
   const $ = id => document.getElementById(id);
   const steps = [...document.querySelectorAll('.step')];
   const state = {step:1,timing:'',condition:'',busy:false,complete:false,estimate:null,lookupAddress:''};
-  const titles = ['YOUR PROPERTY','YOUR ESTIMATE & CONTACT','YOUR TIMELINE','PROPERTY CONDITION'];
+  const titles = ['YOUR PROPERTY','SAVE YOUR ESTIMATE','YOUR TIMELINE','PROPERTY CONDITION'];
   const track = (event, extra={}) => { if(typeof window.gtag==='function') window.gtag('event',event,{page_path:location.pathname,form_id:'sell_landing',...extra}); };
   const error = message => { $('error').textContent=message; $('error').hidden=!message; };
   function show(n, focus=true) {
@@ -11,28 +11,21 @@
     $('controls').hidden=false; $('back').hidden=n===1;
     $('stepLabel').textContent=`STEP ${n} OF 4`; $('progressLabel').textContent=titles[n-1];
     $('fill').style.width=`${n===4?90:n*25}%`; $('progress').setAttribute('aria-valuenow',n===4?'90':String(n*25));
-    $('next').textContent=n===4?'Request my personalized offer →':n===1?'Check my property →':'Continue →';
+    $('next').hidden=n===4&&!state.condition;
+    $('next').textContent=n===4?'Save my request →':n===1?'Get my instant estimate →':n===2?'Save my estimate →':'Continue →';
     error(''); if(focus) steps[n-1].querySelector('h2').focus();
     track('seller_form_step',{step:n});
   }
-  const contactMethod = () => document.querySelector('input[name="contact_method"]:checked').value;
+  const contactMethod = () => 'phone';
   function syncMessage() {
     const e=state.estimate;
-    $('message').value='Preferred contact: '+contactMethod()+'. '+(e?.available?'Preliminary value shown: $'+e.value+'; 80% preliminary figure: $'+e.preliminary_offer+'. Source: '+e.source+'.':'Automated value unavailable; personalized review requested.');
+    $('message').value='Preferred contact: phone.\n'+(e?.available?'Preliminary cash estimate shown: $'+e.preliminary_offer+'.\nEstimated property value: $'+e.value+'.\nEstimate calculated at: '+e.checked_at:'Automated estimate unavailable; personalized review requested.');
   }
-  function updateContact() {
-    const text=contactMethod()==='text';
-    $('phoneField').hidden=!text;$('emailField').hidden=text;
-    $('phone').required=text;$('email').required=!text;
-    $('phone').setCustomValidity('');syncMessage();
-  }
-  document.querySelectorAll('input[name="contact_method"]').forEach(el=>el.addEventListener('change',updateContact));
-  updateContact();
   function validateContact() {
     for(const id of ['name','phone','email'])$(id).value=$(id).value.trim();
     const phone=$('phone').value.replace(/\D/g,'');
-    $('phone').setCustomValidity(contactMethod()==='text'&&!/^(?:1)?[2-9]\d{2}[2-9]\d{6}$/.test(phone)?'Please enter a valid 10-digit US mobile number.':'');
-    for(const id of ['name',contactMethod()==='text'?'phone':'email','consent']){if(!$(id).checkValidity()){$(id).reportValidity();return false;}}
+    $('phone').setCustomValidity(!/^(?:1)?[2-9]\d{2}[2-9]\d{6}$/.test(phone)?'Please enter a valid 10-digit US mobile number.':'');
+    for(const id of ['name','phone','email','consent']){if(!$(id).checkValidity()){$(id).reportValidity();return false;}}
     return true;
   }
   async function lookup() {
@@ -55,7 +48,7 @@
       $('estimateResult').hidden=false;$('estimateAddress').textContent=address;
       $('estimateFigures').hidden=!available;$('estimateFallback').hidden=available;
       if(available){const money=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});$('offerValue').textContent=money.format(e.preliminary_offer);}
-      syncMessage();track('seller_valuation_result',{available});show(2,false);$('estimateResult').setAttribute('tabindex','-1');$('estimateResult').focus();
+      syncMessage();$('message').dispatchEvent(new Event('change',{bubbles:true}));track('seller_valuation_result',{available});show(2,false);$('estimateResult').setAttribute('tabindex','-1');$('estimateResult').focus();
     }
   }
   document.querySelectorAll('.choice').forEach(button=>{
@@ -65,8 +58,8 @@
       const field=button.dataset.field;state[field]=button.dataset.value;
       document.querySelectorAll(`[data-field="${field}"]`).forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
       error('');
-      // Advance directly to contact details after the condition is selected.
-      if(field==='timing')show(4);
+      // Selecting the final answer submits immediately; the busy guard prevents duplicates.
+      if(field==='timing')show(4);else if(field==='condition')$('sellForm').requestSubmit();
     });
   });
   $('back').addEventListener('click',()=>{if(!state.busy&&state.step>1)show(state.step-1);});
@@ -87,8 +80,8 @@
     if(!state.condition){error('Choose the property condition.');return;}
     if(!validateContact()){show(2);validateContact();return;}
     syncMessage();
-    state.busy=true;$('next').disabled=true;$('back').disabled=true;$('next').textContent='Sending your request…';
-    const payload={flow_version:'valuation_v1',contact_method:contactMethod(),message:$('message').value,draft_id:window.StoneBridgeDrafts?.id($('sellForm')),address:$('address').value.trim(),timing:state.timing,condition:state.condition,name:$('name').value,phone:contactMethod()==='text'?$('phone').value:'',email:contactMethod()==='email'?$('email').value:'',consent:$('consent').checked};
+    state.busy=true;$('next').hidden=false;$('next').disabled=true;$('back').disabled=true;$('next').textContent='Sending your request…';
+    const payload={flow_version:'valuation_v2',contact_method:contactMethod(),message:$('message').value,draft_id:window.StoneBridgeDrafts?.id($('sellForm')),address:$('address').value.trim(),timing:state.timing,condition:state.condition,name:$('name').value,phone:$('phone').value,email:$('email').value,consent:$('consent').checked};
     try {
       const response=await fetch('https://stonebridge.psznbzhnps.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:AbortSignal.timeout(25000)});
       const result=await response.json();
@@ -147,4 +140,5 @@
   else if(mapsUrl){const script=document.createElement('script');script.src=mapsUrl;script.async=true;script.onerror=placesFallback;document.head.appendChild(script);}
   show(1,false);
 })();
+
 
