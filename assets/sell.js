@@ -50,7 +50,7 @@
       if(response.ok&&result.ok===true)state.estimate=result;
     } catch {}
     finally {
-      state.busy=false;state.lookupAddress=address;$('valuationLoading').hidden=true;
+      state.busy=false;state.lookupAddress=state.estimate?.available||['no_estimate','not_found','provider_http_404'].includes(state.estimate?.reason)?address:'';$('valuationLoading').hidden=true;
       const e=state.estimate,available=e?.available===true&&Number.isFinite(e.value)&&e.value>0&&Number.isFinite(e.preliminary_offer);
       $('estimateResult').hidden=false;$('estimateAddress').textContent=address;
       $('estimateFigures').hidden=!available;$('estimateFallback').hidden=available;
