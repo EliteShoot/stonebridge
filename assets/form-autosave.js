@@ -26,7 +26,7 @@
       address:value('address'), property:value('property'), message:value('message'),
       timing:choice('timing'), condition:choice('condition'),
       consent:!!root.querySelector('input[type="checkbox"][name="Consent"],#consent,#sellerConsent')?.checked,
-      source_page:location.pathname
+      source_page:location.pathname, flow_version:root.dataset.flowVersion || ''
     };
   }
   function eligible(data) {
@@ -98,3 +98,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init);
   else init();
 })();
+
